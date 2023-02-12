@@ -97,7 +97,7 @@ struct comanda comande[nTavoli];
    ---------------------------------------
    Ho 3 array di interi che tengono gli
    ID dei socket dei relativi dispositivi.
-   --------------------------------------- 
+   ---------------------------------------
 */
 
 int socket_client[nMaxClient];
