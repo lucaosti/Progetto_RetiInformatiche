@@ -35,7 +35,7 @@ struct tavolo tavoli[nTavoli];
 struct prenotazione
 {
 	char cognome[64];
-	time_t data_ora;
+	time_t data_ora;	// Non della richiesta, ma della prenotazione
 	struct prenotazione *prossima;
 	/* 
 	Il tavolo non è necessario poiché corrisponde
@@ -76,6 +76,8 @@ struct piatto piatti[nPiatti];
    --------------------------------------- 
 */
 
+enum stato_comanda{in_attesa, in_preparazione, in_attesa};
+
 struct comanda
 {
 	int quantita[nPiatti];
@@ -83,7 +85,8 @@ struct comanda
 	Quantità dell'i-esimo piatto corrispondete
 	nell'array dei piatti.
 	*/
-	time_t timestamp;
+	time_t timestamp;	// utilizzato per trovare la meno recente
+	enum stato_comanda stato;
 	/* 
 	Il tavolo non è necessario poiché corrisponde
 	all'indice in cui viene salvato all'interno
