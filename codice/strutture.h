@@ -70,9 +70,9 @@ struct piatto piatti[nPiatti];
 /*         Gestione delle comande 
    ---------------------------------------
    Per ogni tavolo, esiste una lista di 
-   comande ordinata in base al time-
-   stamp di richiesta. Vengono cancellate
-   alla richiesta del conto.
+   comande ordinata in base al timestamp
+   di richiesta. Vengono cancellate alla
+   richiesta del conto.
    --------------------------------------- 
 */
 
@@ -87,6 +87,7 @@ struct comanda
 	*/
 	time_t timestamp;	// utilizzato per trovare la meno recente
 	enum stato_comanda stato;
+	int kd;
 	/* 
 	Il tavolo non è necessario poiché corrisponde
 	all'indice in cui viene salvato all'interno
@@ -99,8 +100,8 @@ struct comanda comande[nTavoli];
 
 /*    Gestione del tipo di dispositivi
    ---------------------------------------
-   Ho 3 array di interi che tengono gli
-   ID dei socket dei relativi dispositivi.
+   Ho 3 array di interi che tengono gli ID
+   dei socket dei relativi dispositivi.
    ---------------------------------------
 */
 
