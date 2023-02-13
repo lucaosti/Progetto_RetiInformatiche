@@ -1,6 +1,17 @@
 /* Strutture necessarie al server */
 /* ------------------------------ */
 
+#include <arpa/inet.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <time.h>
+#include <pthread.h>
+
 #define nTavoli 16
 #define nPiatti 8
 #define nMaxClient 16
