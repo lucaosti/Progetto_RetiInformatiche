@@ -9,6 +9,7 @@
 #include <time.h>
 #include <pthread.h>
 #include "strutture.h"
+#include "funzioni.h"
 
 int main(int argc, char* argv[]){
     // Carico dai file "tavoli.txt" e "menu.txt"
@@ -16,5 +17,5 @@ int main(int argc, char* argv[]){
     caricaMenu();
     /* -------------------------------------- */
 
-    
+
 }
