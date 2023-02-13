@@ -1,11 +1,11 @@
 /* Strutture necessarie al server */
-/* ----------------------------- */
+/* ------------------------------ */
 
 #define nTavoli 16
-#define nPiatti ??
-#define nMaxClient ??
-#define nMaxKd ??
-#define nMaxKd ??
+#define nPiatti 8
+#define nMaxClient 16
+#define nMaxTd nTavoli
+#define nMaxKd 8
 
 /* 			 Gestione dei tavoli 
    ---------------------------------------
@@ -18,8 +18,8 @@ struct tavolo
 {
 	int numero;	// Univoco nel ristorante
 	int nPosti;
-	char *sala;
-	char *descrizione;
+	char sala[32];
+	char descrizione[64];
 };
 
 struct tavolo tavoli[nTavoli];
@@ -34,7 +34,7 @@ struct tavolo tavoli[nTavoli];
 
 struct prenotazione
 {
-	char *cognome;
+	char cognome[64];
 	time_t data_ora;
 	struct prenotazione *prossima;
 	/* 
@@ -55,8 +55,8 @@ struct prenotazione prenotazioni[nTavoli];
 
 struct piatto
 {
-	char *codice;
-	char *nome;
+	char codice[2];
+	char nome[64];
 	int prezzo;
 	/* 
 	Il tavolo non è necessario poiché corrisponde
@@ -89,6 +89,7 @@ struct comanda
 	all'indice in cui viene salvato all'interno
 	dell'array "comande".
 	*/
+	struct comanda *prossima;
 };
 
 struct comanda comande[nTavoli];
