@@ -21,11 +21,12 @@ int main(int argc, char* argv[]){
 	int socket_client[nMaxClient];
 	int socket_td[nMaxTd];
 	int socket_kd[nMaxKd];
-	// Struct
+	// Strutture
 	struct tavolo tavoli[nTavoli];
 	struct prenotazione prenotazioni[nTavoli];
 	struct piatto piatti[nPiatti];
 	struct comanda comande[nTavoli];
+	struct lis_thread listaThread;
 	
 	// Carico dai file "tavoli.txt" e "menu.txt"
 	caricaTavoli();
@@ -213,7 +214,7 @@ int main(int argc, char* argv[]){
 				else { // Terzo caso: richiesta da un socket già connesso
 					// Cerco il socket nelle mie strutture, se non c'è mi sta per forza comunicando cosa è: tramite un byte;
 					// c = client, t = table device, k = kitchen device.
-					// Altrimenti, se l'ho trovato, so cosa è e lo gestisco.
+					// Altrimenti, se l'ho trovato, so cosa è e lo gestisco mediante un thread.
 					
 				}
 			}

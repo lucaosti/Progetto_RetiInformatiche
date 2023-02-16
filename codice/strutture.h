@@ -114,7 +114,7 @@ struct comanda
    --------------------------------------- 
 */
 
-struct listaThread
+struct lis_thread
 {
 	pthread_t t;
 	pthread_t* prossimo;
