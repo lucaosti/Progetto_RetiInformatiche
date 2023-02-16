@@ -3,6 +3,7 @@
         "pthread.h": "c",
         "funzioni.h": "c",
         "strutture.h": "c",
-        "in.h": "c"
+        "in.h": "c",
+        "stdlib.h": "c"
     }
 }
