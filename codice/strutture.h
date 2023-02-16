@@ -35,8 +35,6 @@ struct tavolo
 	char descrizione[64];
 };
 
-struct tavolo tavoli[nTavoli];
-
 /*       Gestione delle prenotazioni 
    ---------------------------------------
    Per ogni tavolo, esiste una lista di 
@@ -57,8 +55,6 @@ struct prenotazione
 	*/
 };
 
-struct prenotazione prenotazioni[nTavoli];
-
 /*           Gestione dei piatti 
    ---------------------------------------
    Viene parsato il file "menu.txt" dopo
@@ -77,8 +73,6 @@ struct piatto
 	dell'array "comande".
 	*/
 };
-
-struct piatto piatti[nPiatti];
 
 /*         Gestione delle comande 
    ---------------------------------------
@@ -108,5 +102,3 @@ struct comanda
 	*/
 	struct comanda *prossima;
 };
-
-struct comanda comande[nTavoli];
