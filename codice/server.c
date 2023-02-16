@@ -59,10 +59,10 @@ int main(int argc, char* argv[]){
 
 	/* Aggancio */
 	ret = bind(listener, (struct sockaddr*)&my_addr, sizeof(my_addr));
-		if( ret<0){
-			perror("Bind non riuscita\n");
-			exit(0);
-		}
+	if( ret<0){
+		perror("Bind non riuscita\n");
+		exit(0);
+	}
 
 	/* Apro la coda */
 	listen(listener, 10);
