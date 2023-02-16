@@ -106,7 +106,7 @@ int main(int argc, char* argv[]){
 						//   - "a", restituisce tutte le comande in attesa
 						//   - "p", restituisce tutte le comande in preparazione
 						//   - "s", restituisce tutte le comande in servizio
-						QUI
+						
 					}
 					else if(strcmp(serverCommand, "stop") == 0) { // Secondo caso: stop
 
