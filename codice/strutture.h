@@ -18,7 +18,7 @@
 #define nMaxTd nTavoli
 #define nMaxKd 8
 
-/* 			 Gestione dei tavoli 
+/*           Gestione dei tavoli 
    ---------------------------------------
    Viene parsato il file "tavoli.txt" dopo
    l'accensione del server.
