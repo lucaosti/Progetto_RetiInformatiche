@@ -21,7 +21,10 @@ int main(int argc, char* argv[]){
 	int socket_td[nMaxTd];
 	int socket_kd[nMaxKd];
 	// Struct
-	
+	struct tavolo tavoli[nTavoli];
+	struct prenotazione prenotazioni[nTavoli];
+	struct piatto piatti[nPiatti];
+	struct comanda comande[nTavoli];
 	
 	// Carico dai file "tavoli.txt" e "menu.txt"
 	caricaTavoli();
