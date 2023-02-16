@@ -15,8 +15,9 @@
 #include "funzioni.h"
 
 int main(int argc, char* argv[]){
-	// Strutture
-	// Socket
+	/* --- Strutture --- */
+
+	// Array per i Socket
 	int socket_client[nMaxClient];
 	int socket_td[nMaxTd];
 	int socket_kd[nMaxKd];
@@ -29,6 +30,8 @@ int main(int argc, char* argv[]){
 	// Carico dai file "tavoli.txt" e "menu.txt"
 	caricaTavoli();
 	caricaMenu();
+
+	/* --- Inizio ---*/
 
 	// Stampo a video il "benvenuto" del server
 	printf(BENVENUTO_SERVER);  
@@ -211,6 +214,7 @@ int main(int argc, char* argv[]){
 					// Cerco il socket nelle mie strutture, se non c'è mi sta per forza comunicando cosa è: tramite un byte;
 					// c = client, t = table device, k = kitchen device.
 					// Altrimenti, se l'ho trovato, so cosa è e lo gestisco.
+					
 				}
 			}
 		}

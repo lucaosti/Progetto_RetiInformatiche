@@ -102,3 +102,20 @@ struct comanda
 	*/
 	struct comanda *prossima;
 };
+
+/*           Gestione dei Thread 
+   ---------------------------------------
+   Ogni volta che un socket registrato
+   viene comunica al server, quest'ultimo
+   risponde mediante un thread, che viene
+   inserito in una lista per controllare
+   la terminazione una volta decisa la
+   chiusura del server.
+   --------------------------------------- 
+*/
+
+struct listaThread
+{
+	pthread_t t;
+	pthread_t* prossimo;
+};
