@@ -75,7 +75,7 @@ int main(int argc, char* argv[]){
 	for(;;) {
 		//Imposto il set di socket da monitorare in lettura per la select()
 		read_fds = master;
-		
+
 		// Mi blocco (potenzialmente) in attesa di descrittori pronti
 		ret = select(fdmax+1, &read_fds, NULL, NULL, NULL);
 		if(ret < 0) {
@@ -106,9 +106,10 @@ int main(int argc, char* argv[]){
 						//   - "a", restituisce tutte le comande in attesa
 						//   - "p", restituisce tutte le comande in preparazione
 						//   - "s", restituisce tutte le comande in servizio
-						
+
 						// Prendo il secondo termine del comando
 						serverCommand = strtok(NULL, " ");
+
 						if(serverCommand == NULL) { // da capire se farlo o meno
 							// Non necessario, quindi:
 							printf("Comando 'stat' senza parametri inesistente!\n");
@@ -170,7 +171,7 @@ int main(int argc, char* argv[]){
 								FD_CLR(j, &master);
 							}
 							close(listener);
-							
+
 							// Termino il server con esito positivo
 							return 1;
 						}
@@ -186,14 +187,14 @@ int main(int argc, char* argv[]){
 				}
 				else if(i == listener) { // Secondo caso: nuova connessione
 					// Calcolo la lunghezza dell'indirizzo del client
-            		addrlen = sizeof(cl_addr);
-            
+					addrlen = sizeof(cl_addr);
+
 					// Accetto la connessione e creo il socket connesso ('newfd')
 					newfd = accept(listener, (struct sockaddr *)&cl_addr, &addrlen);
-            
+
 					// Aggiungo il socket connesso al set dei descrittori monitorati
 					FD_SET(newfd, &master); 
-            
+
 					// Aggiorno l'ID del massimo descrittore
 					if(newfd > fdmax) { 
 						fdmax = newfd;  
