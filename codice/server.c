@@ -16,6 +16,11 @@
 
 int main(int argc, char* argv[]){
 	// Strutture
+	// Socket
+	int socket_client[nMaxClient];
+	int socket_td[nMaxTd];
+	int socket_kd[nMaxKd];
+	// Struct
 	
 	
 	// Carico dai file "tavoli.txt" e "menu.txt"
