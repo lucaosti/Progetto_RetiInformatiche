@@ -118,14 +118,17 @@ int inserisci(int i, char c) {
 	}
 }
 
-void gestisciClient(){
+// Gestisce UNA richiesta da parte di un client
+void gestisciClient() {
 
 }
 
-void gestisciTd(){
+// Gestisce UNA richiesta da parte di un table device
+void gestisciTd() {
 
 }
 
-void gestisciKd(){
-	
+// Gestisce UNA richiesta da parte di un kitchen device
+void gestisciKd() {
+
 }

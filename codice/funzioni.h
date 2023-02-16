@@ -25,6 +25,11 @@ void elencoComandeTavolo(char* buffer, int tavolo);
 // Inserisce in base alla lettera c, il socket id nell'array relativo
 int inserisci(int i, char c);
 
+// Gestisce UNA richiesta da parte di un client
 void gestisciClient();
+
+// Gestisce UNA richiesta da parte di un table device
 void gestisciTd();
+
+// Gestisce UNA richiesta da parte di un kitchen device
 void gestisciKd();
