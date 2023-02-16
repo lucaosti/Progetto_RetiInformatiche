@@ -1,5 +1,5 @@
-/* Strutture necessarie al server */
-/* ------------------------------ */
+/* Strutture e definizioni necessarie al server */
+/* -------------------------------------------- */
 
 #include <arpa/inet.h>
 #include <sys/types.h>
