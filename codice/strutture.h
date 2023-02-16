@@ -20,6 +20,21 @@
 #define BUFFER_SIZE 1024
 #define BENVENUTO_SERVER "???"
 
+/* --------- Strutture globali ---------*/
+// Array per i Socket
+int socket_client[nMaxClient];
+int socket_td[nMaxTd];
+int socket_kd[nMaxKd];
+
+// Strutture
+struct tavolo tavoli[nTavoli];
+struct prenotazione prenotazioni[nTavoli];
+struct piatto piatti[nPiatti];
+struct comanda comande[nTavoli];
+struct lis_thread listaThread;
+/* ------------------------------------ */
+
+
 /*           Gestione dei tavoli 
    ---------------------------------------
    Viene parsato il file "tavoli.txt" dopo

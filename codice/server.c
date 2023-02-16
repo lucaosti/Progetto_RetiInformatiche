@@ -16,18 +16,14 @@
 
 int main(int argc, char* argv[]){
 	/* --- Strutture --- */
+	// Le strutture vengono definite in "strutture.h" per
+	// permettere l'utilizzo della libreria "funzioni.c"
 
-	// Array per i Socket
-	int socket_client[nMaxClient];
-	int socket_td[nMaxTd];
-	int socket_kd[nMaxKd];
-	// Strutture
-	struct tavolo tavoli[nTavoli];
-	struct prenotazione prenotazioni[nTavoli];
-	struct piatto piatti[nPiatti];
-	struct comanda comande[nTavoli];
-	struct lis_thread listaThread;
-	
+	// Le inizializzo
+	for(int indice; indice < nMaxClient; indice++)	socket_client[indice] = -1;
+	for(int indice; indice < nMaxTd; indice++)		socket_td[indice] = -1;
+	for(int indice; indice < nMaxKd; indice++)		socket_kd[indice] = -1;
+
 	// Carico dai file "tavoli.txt" e "menu.txt"
 	caricaTavoli();
 	caricaMenu();
@@ -222,7 +218,7 @@ int main(int argc, char* argv[]){
 				else { // Terzo caso: richiesta da un socket già connesso
 					// Cerco il socket nelle mie strutture, se non c'è mi sta per forza comunicando cosa è: tramite un byte;
 					// c = client, t = table device, k = kitchen device.
-					// Altrimenti, se l'ho trovato, so cosa è e lo gestisco mediante un thread.
+					// Altrimenti, se l'ho trovato, so cosa è e lo gestisco mediante un thread, potrebbe essere una disconnessione.
 					int tipo = -1; // 0 = client; 1 = table device; 2 = kitchen device.
 					for (int j; j <= nMaxClient; j++) {
 						if (socket_client[j] == i){
@@ -245,16 +241,51 @@ int main(int argc, char* argv[]){
 					switch (tipo)
 					{
 					case -1: // Si sta presentando
-						
+						ret = ricevi(i, 1, buffer);
+						ret = inserisci(i, buffer[0]);
+						if( ret < 0) {
+							printf("Presentazione non riuscita: come primo messaggio non è arrivato il tipo.\n");
+							fflush(stdout);
+						}
 						break;
 					case 0: // Client che vuole utilizzare servizi
-						
+						// Creo un nuovo elemento della lista di thread
+						struct lis_thread p;
+						// Creo il thread
+						(void) pthread_create(&p.t, NULL, gestisciClient, NULL);
+						// Creo un puntatore per inserirlo in lista
+						struct lis_thread *inserisciThread;
+						// Scorro tutta la lista finché non ne trovo uno libero
+						inserisciThread = &listaThread;
+						while(inserisciThread->prossimo != NULL) inserisciThread = inserisciThread->prossimo;
+						// Lo inserisco
+						inserisciThread->t = &p;
 						break;
 					case 1: // Table device che vuole utilizzare servizi
-						
+						// Creo un nuovo elemento della lista di thread
+						struct lis_thread p;
+						// Creo il thread
+						(void) pthread_create(&p.t, NULL, gestisciTd, NULL);
+						// Creo un puntatore per inserirlo in lista
+						struct lis_thread *inserisciThread;
+						// Scorro tutta la lista finché non ne trovo uno libero
+						inserisciThread = &listaThread;
+						while(inserisciThread->prossimo != NULL) inserisciThread = inserisciThread->prossimo;
+						// Lo inserisco
+						inserisciThread->t = &p;
 						break;
 					case 2: // Kitchen device che vuole utilizzare servizi
-						
+						// Creo un nuovo elemento della lista di thread
+						struct lis_thread p;
+						// Creo il thread
+						(void) pthread_create(&p.t, NULL, gestisciKd, NULL);
+						// Creo un puntatore per inserirlo in lista
+						struct lis_thread *inserisciThread;
+						// Scorro tutta la lista finché non ne trovo uno libero
+						inserisciThread = &listaThread;
+						while(inserisciThread->prossimo != NULL) inserisciThread = inserisciThread->prossimo;
+						// Lo inserisco
+						inserisciThread->t = &p;
 						break;
 					default:
 						return -1; // errore

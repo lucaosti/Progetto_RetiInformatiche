@@ -8,6 +8,12 @@ int comandeInSospeso();
 // Invia al socket in input il messaggio dentro buffer
 int invia(int j, char* buffer);
 
+// Riceve dal socket in input il messaggio e lo mette dentro buffer
+int ricevi(int j, int lunghezza, char* buffer);
+
+// Ricevi dal socket in input la lunghezza del messaggio e lo mette dentro lmsg
+int riceviLunghezza(int j, int *lmsg);
+
 // Prende uno stato_comanda e inserisce dentro il buffer tutte le informazioni
 // delle comande in quello stato di qualunque tavolino
 void elencoComande(char* buffer, enum stato_comanda stato);
@@ -15,3 +21,10 @@ void elencoComande(char* buffer, enum stato_comanda stato);
 // Prende un tavolo e inserisce dentro il buffer tutte le informazioni
 // delle comande inerenti a quel tavolino
 void elencoComandeTavolo(char* buffer, int tavolo);
+
+// Inserisce in base alla lettera c, il socket id nell'array relativo
+int inserisci(int i, char c);
+
+void gestisciClient();
+void gestisciTd();
+void gestisciKd();

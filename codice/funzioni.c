@@ -41,6 +41,20 @@ int invia(int j, char* buffer) {
 	return ret;
 }
 
+// Riceve dal socket in input il messaggio e lo mette dentro buffer
+int ricevi(int j, int lunghezza,char* buffer) {
+	int ret;
+	ret = recv(j, (void*)buffer, lunghezza, 0);
+	return ret;
+}
+
+// Ricevi dal socket in input la lunghezza del messaggio e lo mette dentro lmsg
+int riceviLunghezza(int j, int *lmsg) {
+	int ret;
+	ret = recv(j, (void*)lmsg, sizeof(uint16_t), 0);
+	return ret;
+}
+
 // Prende uno stato_comanda e inserisce dentro il buffer tutte le informazioni
 // delle comande in quello stato di qualunque tavolino
 void elencoComande(char* buffer, enum stato_comanda stato) {
@@ -66,5 +80,40 @@ void elencoComandeTavolo(char* buffer, int tavolo) {
 		strcat(buffer, "\n");
 		// Vado avanti
 		c = c->prossima;
+	}
+}
+
+// Inserisce in base alla lettera c, il socket id nell'array relativo
+int inserisci(int i, char c) {
+	int j = 0;
+	switch (c)
+	{
+	case 'c': // Client
+		for(; j < nMaxClient; j++){
+			if(socket_client[j] != -1){
+				socket_client[j] = i;
+				break;
+			}
+		}
+		return 1;
+	case 't': // Kitchen device
+		for(; j < nMaxKd; j++){
+			if(socket_kd[j] != -1){
+				socket_kd[j] = i;
+				break;
+			}
+		}
+		return 1;
+	case 'k': // Table device
+		for(; j < nMaxTd; j++){
+			if(socket_td[j] != -1){
+				socket_td[j] = i;
+				break;
+			}
+		}
+		return 1;
+	
+	default:
+		return -1;
 	}
 }
