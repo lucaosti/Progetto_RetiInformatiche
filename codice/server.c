@@ -21,7 +21,6 @@ int main(int argc, char* argv[]){
 	// Carico dai file "tavoli.txt" e "menu.txt"
 	caricaTavoli();
 	caricaMenu();
-	/* -------------------------------------- */
 
 	// Stampo a video il "benvenuto" del server
 	printf(BENVENUTO_SERVER);  
