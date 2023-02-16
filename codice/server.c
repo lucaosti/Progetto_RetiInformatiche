@@ -183,6 +183,14 @@ int main(int argc, char* argv[]){
 							}
 							close(listener);
 
+							// Aspetto la fine di TUTTI i thread
+							struct lis_thread *lt;
+							lt = &listaThread;
+							while(lt != NULL) {
+								pthread_join(lt->t,NULL);
+								lt = lt->prossimo;
+							}
+
 							// Termino il server con esito positivo
 							return 1;
 						}
