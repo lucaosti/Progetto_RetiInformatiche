@@ -117,7 +117,3 @@ struct comanda comande[nTavoli];
    dei socket dei relativi dispositivi.
    ---------------------------------------
 */
-
-int socket_client[nMaxClient];
-int socket_td[nMaxTd];
-int socket_kd[nMaxKd];
