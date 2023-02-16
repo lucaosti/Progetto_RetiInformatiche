@@ -110,10 +110,3 @@ struct comanda
 };
 
 struct comanda comande[nTavoli];
-
-/*    Gestione del tipo di dispositivi
-   ---------------------------------------
-   Ho 3 array di interi che tengono gli ID
-   dei socket dei relativi dispositivi.
-   ---------------------------------------
-*/
