@@ -215,7 +215,43 @@ int main(int argc, char* argv[]){
 					// Cerco il socket nelle mie strutture, se non c'è mi sta per forza comunicando cosa è: tramite un byte;
 					// c = client, t = table device, k = kitchen device.
 					// Altrimenti, se l'ho trovato, so cosa è e lo gestisco mediante un thread.
-					
+					int tipo = -1; // 0 = client; 1 = table device; 2 = kitchen device.
+					for (int j; j <= nMaxClient; j++) {
+						if (socket_client[j] == i){
+							tipo = 0;
+							break;
+						}
+					}
+					for (int j; j <= nMaxTd; j++) {
+						if (socket_td[j] == i){
+							tipo = 1;
+							break;
+						}
+					}
+					for (int j; j <= nMaxKd; j++) {
+						if (socket_kd[j] == i){
+							tipo = 2;
+							break;
+						}
+					}
+					switch (tipo)
+					{
+					case -1: // Si sta presentando
+						
+						break;
+					case 0: // Client che vuole utilizzare servizi
+						
+						break;
+					case 1: // Table device che vuole utilizzare servizi
+						
+						break;
+					case 2: // Kitchen device che vuole utilizzare servizi
+						
+						break;
+					default:
+						return -1; // errore
+						break;
+					}
 				}
 			}
 		}
