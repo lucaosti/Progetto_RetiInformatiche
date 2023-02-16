@@ -117,3 +117,15 @@ int inserisci(int i, char c) {
 		return -1;
 	}
 }
+
+void gestisciClient(){
+
+}
+
+void gestisciTd(){
+
+}
+
+void gestisciKd(){
+	
+}
