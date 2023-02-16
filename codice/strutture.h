@@ -17,6 +17,8 @@
 #define nMaxClient 16
 #define nMaxTd nTavoli
 #define nMaxKd 8
+#define BUFFER_SIZE 1024
+#define BENVENUTO_SERVER "???"
 
 /*           Gestione dei tavoli 
    ---------------------------------------
