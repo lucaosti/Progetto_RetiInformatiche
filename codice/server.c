@@ -107,9 +107,81 @@ int main(int argc, char* argv[]){
 						//   - "p", restituisce tutte le comande in preparazione
 						//   - "s", restituisce tutte le comande in servizio
 						
+						// Prendo il secondo termine del comando
+						serverCommand = strtok(NULL, " ");
+						if(serverCommand == NULL) { // da capire se farlo o meno
+							// Non necessario, quindi:
+							printf("Comando 'stat' senza parametri inesistente!\n");
+							fflush(stdout);
+						}
+						if(strcmp(serverCommand[0], "T") == 0) { // Chiede lo stato di un tavolo
+							// Cerco il numero del tavolo e stampo l'esito
+							serverCommand = strtok(NULL, "T");
+							int tavolo = atoi(serverCommand);
+							elencoComandeTavolo(buffer, tavolo);
+
+							printf(buffer);
+							fflush(stdout);
+						}
+						else if(strcmp(serverCommand, "a") == 0) { // Chiedo le comande in attesa
+							// Scorro tutto l'array di liste, nel caso sia in attesa, la aggiungo al buffer
+							elencoComande(buffer, in_attesa);
+
+							printf(buffer);
+							fflush(stdout);
+						}
+						else if(strcmp(serverCommand, "p") == 0) { // Chiedo le comande in preparazione
+							// Scorro tutto l'array di liste, nel caso sia in preparazione, la aggiungo al buffer
+							elencoComande(buffer, in_preparazione);
+
+							printf(buffer);
+							fflush(stdout);
+						}
+						else if(strcmp(serverCommand, "s") == 0) { // Chiedo le comande in servizio
+							// Scorro tutto l'array di liste, nel caso sia in servizio, la aggiungo al buffer
+							elencoComande(buffer, in_servizio);
+
+							printf(buffer);
+							fflush(stdout);
+						}
+						else { // Comando non riconosciuto
+							printf("Comando 'stat' con elementi non riconosciuti!\n");
+							fflush(stdout);
+						}
 					}
 					else if(strcmp(serverCommand, "stop") == 0) { // Secondo caso: stop
+						// Se posso stopparmi, mando una notifica a tutti i dispositivi connessi e mi interrompo.
+						// Nel caso io non possa fermarmi (ci sono delle comande in attesa o preparazione), lo comunico e non faccio niente.
+						if( !comandeInSospeso() ) { // Mi posso fermare
+							// Comunico l'esecuzione del comando
+							printf("Comunico a tutti la chiusura del server e lo termino.\n");
+							fflush(stdout);
 
+							// Invio ad ogni dispositivo connesso il messaggio "STOP"
+							strcpy(buffer,"STOP\0");
+							for(int j = 1; j < fdmax; j++) {
+								if( j == listener) continue; // Salta il listener
+								ret = invia(j, buffer);
+								if(ret < 0){
+									perror("Errore: \n");
+									exit(1);
+								}
+								close(j);
+								FD_CLR(j, &master);
+							}
+							close(listener);
+							
+							// Termino il server con esito positivo
+							return 1;
+						}
+						else { // Non posso fermarmi
+							printf("Sono presenti delle comande in preparazione e in attesa!\nNon è possibile fermare il server.\n");
+							fflush(stdout);
+						}
+					}
+					else { // Comando non riconosciuto
+						printf("Comando non riconosciuto!\n");
+						fflush(stdout);
 					}
 				}
 				else if(i == listener) { // Secondo caso: nuova connessione
@@ -132,7 +204,6 @@ int main(int argc, char* argv[]){
 					// c = client, t = table device, k = kitchen device.
 					// Altrimenti, se l'ho trovato, so cosa è e lo gestisco.
 				}
-				
 			}
 		}
 	}

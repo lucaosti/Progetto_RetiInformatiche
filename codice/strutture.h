@@ -87,7 +87,7 @@ struct piatto piatti[nPiatti];
    --------------------------------------- 
 */
 
-enum stato_comanda{in_attesa, in_preparazione, in_attesa};
+enum stato_comanda{in_attesa, in_preparazione, in_servizio};
 
 struct comanda
 {
