@@ -15,6 +15,9 @@
 #include "funzioni.h"
 
 int main(int argc, char* argv[]){
+	// Strutture
+	
+	
 	// Carico dai file "tavoli.txt" e "menu.txt"
 	caricaTavoli();
 	caricaMenu();
@@ -81,13 +84,12 @@ int main(int argc, char* argv[]){
 
 		// Scorro ogni descrittore 'i'
 		for(i=0; i<=fdmax; i++) {
-			// Il descrittore 'i' è pronto se la select
-			// lo ha lasciato nel set "read_fds"
+			// Il descrittore 'i' è pronto se la select lo ha lasciato nel set "read_fds"
 			if(FD_ISSET(i, &read_fds)) {
 				// Ci sono tre casi:
 				//   - ho ricevuto un comando (stdin);
 				//   - ho ricevuto una nuova richiesta di connessione;
-				//	 - devo gestire una richiesta da un socket già connesso.
+				//   - devo gestire una richiesta da un socket già connesso.
 				if(i == 0) { // Primo caso: comando da stdin
 					char *serverCommand;
 					scanf(" %[^\n]", buffer); // Lo inserisco nel buffer e poi lo analizzo
@@ -115,6 +117,7 @@ int main(int argc, char* argv[]){
 							// Cerco il numero del tavolo e stampo l'esito
 							serverCommand = strtok(NULL, "T");
 							int tavolo = atoi(serverCommand);
+							
 							elencoComandeTavolo(buffer, tavolo);
 
 							printf(buffer);
