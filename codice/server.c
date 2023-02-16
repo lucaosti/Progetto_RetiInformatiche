@@ -14,9 +14,6 @@
 #include "strutture.h"
 #include "funzioni.h"
 
-#define BUFFER_SIZE 1024
-#define BENVENUTO_SERVER "???"
-
 int main(int argc, char* argv[]){
 	// Carico dai file "tavoli.txt" e "menu.txt"
 	caricaTavoli();
