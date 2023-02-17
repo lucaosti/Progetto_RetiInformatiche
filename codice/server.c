@@ -20,9 +20,12 @@ int main(int argc, char* argv[]){
 	// permettere l'utilizzo della libreria "funzioni.c"
 
 	// Le inizializzo
-	for(int indice; indice < nMaxClient; indice++)	socket_client[indice] = -1;
-	for(int indice; indice < nMaxTd; indice++)		socket_td[indice] = -1;
-	for(int indice; indice < nMaxKd; indice++)		socket_kd[indice] = -1;
+	for(int indice; indice < nMaxClient; indice++)
+		socket_client[indice] = -1;
+	for(int indice; indice < nMaxTd; indice++)
+		socket_td[indice] = -1;
+	for(int indice; indice < nMaxKd; indice++)
+		socket_kd[indice] = -1;
 
 	// Carico dai file "tavoli.txt" e "menu.txt"
 	caricaTavoli();
@@ -59,7 +62,7 @@ int main(int argc, char* argv[]){
 
 	/* Aggancio */
 	ret = bind(listener, (struct sockaddr*)&my_addr, sizeof(my_addr));
-	if( ret<0){
+	if(ret < 0){
 		perror("Bind non riuscita\n");
 		exit(0);
 	}
@@ -91,7 +94,7 @@ int main(int argc, char* argv[]){
 		}
 
 		// Scorro ogni descrittore 'i'
-		for(i=0; i<=fdmax; i++) {
+		for(i = 0; i <= fdmax; i++) {
 			// Il descrittore 'i' è pronto se la select lo ha lasciato nel set "read_fds"
 			if(FD_ISSET(i, &read_fds)) {
 				// Ci sono tre casi:
@@ -187,6 +190,8 @@ int main(int argc, char* argv[]){
 								lt = lt->prossimo;
 							}
 
+							deallocaStrutture();
+
 							// Termino il server con esito positivo
 							return 1;
 						}
@@ -253,11 +258,12 @@ int main(int argc, char* argv[]){
 						struct lis_thread p;
 						// Creo il thread
 						(void) pthread_create(&p.t, NULL, gestisciClient, NULL);
-						// Creo un puntatore per inserirlo in lista
-						struct lis_thread *inserisciThread;
+						// Creo un puntatore per inserirlo in lista allocato con malloc
+						struct lis_thread *inserisciThread = (struct lis_thread *) malloc(sizeof(struct lis_thread));
 						// Scorro tutta la lista finché non ne trovo uno libero
 						inserisciThread = &listaThread;
-						while(inserisciThread->prossimo != NULL) inserisciThread = inserisciThread->prossimo;
+						while(inserisciThread->prossimo != NULL)
+							inserisciThread = inserisciThread->prossimo;
 						// Lo inserisco
 						inserisciThread->t = &p;
 						break;
@@ -266,11 +272,12 @@ int main(int argc, char* argv[]){
 						struct lis_thread p;
 						// Creo il thread
 						(void) pthread_create(&p.t, NULL, gestisciTd, NULL);
-						// Creo un puntatore per inserirlo in lista
-						struct lis_thread *inserisciThread;
+						// Creo un puntatore per inserirlo in lista allocato con malloc
+						struct lis_thread *inserisciThread = (struct lis_thread *) malloc(sizeof(struct lis_thread));
 						// Scorro tutta la lista finché non ne trovo uno libero
 						inserisciThread = &listaThread;
-						while(inserisciThread->prossimo != NULL) inserisciThread = inserisciThread->prossimo;
+						while(inserisciThread->prossimo != NULL)
+							inserisciThread = inserisciThread->prossimo;
 						// Lo inserisco
 						inserisciThread->t = &p;
 						break;
@@ -279,11 +286,12 @@ int main(int argc, char* argv[]){
 						struct lis_thread p;
 						// Creo il thread
 						(void) pthread_create(&p.t, NULL, gestisciKd, NULL);
-						// Creo un puntatore per inserirlo in lista
-						struct lis_thread *inserisciThread;
+						// Creo un puntatore per inserirlo in lista allocato con malloc
+						struct lis_thread *inserisciThread = (struct lis_thread *) malloc(sizeof(struct lis_thread));
 						// Scorro tutta la lista finché non ne trovo uno libero
 						inserisciThread = &listaThread;
-						while(inserisciThread->prossimo != NULL) inserisciThread = inserisciThread->prossimo;
+						while(inserisciThread->prossimo != NULL)
+							inserisciThread = inserisciThread->prossimo;
 						// Lo inserisco
 						inserisciThread->t = &p;
 						break;

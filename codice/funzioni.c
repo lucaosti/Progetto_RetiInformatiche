@@ -142,3 +142,16 @@ void gestisciTd() {
 void gestisciKd() {
 
 }
+
+// Dealloca tutte le strutture
+void deallocaStrutture() {
+	/* NELLA FORMA
+	void List_destory(List * list){
+	if(list == NULL)
+		return;
+	List_destroy(list->next);
+	free(list->str);
+	free(list);
+	}
+	*/
+}

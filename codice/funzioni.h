@@ -33,3 +33,6 @@ void gestisciTd();
 
 // Gestisce UNA richiesta da parte di un kitchen device
 void gestisciKd();
+
+// Dealloca tutte le strutture
+void deallocaStrutture();
