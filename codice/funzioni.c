@@ -251,6 +251,7 @@ void gestisciKd(int socketId) {
 	token = strtok(buffer, " ");
 	if(strcmp(token, "take")) { // Primo caso
 		// Scorro l'array comande ed invio
+		
 	}
 	else if(strcmp(token, "show")) { // Secondo caso
 		// Scorro l'array comande ed invio
