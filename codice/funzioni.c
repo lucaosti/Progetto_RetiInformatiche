@@ -59,13 +59,6 @@ int ricevi(int j, int lunghezza,char* buffer) {
 }
 
 // Ricevi dal socket in input la lunghezza del messaggio e lo mette dentro lmsg
-int inviaLunghezza(int j, int lmsg) {
-	int ret;
-	ret = recv(j, (void*)lmsg, sizeof(uint16_t), 0);
-	return ret;
-}
-
-// Ricevi dal socket in input la lunghezza del messaggio e lo mette dentro lmsg
 int riceviLunghezza(int j, int *lmsg) {
 	int ret;
 	ret = recv(j, (void*)lmsg, sizeof(uint16_t), 0);
@@ -220,15 +213,14 @@ void gestisciTd(int socketId) {
 	if(strcmp(token, "menu")) { // Primo caso
 		// Invio il menu
 		strcpy(buffer, menu);
-		// Invio la lunghezza
-		lmsg = strlen(buffer);
-		inviaLunghezza(socketId, buffer);
-
+		invia(socketId, buffer);
 	}
 	else if(strcmp(token, "comanda")) { // Secondo caso
+		// Parso la comanda e la mando ai kd
 
 	}
 	else if(strcmp(token, "conto")) { // Terzo caso
+		// Scorro l'array comande ed invio
 
 	}
 }
@@ -252,7 +244,22 @@ void gestisciKd(int socketId) {
 	}
 
 	// Gestisce i tipi di comandi:
-	//   - 
+	//   - take, funzionante solo nel caso siano presenti delle comande in_attesa;
+	//   - show, comande in_preparazione presso il kd;
+	//   - ready <comanda>, solo se presente tra quelle in_preparazione del kd.
+	char* token;
+	token = strtok(buffer, " ");
+	if(strcmp(token, "take")) { // Primo caso
+		// Scorro l'array comande ed invio
+	}
+	else if(strcmp(token, "show")) { // Secondo caso
+		// Scorro l'array comande ed invio
+
+	}
+	else if(strcmp(token, "ready")) { // Terzo caso
+		// Parso il comando e notifico il td
+
+	}
 }
 
 // Dealloca tutte le strutture

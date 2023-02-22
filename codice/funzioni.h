@@ -5,10 +5,7 @@
 // "in_preparazione" o "in_servizio". 0 altrimenti
 int comandeInSospeso();
 
-// Invia al socket in input la lunghezza del messaggio
-int inviaLunghezza(int j, int lmsg);
-
-// Invia al socket in input il messaggio dentro buffer
+// Invia al socket in input la lunghezza ed il messaggio dentro buffer
 int invia(int j, char* buffer);
 
 // Ricevi dal socket in input la lunghezza del messaggio e lo mette dentro lmsg
