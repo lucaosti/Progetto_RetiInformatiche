@@ -18,6 +18,7 @@
 #define nMaxTd nTavoli
 #define nMaxKd 8
 #define BUFFER_SIZE 1024
+#define MENU_SIZE 1024
 #define BENVENUTO_SERVER "???"
 
 /* --------- Strutture globali ---------*/
@@ -32,6 +33,9 @@ struct prenotazione prenotazioni[nTavoli];
 struct piatto piatti[nPiatti];
 struct comanda comande[nTavoli];
 struct lis_thread listaThread;
+
+// Altro
+char menu[MENU_SIZE];
 /* ------------------------------------ */
 
 
@@ -133,4 +137,17 @@ struct lis_thread
 {
 	pthread_t t;
 	struct lis_thread* prossimo;
+};
+
+/*     Gestione degli input ai Thread 
+   --------------------------------------
+   Quando un dispositivo si connette
+   avvio un thread al quale passo in
+   input i seguenti valori.
+   -------------------------------------- 
+*/
+
+struct inputf{
+	int sId;
+	char buf[BUFFER_SIZE];
 };

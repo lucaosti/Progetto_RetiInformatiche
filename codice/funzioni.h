@@ -5,14 +5,17 @@
 // "in_preparazione" o "in_servizio". 0 altrimenti
 int comandeInSospeso();
 
+// Invia al socket in input la lunghezza del messaggio
+int inviaLunghezza(int j, int lmsg);
+
 // Invia al socket in input il messaggio dentro buffer
 int invia(int j, char* buffer);
 
-// Riceve dal socket in input il messaggio e lo mette dentro buffer
-int ricevi(int j, int lunghezza, char* buffer);
-
 // Ricevi dal socket in input la lunghezza del messaggio e lo mette dentro lmsg
 int riceviLunghezza(int j, int *lmsg);
+
+// Riceve dal socket in input il messaggio e lo mette dentro buffer
+int ricevi(int j, int lunghezza, char* buffer);
 
 // Prende uno stato_comanda e inserisce dentro il buffer tutte le informazioni
 // delle comande in quello stato di qualunque tavolino
@@ -26,13 +29,13 @@ void elencoComandeTavolo(char* buffer, int tavolo);
 int inserisci(int i, char c);
 
 // Gestisce UNA richiesta da parte di un client
-void gestisciClient(int socketId, char* b);
+void gestisciClient(int socketId);
 
 // Gestisce UNA richiesta da parte di un table device
-void gestisciTd(int socketId, char* b);
+void gestisciTd(int socketId);
 
 // Gestisce UNA richiesta da parte di un kitchen device
-void gestisciKd(int socketId, char* b);
+void gestisciKd(int socketId);
 
 // Dealloca tutte le strutture
 void deallocaStrutture();

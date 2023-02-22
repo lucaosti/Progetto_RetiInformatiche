@@ -59,6 +59,13 @@ int ricevi(int j, int lunghezza,char* buffer) {
 }
 
 // Ricevi dal socket in input la lunghezza del messaggio e lo mette dentro lmsg
+int inviaLunghezza(int j, int lmsg) {
+	int ret;
+	ret = recv(j, (void*)lmsg, sizeof(uint16_t), 0);
+	return ret;
+}
+
+// Ricevi dal socket in input la lunghezza del messaggio e lo mette dentro lmsg
 int riceviLunghezza(int j, int *lmsg) {
 	int ret;
 	ret = recv(j, (void*)lmsg, sizeof(uint16_t), 0);
@@ -129,29 +136,123 @@ int inserisci(int i, char c) {
 }
 
 // Gestisce UNA richiesta da parte di un client
-void gestisciClient(int socketId, char* b) {
-	// Come prima cosa copio il buffer in entrata (per riferimento) in quello locale
-	char buffer[1024];
-	strcpy(buffer, b);
-	
-	// Gestisce tre tipi di comandi:
+void gestisciClient(int socketId) {
+	char buffer[BUFFER_SIZE];
+
+	// Ricevi il messaggio
+	int ret;
+	int lmsg = 0;
+	ret = riceviLunghezza(socketId, &lmsg);
+	if(ret == 0) {
+		printf("Client disconnesso\n");
+		fflush(stdout);
+	}
+	ret = ricevi(socketId, lmsg, buffer);
+	if(ret == 0) {
+		printf("Client disconnesso\n");
+		fflush(stdout);
+	}
+
+	// Gestisce i tipi di comandi:
 	//   - find, e, di conseguenza, dopo;
-	//       - book;
-	//   - disconnessione.
+	//       - book, e termina il thread;
+	//       - disconnessione, cancella il socketId da socket_client e termina il thread.
+	char* token;
+	token = strtok(buffer, " ");
+	if(strcmp(token, "find")) { // Primo caso
+		// Parsa la stringa e cerca i tavoli liberi
+
+		// Invia il buffer con le possibilità
+
+		// Aspetta una book o una disconnessione
+		ret = riceviLunghezza(socketId, &lmsg);
+		if(ret == 0) {
+			printf("Client disconnesso\n");
+			fflush(stdout);
+		}
+		ret = ricevi(socketId, lmsg, buffer);
+		if(ret == 0) {
+			printf("Client disconnesso\n");
+			fflush(stdout);
+		}
+
+		if(strcmp(token, "book")) { // Caso book
+
+		}
+	}
+	else if(strcmp(token, "book")) {
+		// Errore, non sono state fatte precedenti find
+		strcpy(buffer, "Errore, non sono state fatte precedenti find");
+		lmsg = strlen(buffer);
+
+	}
+	else {
+		// Errore, comando non riconosciuto
+
+	}
+	return;
 }
 
 // Gestisce UNA richiesta da parte di un table device
-void gestisciTd(int socketId, char* b) {
-	// Come prima cosa copio il buffer in entrata (per riferimento) in quello locale
-	char buffer[1024];
-	strcpy(buffer, b);
+void gestisciTd(int socketId) {
+	char buffer[BUFFER_SIZE];
+
+	// Ricevi il messaggio
+	int ret;
+	int lmsg = 0;
+	ret = riceviLunghezza(socketId, &lmsg);
+	if(ret == 0) {
+		printf("Client disconnesso\n");
+		fflush(stdout);
+	}
+	ret = ricevi(socketId, lmsg, buffer);
+	if(ret == 0) {
+		printf("Client disconnesso\n");
+		fflush(stdout);
+	}
+
+	// Gestisce i tipi di comandi:
+	//   - menu;
+	//   - comanda;
+	//   - conto;
+	char* token;
+	token = strtok(buffer, " ");
+	if(strcmp(token, "menu")) { // Primo caso
+		// Invio il menu
+		strcpy(buffer, menu);
+		// Invio la lunghezza
+		lmsg = strlen(buffer);
+		inviaLunghezza(socketId, buffer);
+
+	}
+	else if(strcmp(token, "comanda")) { // Secondo caso
+
+	}
+	else if(strcmp(token, "conto")) { // Terzo caso
+
+	}
 }
 
 // Gestisce UNA richiesta da parte di un kitchen device
-void gestisciKd(int socketId, char* b) {
-	// Come prima cosa copio il buffer in entrata (per riferimento) in quello locale
-	char buffer[1024];
-	strcpy(buffer, b);
+void gestisciKd(int socketId) {
+	char buffer[BUFFER_SIZE];
+
+	// Ricevi il messaggio
+	int ret;
+	int lmsg = 0;
+	ret = riceviLunghezza(socketId, &lmsg);
+	if(ret == 0) {
+		printf("Client disconnesso\n");
+		fflush(stdout);
+	}
+	ret = ricevi(socketId, lmsg, buffer);
+	if(ret == 0) {
+		printf("Client disconnesso\n");
+		fflush(stdout);
+	}
+
+	// Gestisce i tipi di comandi:
+	//   - 
 }
 
 // Dealloca tutte le strutture
