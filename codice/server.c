@@ -257,7 +257,7 @@ int main(int argc, char* argv[]){
 						// Creo un nuovo elemento della lista di thread
 						struct lis_thread p;
 						// Creo il thread
-						(void) pthread_create(&p.t, NULL, gestisciClient, NULL);
+						(void) pthread_create(&p.t, NULL, gestisciClient, i);
 						// Creo un puntatore per inserirlo in lista allocato con malloc
 						struct lis_thread *inserisciThread = (struct lis_thread *) malloc(sizeof(struct lis_thread));
 						// Scorro tutta la lista finché non ne trovo uno libero
@@ -265,13 +265,13 @@ int main(int argc, char* argv[]){
 						while(inserisciThread->prossimo != NULL)
 							inserisciThread = inserisciThread->prossimo;
 						// Lo inserisco
-						inserisciThread->t = &p;
+						inserisciThread->prossimo->t = &p;
 						break;
 					case 1: // Table device che vuole utilizzare servizi
 						// Creo un nuovo elemento della lista di thread
 						struct lis_thread p;
 						// Creo il thread
-						(void) pthread_create(&p.t, NULL, gestisciTd, NULL);
+						(void) pthread_create(&p.t, NULL, gestisciTd, i);
 						// Creo un puntatore per inserirlo in lista allocato con malloc
 						struct lis_thread *inserisciThread = (struct lis_thread *) malloc(sizeof(struct lis_thread));
 						// Scorro tutta la lista finché non ne trovo uno libero
@@ -279,13 +279,13 @@ int main(int argc, char* argv[]){
 						while(inserisciThread->prossimo != NULL)
 							inserisciThread = inserisciThread->prossimo;
 						// Lo inserisco
-						inserisciThread->t = &p;
+						inserisciThread->prossimo->t = &p;
 						break;
 					case 2: // Kitchen device che vuole utilizzare servizi
 						// Creo un nuovo elemento della lista di thread
 						struct lis_thread p;
 						// Creo il thread
-						(void) pthread_create(&p.t, NULL, gestisciKd, NULL);
+						(void) pthread_create(&p.t, NULL, gestisciKd, i);
 						// Creo un puntatore per inserirlo in lista allocato con malloc
 						struct lis_thread *inserisciThread = (struct lis_thread *) malloc(sizeof(struct lis_thread));
 						// Scorro tutta la lista finché non ne trovo uno libero
@@ -293,7 +293,7 @@ int main(int argc, char* argv[]){
 						while(inserisciThread->prossimo != NULL)
 							inserisciThread = inserisciThread->prossimo;
 						// Lo inserisco
-						inserisciThread->t = &p;
+						inserisciThread->prossimo->t = &p;
 						break;
 					default:
 						return -1; // errore

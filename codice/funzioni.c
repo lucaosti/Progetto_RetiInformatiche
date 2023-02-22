@@ -129,18 +129,29 @@ int inserisci(int i, char c) {
 }
 
 // Gestisce UNA richiesta da parte di un client
-void gestisciClient() {
-
+void gestisciClient(int socketId, char* b) {
+	// Come prima cosa copio il buffer in entrata (per riferimento) in quello locale
+	char buffer[1024];
+	strcpy(buffer, b);
+	
+	// Gestisce tre tipi di comandi:
+	//   - find, e, di conseguenza, dopo;
+	//       - book;
+	//   - disconnessione.
 }
 
 // Gestisce UNA richiesta da parte di un table device
-void gestisciTd() {
-
+void gestisciTd(int socketId, char* b) {
+	// Come prima cosa copio il buffer in entrata (per riferimento) in quello locale
+	char buffer[1024];
+	strcpy(buffer, b);
 }
 
 // Gestisce UNA richiesta da parte di un kitchen device
-void gestisciKd() {
-
+void gestisciKd(int socketId, char* b) {
+	// Come prima cosa copio il buffer in entrata (per riferimento) in quello locale
+	char buffer[1024];
+	strcpy(buffer, b);
 }
 
 // Dealloca tutte le strutture

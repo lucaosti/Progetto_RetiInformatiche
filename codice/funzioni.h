@@ -26,13 +26,13 @@ void elencoComandeTavolo(char* buffer, int tavolo);
 int inserisci(int i, char c);
 
 // Gestisce UNA richiesta da parte di un client
-void gestisciClient();
+void gestisciClient(int socketId, char* b);
 
 // Gestisce UNA richiesta da parte di un table device
-void gestisciTd();
+void gestisciTd(int socketId, char* b);
 
 // Gestisce UNA richiesta da parte di un kitchen device
-void gestisciKd();
+void gestisciKd(int socketId, char* b);
 
 // Dealloca tutte le strutture
 void deallocaStrutture();
