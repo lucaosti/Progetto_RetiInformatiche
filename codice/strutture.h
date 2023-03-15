@@ -139,16 +139,3 @@ struct lis_thread
 	pthread_t t;
 	struct lis_thread* prossimo;
 };
-
-/*     Gestione degli input ai Thread 
-   --------------------------------------
-   Quando un dispositivo si connette
-   avvio un thread al quale passo in
-   input i seguenti valori.
-   -------------------------------------- 
-*/
-
-struct inputf{
-	int sId;
-	char buf[BUFFER_SIZE];
-};
