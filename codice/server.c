@@ -266,7 +266,7 @@ int main(int argc, char* argv[]){
 						while(inserisciThread->prossimo != NULL)
 							inserisciThread = inserisciThread->prossimo;
 						// Lo inserisco
-						inserisciThread->/*prossimo->*/t = &p;
+						inserisciThread->t = &p;
 						break;
 					case 1: // Table device che vuole utilizzare servizi
 						// Creo un nuovo elemento della lista di thread
@@ -280,7 +280,7 @@ int main(int argc, char* argv[]){
 						while(inserisciThread->prossimo != NULL)
 							inserisciThread = inserisciThread->prossimo;
 						// Lo inserisco
-						inserisciThread->/*prossimo->*/t = &p;
+						inserisciThread->t = &p;
 						break;
 					case 2: // Kitchen device che vuole utilizzare servizi
 						// Creo un nuovo elemento della lista di thread
@@ -294,7 +294,7 @@ int main(int argc, char* argv[]){
 						while(inserisciThread->prossimo != NULL)
 							inserisciThread = inserisciThread->prossimo;
 						// Lo inserisco
-						inserisciThread->/*prossimo->*/t = &p;
+						inserisciThread->t = &p;
 						break;
 					default:
 						return -1; // errore

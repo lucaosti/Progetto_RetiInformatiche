@@ -4,7 +4,8 @@
         "funzioni.h": "c",
         "strutture.h": "c",
         "in.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "stdio.h": "c"
     },
     "cmake.configureOnOpen": true
 }
