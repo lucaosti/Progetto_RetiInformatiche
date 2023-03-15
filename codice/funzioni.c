@@ -68,12 +68,23 @@ int riceviLunghezza(int j, int *lmsg) {
 // Prende uno stato_comanda e inserisce dentro il buffer tutte le informazioni
 // delle comande in quello stato di qualunque tavolino
 void elencoComande(char* buffer, enum stato_comanda stato) {
-	for (int i = 0; i < nTavoli; i++) {
+	for(int i = 0; i < nTavoli; i++) {
 		struct comanda *c;
 		c = &comande[i];
 		while(c != NULL) {
-			strcat(buffer, ""); // Manca il modo di inserire i dettagli della comanda
+			strcat(buffer, "com");
+			strcat(buffer, c->nComanda);
+			strcat(buffer, " T");
+			strcat(buffer, i);
 			strcat(buffer, "\n");
+			for(int j = 0; j < nPiatti; j++) {
+				if(c->quantita[j] != 0) {
+					strcat(buffer, menu[j].codice);
+					strcat(buffer, " ");
+					strcat(buffer, c->quantita[j]);
+					strcat(buffer, "\n");
+				}
+			}
 			// Vado avanti
 			c = c->prossima;
 		}
@@ -86,8 +97,19 @@ void elencoComandeTavolo(char* buffer, int tavolo) {
 	struct comanda *c;
 	c = &comande[tavolo];
 	while(c != NULL) {
-		strcat(buffer, ""); // Manca il modo di inserire i dettagli della comanda
+		strcat(buffer, "com");
+		strcat(buffer, c->nComanda);
+		strcat(buffer, " ");
+		strcat(buffer, c->stato);
 		strcat(buffer, "\n");
+		for(int j = 0; j < nPiatti; j++) {
+			if(c->quantita[j] != 0) {
+				strcat(buffer, menu[j].codice);
+				strcat(buffer, " ");
+				strcat(buffer, c->quantita[j]);
+				strcat(buffer, "\n");
+			}
+		}
 		// Vado avanti
 		c = c->prossima;
 	}

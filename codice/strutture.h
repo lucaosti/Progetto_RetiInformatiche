@@ -18,7 +18,6 @@
 #define nMaxTd nTavoli
 #define nMaxKd 8
 #define BUFFER_SIZE 1024
-#define MENU_SIZE 1024
 #define BENVENUTO_SERVER "???"
 
 /* --------- Strutture globali ---------*/
@@ -35,7 +34,8 @@ struct comanda comande[nTavoli];
 struct lis_thread listaThread;
 
 // Altro
-char menu[MENU_SIZE];
+char menu_text[nPiatti*64];
+struct piatto menu[nPiatti];
 /* ------------------------------------ */
 
 
@@ -106,6 +106,7 @@ enum stato_comanda{in_attesa, in_preparazione, in_servizio};
 
 struct comanda
 {
+	int nComanda;
 	int quantita[nPiatti];
 	/* 
 	Quantità dell'i-esimo piatto corrispondete
