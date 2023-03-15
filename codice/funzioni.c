@@ -203,7 +203,8 @@ void gestisciClient(int socketId) {
 	}
 	else {
 		// Errore, comando non riconosciuto
-
+		printf("Errore comando Client!\n");
+		fflush(stdout);
 	}
 	return;
 }
@@ -245,6 +246,11 @@ void gestisciTd(int socketId) {
 		// Scorro l'array comande ed invio
 
 	}
+	else {
+		// Errore, comando non riconosciuto
+		printf("Errore comando Table Device!\n");
+		fflush(stdout);
+	}
 }
 
 // Gestisce UNA richiesta da parte di un kitchen device
@@ -282,6 +288,11 @@ void gestisciKd(int socketId) {
 	else if(strcmp(token, "ready")) { // Terzo caso
 		// Parso il comando e notifico il td
 
+	}
+	else {
+		// Errore, comando non riconosciuto
+		printf("Errore comando Kitchen Device!\n");
+		fflush(stdout);
 	}
 }
 
