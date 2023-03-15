@@ -112,22 +112,28 @@ int main(int argc, char* argv[]){
 						// Ci sono diversi casi
 						//   - Nessun parametro, restituisce lo stato di tutte le comande giornaliere;
 						//   - "T<nTavolo>"", restituisce tutte le comande relative al tavolo table relative al pasto in corso;
-						//   - "a", restituisce tutte le comande in attesa
-						//   - "p", restituisce tutte le comande in preparazione
-						//   - "s", restituisce tutte le comande in servizio
+						//   - "a", restituisce tutte le comande in attesa;
+						//   - "p", restituisce tutte le comande in preparazione;
+						//   - "s", restituisce tutte le comande in servizio.
 
 						// Prendo il secondo termine del comando
 						serverCommand = strtok(NULL, " ");
 
-						if(serverCommand == NULL) { // da capire se farlo o meno
+						if(serverCommand == NULL) {
 							// Non necessario, quindi:
 							printf("Comando 'stat' senza parametri inesistente!\n");
 							fflush(stdout);
 						}
-						if(strcmp(serverCommand[0], "T") == 0) { // Chiede lo stato di un tavolo
+						else if(strcmp(serverCommand[0], "T") == 0) { // Chiede lo stato di un tavolo
 							// Cerco il numero del tavolo e stampo l'esito
 							serverCommand = strtok(NULL, "T");
 							int tavolo = atoi(serverCommand);
+
+							if(tavolo > nMaxTd || tavolo == 0) {
+								printf("Tavolo inesistente!\n");
+								fflush(stdout);
+								break;
+							}
 							
 							elencoComandeTavolo(buffer, tavolo);
 
@@ -221,24 +227,20 @@ int main(int argc, char* argv[]){
 					}
 				}
 				else { // Terzo caso: richiesta da un socket già connesso
-					// Cerco il socket nelle mie strutture, se non c'è mi sta per forza comunicando cosa è: tramite un byte;
+					// Cerco il socket nelle mie strutture, se non c'è mi sta per forza comunicando cosa è: tramite un char (1 byte);
 					// c = client, t = table device, k = kitchen device.
 					// Altrimenti, se l'ho trovato, so cosa è e lo gestisco mediante un thread, potrebbe essere una disconnessione.
 					int tipo = -1; // 0 = client; 1 = table device; 2 = kitchen device.
-					for (int j; j <= nMaxClient; j++) {
-						if (socket_client[j] == i){
+					for (int j; j <= nMaxClient+nMaxTd+nMaxKd; j++) {
+						if (socket_client[j%nMaxClient] == i){
 							tipo = 0;
 							break;
 						}
-					}
-					for (int j; j <= nMaxTd; j++) {
-						if (socket_td[j] == i){
+						if (socket_td[j%nMaxTd] == i){
 							tipo = 1;
 							break;
 						}
-					}
-					for (int j; j <= nMaxKd; j++) {
-						if (socket_kd[j] == i){
+						if (socket_kd[j%nMaxKd] == i){
 							tipo = 2;
 							break;
 						}
