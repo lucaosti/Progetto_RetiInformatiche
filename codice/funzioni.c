@@ -1,6 +1,6 @@
 /* Contiene le funzioni necessarie al Server */
 /* ----------------------------------------- */
-
+ano
 #include <arpa/inet.h>
 #include <sys/types.h>
 #include <sys/socket.h>
