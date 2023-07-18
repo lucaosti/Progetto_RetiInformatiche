@@ -1,18 +1,8 @@
 /* Codice del server */
 /* ----------------- */
 
-#include <arpa/inet.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <time.h>
-#include <pthread.h>
-#include "strutture.h"
-#include "funzioni.h"
+#include "strutture.h"	// Ci sono anche gli altri include
+#include "funzioni.h"	// Firme delle funzioni
 
 int main(int argc, char* argv[]){
 	/* --- Strutture --- */

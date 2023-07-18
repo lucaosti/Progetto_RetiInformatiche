@@ -31,7 +31,7 @@ void caricaMenu() {
 }
 
 // Ritorna 1 nel caso ci siano attualmente delle comande
-// "in_preparazione" o "in_servizio". 0 altrimenti
+// "in_preparazione" o "in_servizio"; 0 altrimenti
 int comandeInSospeso() {
 	for (int i = 0; i < nTavoli; i++) {
 		struct comanda *c;
