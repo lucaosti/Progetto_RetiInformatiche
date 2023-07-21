@@ -21,12 +21,12 @@ void caricaTavoli() {
 
 // Carica il menu dal file e lo mette nell'array
 void caricaMenu() {
-	struct piatto p;
 	for(int i = 0; i < nPiatti; i++) {
-		strcpy(p.codice, "a");
-		strcpy(p.nome, "a");
-		p.prezzo = 1;
-		menu[i] = p;
+		struct piatto* p = malloc(sizeof(*p));
+		strcpy(p->codice, "a");
+		strcpy(p->nome, "a");
+		p->prezzo = 1;
+		menu[i] = &p;
 	}
 }
 
