@@ -156,7 +156,7 @@ int inserisci(int i, char c) {
 	}
 }
 
-// Gestisce UNA richiesta da parte di un client
+// Gestisce UNA richiesta da parte di UN client
 void gestisciClient(int socketId) {
 	char buffer[BUFFER_SIZE];
 
@@ -215,7 +215,7 @@ void gestisciClient(int socketId) {
 	return;
 }
 
-// Gestisce UNA richiesta da parte di un table device
+// Gestisce UNA richiesta da parte di UN table device
 void gestisciTd(int socketId) {
 	char buffer[BUFFER_SIZE];
 
@@ -259,7 +259,7 @@ void gestisciTd(int socketId) {
 	}
 }
 
-// Gestisce UNA richiesta da parte di un kitchen device
+// Gestisce UNA richiesta da parte di UN kitchen device
 void gestisciKd(int socketId) {
 	char buffer[BUFFER_SIZE];
 

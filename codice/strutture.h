@@ -14,6 +14,7 @@
 
 #define nTavoli 16
 #define nPiatti 8
+#define dimEntryMeny 64
 #define nMaxClient 16
 #define nMaxTd nTavoli
 #define nMaxKd 8
@@ -28,14 +29,14 @@ int socket_kd[nMaxKd];
 
 // Strutture
 struct tavolo tavoli[nTavoli];
-struct prenotazione prenotazioni[nTavoli];
+struct prenotazione* prenotazioni[nTavoli];
 struct piatto piatti[nPiatti];
-struct comanda comande[nTavoli];
-struct lis_thread listaThread;
+struct comanda* comande[nTavoli];
+struct lis_thread* listaThread;
 
 // Altro
-char menu_text[nPiatti*64];
-struct piatto* menu[nPiatti];
+char menu_text[nPiatti*dimEntryMeny];
+struct piatto menu[nPiatti];
 /* ------------------------------------ */
 
 
