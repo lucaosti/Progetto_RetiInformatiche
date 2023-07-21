@@ -30,7 +30,6 @@ int socket_kd[nMaxKd];
 // Strutture
 struct tavolo tavoli[nTavoli];
 struct prenotazione* prenotazioni[nTavoli];
-struct piatto piatti[nPiatti];
 struct comanda* comande[nTavoli];
 struct lis_thread* listaThread;
 

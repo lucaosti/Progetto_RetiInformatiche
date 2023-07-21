@@ -1,0 +1,6 @@
+tavoli: descrizione tavoli;
+prenotazioni: lista, per ogni tavolo i, di prenotazioni;
+comande: lista, per ogni tavolo i, di comanda;
+comanda: lista, per ognuna, un array indicizzato coi piatti per la quantità;
+lis_thread: lista;
+menu: descrizione piatti.
