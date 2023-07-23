@@ -134,7 +134,7 @@ int inserisci(int i, char c) {
 			}
 		}
 		return 1;
-	case 't': // Kitchen device
+	case 'k': // Kitchen device
 		for(; j < nMaxKd; j++){
 			if(socket_kd[j] != -1){
 				socket_kd[j] = i;
@@ -142,7 +142,7 @@ int inserisci(int i, char c) {
 			}
 		}
 		return 1;
-	case 'k': // Table device
+	case 't': // Table device
 		for(; j < nMaxTd; j++){
 			if(socket_td[j] != -1){
 				socket_td[j] = i;
@@ -153,6 +153,38 @@ int inserisci(int i, char c) {
 	
 	default:
 		return -1;
+	}
+}
+
+// Prende i parametri della find ed inserisce nel buffer le disponibilità
+void cercaDisponibilita(int nPers, time_t dataora, char* buffer, char* disponibilita[nTavoli]) {
+	int numero = 0;
+	for(int index = 0; index < nTavoli; index++) {
+		if(tavoli[index].nPosti < nPers){
+			disponibilita[index] = 0;
+			continue;
+		}
+		struct prenotazione* punta = &prenotazioni[index];
+		char esito = 1; // Non esiste bool
+		while(punta->prossima != NULL) {
+			if(punta->data_ora == dataora){
+				esito = 0;
+				break;
+			}
+		}
+		if(!esito)
+			continue;
+		// Tavolo buono
+		disponibilita[index] = 1;
+		strcat(buffer, itoa(numero));
+		strcat(buffer, ") T");
+		strcat(buffer, itoa(index));
+		strcat(buffer, " ");
+		strcat(buffer, tavoli[index].sala);
+		strcat(buffer, " ");
+		strcat(buffer, tavoli[index].descrizione);
+		strcat(buffer, "\n");
+		numero++;
 	}
 }
 
@@ -182,8 +214,25 @@ void gestisciClient(int socketId) {
 	token = strtok(buffer, " ");
 	if(strcmp(token, "find")) { // Primo caso
 		// Parsa la stringa e cerca i tavoli liberi
+		token = strtok(NULL, " ");
+		char cognome[64];
+		strcpy(cognome, token);
 
+		token = strtok(NULL, " ");
+		int nPers;
+		strcpy(nPers, token);
+
+		token = strtok(NULL, " ");
+		struct tm when;
+		time_t dataora;
+		dataora = ; // Devo parsarla in qualche modo
+
+		char disponibilita[nTavoli];
+
+		cercaDisponibilita(nPers, dataora, &buffer, &disponibilita);
+retry:
 		// Invia il buffer con le possibilità
+		ret = invia(socketId, buffer);
 
 		// Aspetta una book o una disconnessione
 		ret = riceviLunghezza(socketId, &lmsg);
@@ -198,14 +247,51 @@ void gestisciClient(int socketId) {
 		}
 
 		if(strcmp(token, "book")) { // Caso book
+			token = strtok(NULL, " ");
+			cercaDisponibilita(nPers, dataora, &buffer, &disponibilita);
+			// Converto l'indice in tavolo
+			int tavolo = 0;
+			int v = atoi(token);
+			for(tavolo = 0; tavolo <= nTavoli && !v; tavolo++){
+				while(!disponibilita[tavolo])
+					tavolo++;
+				v--;
+			}
 
+			if(disponibilita[tavolo] == 0 /* Non valida */) {
+				// Caso in cui non sia più disponibile l'opzione
+				goto retry;
+			}
+			// Salvo la prenotazione
+			struct prenotazione* p = malloc(sizeof(*p));
+			strcpy(p->cognome, cognome);
+			p->data_ora = dataora;
+			p->prossima = NULL;
+
+			// Inserisco in lista prenotazioni
+			struct prenotazione* punta = &prenotazioni[tavolo];
+			if(punta == NULL) {
+				punta = p;
+			}
+			else {
+				while(punta->prossima != NULL && punta->prossima->data_ora < p->data_ora) {
+					punta = punta->prossima;
+				}
+				p->prossima = punta->prossima;
+				punta->prossima = p;
+			}
+
+			printf("Client %d ha effettuato una prenotazione\n", socketId);
+			fflush(stdout);
+
+			strcpy(buffer, "PRENOTAZIONE EFFETTUATA");
+			invia(socketId, buffer);
 		}
 	}
 	else if(strcmp(token, "book")) {
 		// Errore, non sono state fatte precedenti find
 		strcpy(buffer, "Errore, non sono state fatte precedenti find");
-		lmsg = strlen(buffer);
-
+		invia(socketId, buffer);
 	}
 	else {
 		// Errore, comando non riconosciuto
