@@ -1,16 +1,6 @@
 /* Contiene le funzioni necessarie al Server */
 /* ----------------------------------------- */
 
-#include <arpa/inet.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <time.h>
-#include <pthread.h>
 #include "strutture.h"
 #include "funzioni.h"
 
@@ -248,7 +238,7 @@ retry:
 
 		if(strcmp(token, "book")) { // Caso book
 			token = strtok(NULL, " ");
-			cercaDisponibilita(nPers, dataora, &buffer, &disponibilita);
+			
 			// Converto l'indice in tavolo
 			int tavolo = 0;
 			int v = atoi(token);
@@ -257,8 +247,10 @@ retry:
 					tavolo++;
 				v--;
 			}
+			// Cerco le disponibilità attuali
+			cercaDisponibilita(nPers, dataora, &buffer, &disponibilita);
 
-			if(disponibilita[tavolo] == 0 /* Non valida */) {
+			if(disponibilita[tavolo] == 0) {
 				// Caso in cui non sia più disponibile l'opzione
 				goto retry;
 			}
