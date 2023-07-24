@@ -1,27 +1,12 @@
 caricaTavoli:
-
+    Da fare;
 caricaMenu:
-
-comandeInSospeso:
-
-invia:
-
-riceviLunghezza:
-
-ricevi:
-
-elencoComande:
-
-elencoComandeTavolo:
-
-inserisci:
-
-cercaDisponibilita:
-
+    Da parsare menu.txt;
 gestisciClient:
-
+    Da parsare data_ora;
 gestisciTd:
-
+    Da finire;
 gestisciKd:
-
+    Da finire;
 deallocaStrutture:
+    Da fare.

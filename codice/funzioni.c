@@ -75,7 +75,7 @@ void elencoComande(char* buffer, enum stato_comanda stato) {
 			strcat(buffer, "\n");
 			for(int j = 0; j < nPiatti; j++) {
 				if(c->quantita[j] != 0) {
-					strcat(buffer, menu[j].codice);
+					strcat(buffer, menu[j]->codice);
 					strcat(buffer, " ");
 					strcat(buffer, c->quantita[j]);
 					strcat(buffer, "\n");
@@ -100,7 +100,7 @@ void elencoComandeTavolo(char* buffer, int tavolo) {
 		strcat(buffer, "\n");
 		for(int j = 0; j < nPiatti; j++) {
 			if(c->quantita[j] != 0) {
-				strcat(buffer, menu[j].codice);
+				strcat(buffer, menu[j]->codice);
 				strcat(buffer, " ");
 				strcat(buffer, c->quantita[j]);
 				strcat(buffer, "\n");
