@@ -10,12 +10,16 @@ int main(int argc, char* argv[]){
 	// permettere l'utilizzo della libreria "funzioni.c"
 
 	// Le inizializzo
-	for(int indice; indice < nMaxClient; indice++)
+	for(int indice = 0; indice < nMaxClient; indice++)
 		socket_client[indice] = -1;
-	for(int indice; indice < nMaxTd; indice++)
+	for(int indice = 0; indice < nMaxTd; indice++)
 		socket_td[indice] = -1;
-	for(int indice; indice < nMaxKd; indice++)
+	for(int indice = 0; indice < nMaxKd; indice++)
 		socket_kd[indice] = -1;
+	for(int indice = 0; indice < nTavoli; indice++)
+		tavolo_td[indice] = -1;
+
+	numeroComanda = 0;
 
 	// Carico dai file "tavoli.txt" e "menu.txt"
 	caricaTavoli();

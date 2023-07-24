@@ -5,7 +5,9 @@ caricaMenu:
 gestisciClient:
     Da parsare data_ora;
 gestisciTd:
-    Da finire;
+    - menu, fatto;
+    - comanda, da finire il parsing del piatto;
+    - conto, fatto;
 gestisciKd:
     Da finire;
 deallocaStrutture:

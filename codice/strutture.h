@@ -36,6 +36,8 @@ struct lis_thread* listaThread;
 // Altro
 char menu_text[nPiatti*dimEntryMeny];
 struct piatto* menu[nPiatti];
+int tavolo_td[nTavoli]; // Associo TD e tavolo
+int numeroComanda; // UUID comanda
 /* ------------------------------------ */
 
 

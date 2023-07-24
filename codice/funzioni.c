@@ -296,6 +296,12 @@ retry:
 // Gestisce UNA richiesta da parte di UN table device
 void gestisciTd(int socketId) {
 	char buffer[BUFFER_SIZE];
+	
+	// Trovo il tavolo collegato al TD
+	int tavolo;
+	for(tavolo = 0; tavolo < nTavoli; tavolo++)
+		if(socketId == tavolo_td[tavolo])
+			break;
 
 	// Ricevi il messaggio
 	int ret;
@@ -323,12 +329,49 @@ void gestisciTd(int socketId) {
 		invia(socketId, buffer);
 	}
 	else if(strcmp(token, "comanda")) { // Secondo caso
-		// Parso la comanda e la mando ai kd
+		// Parso la comanda ed inserisco
+		struct comanda* punta = &comande[tavolo];
+		while(punta != NULL && punta->prossima != NULL)
+			punta = punta->prossima;
 
+		struct comanda* com = malloc(sizeof(com));
+		punta->prossima = com;
+
+		token = strtok(NULL, " ");
+		while(token != NULL) {
+			
+			token = strtok(NULL, "-");
+			atoi(token);
+			token = strtok(NULL, " ");
+		}
+		com->timestamp = time(NULL);
+		com->kd = socketId;
+		com->nComanda = numeroComanda++;
+		com->prossima = NULL;
+		com->stato = in_attesa;
 	}
 	else if(strcmp(token, "conto")) { // Terzo caso
 		// Scorro l'array comande ed invio
+		struct comanda* punta = &comande[tavolo];
+		int totale = 0;
+		while(punta != NULL){
+			for(int indice = 0; indice < nPiatti; indice++){
+				if(punta->quantita[indice] == 0) 
+					continue;
 
+				strcat(buffer, menu[indice]->codice);
+				strcat(buffer, " ");
+				strcat(buffer, itoa(punta->quantita[indice]));
+				strcat(buffer, " ");
+				strcat(buffer, itoa(punta->quantita[indice]*menu[indice]->prezzo));
+				strcat(buffer, "\n");
+				totale += punta->quantita[indice] * menu[indice]->prezzo;
+			}
+			punta = punta->prossima;
+		}
+		strcat(buffer, "Totale: ");
+		strcat(buffer,totale);
+		strcat(buffer, "\n");
 	}
 	else {
 		// Errore, comando non riconosciuto
