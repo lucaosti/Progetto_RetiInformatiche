@@ -1,6 +1,12 @@
 /* Contiene i prototipi delle funzioni necessarie al Server */
 /* -------------------------------------------------------- */
 
+// Carica i tavoli dal file e li mette nell'array
+void caricaTavoli();
+
+// Carica il menu dal file e lo mette nell'array
+void caricaMenu();
+
 // Ritorna 1 nel caso ci siano attualmente delle comande
 // "in_preparazione" o "in_servizio". 0 altrimenti
 int comandeInSospeso();

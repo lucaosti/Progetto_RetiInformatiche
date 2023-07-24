@@ -35,7 +35,7 @@ struct lis_thread* listaThread;
 
 // Altro
 char menu_text[nPiatti*dimEntryMeny];
-struct piatto menu[nPiatti];
+struct piatto* menu[nPiatti];
 /* ------------------------------------ */
 
 

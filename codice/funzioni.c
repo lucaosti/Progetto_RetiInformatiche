@@ -16,7 +16,7 @@ void caricaMenu() {
 		strcpy(p->codice, "a");
 		strcpy(p->nome, "a");
 		p->prezzo = 1;
-		menu[i] = &p;
+		menu[i] = p;
 	}
 }
 
@@ -47,17 +47,17 @@ int invia(int j, char* buffer) {
 	return ret;
 }
 
-// Riceve dal socket in input il messaggio e lo mette dentro buffer
-int ricevi(int j, int lunghezza,char* buffer) {
-	int ret;
-	ret = recv(j, (void*)buffer, lunghezza, 0);
-	return ret;
-}
-
 // Ricevi dal socket in input la lunghezza del messaggio e lo mette dentro lmsg
 int riceviLunghezza(int j, int *lmsg) {
 	int ret;
 	ret = recv(j, (void*)lmsg, sizeof(uint16_t), 0);
+	return ret;
+}
+
+// Riceve dal socket in input il messaggio e lo mette dentro buffer
+int ricevi(int j, int lunghezza,char* buffer) {
+	int ret;
+	ret = recv(j, (void*)buffer, lunghezza, 0);
 	return ret;
 }
 
