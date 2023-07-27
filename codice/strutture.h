@@ -24,7 +24,7 @@
 /* --------- Strutture globali ---------*/
 // Array per i Socket
 int socket_client[nMaxClient];
-int socket_td[nMaxTd];
+int socket_td[nMaxTd]; // associati all'indice del tavolo
 int socket_kd[nMaxKd];
 
 // Strutture
@@ -116,7 +116,7 @@ struct comanda
 	*/
 	time_t timestamp;	// utilizzato per trovare la meno recente
 	enum stato_comanda stato;
-	int kd;
+	int kd; // SocketId del kd da cui è stato prelevato
 	/* 
 	Il tavolo non è necessario poiché corrisponde
 	all'indice in cui viene salvato all'interno

@@ -349,13 +349,21 @@ void gestisciTd(int socketId) {
 		com->nComanda = numeroComanda++;
 		com->prossima = NULL;
 		com->stato = in_attesa;
+
+		// Notifico tutti i KD
+		strcpy(buffer, "Nuova comanda!");
+		for(int indice = 0; indice < nMaxKd; indice++) {
+			if(socket_kd[indice] != -1) {
+				invia(socket_kd[indice], buffer);
+			}
+		}
 	}
 	else if(strcmp(token, "conto")) { // Terzo caso
 		// Scorro l'array comande ed invio
 		struct comanda* punta = &comande[tavolo];
 		int totale = 0;
-		while(punta != NULL){
-			for(int indice = 0; indice < nPiatti; indice++){
+		while(punta != NULL) {
+			for(int indice = 0; indice < nPiatti; indice++) {
 				if(punta->quantita[indice] == 0) 
 					continue;
 
@@ -406,15 +414,83 @@ void gestisciKd(int socketId) {
 	token = strtok(buffer, " ");
 	if(strcmp(token, "take")) { // Primo caso
 		// Scorro l'array comande ed invio
-		
+		struct comanda* com = NULL;
+		int nTav = -1;
+		for(int indice = 0; indice < nTavoli; indice++) {
+			struct comanda *punta = comande[indice];
+			while(punta != NULL) {
+				if((com == NULL || punta->timestamp < com->timestamp) && punta->stato == in_attesa) {
+					com = punta;
+					nTav = indice;
+				}
+				punta = punta->prossima;
+			}
+		}
+		if(nTav == -1) {
+			invia(socketId, "Non ci sono comande");
+		}
+
+		com->kd = socketId;
+		com->stato = in_preparazione;
+
+		strcpy(buffer, "com");
+		strcat(buffer, itoa(com->nComanda));
+		strcat(buffer, "\t");
+		strcat(buffer, "T");
+		strcat(buffer, itoa(nTav));
+		strcat(buffer, "\n");
+		for(int indice = 0; indice < nPiatti; indice++) {
+			if(com->quantita[indice] != 0) {
+				strcat(buffer, menu[indice]->codice);
+				strcat(buffer, "\t");
+				strcat(buffer, itoa(com->quantita[indice]));
+				strcat(buffer, "\n");
+			}
+		}
+		invia(socketId, buffer);
 	}
 	else if(strcmp(token, "show")) { // Secondo caso
 		// Scorro l'array comande ed invio
-
+		strcpy(buffer, "");
+		for(int indice = 0; indice < nTavoli; indice++) {
+			struct comanda *punta = comande[indice];
+			while(punta != NULL){
+				if(punta->kd == socketId && punta->stato == in_preparazione) {
+					strcat(buffer, "com");
+					strcat(buffer, itoa(punta->nComanda));
+					strcat(buffer, "\t");
+					strcat(buffer, "T");
+					strcat(buffer, itoa(indice));
+					strcat(buffer, "\n");
+					for(int indice2 = 0; indice2 < nPiatti; indice2++) {
+						if(punta->quantita[indice2] != 0) {
+							strcat(buffer, menu[indice2]->codice);
+							strcat(buffer, "\t");
+							strcat(buffer, itoa(punta->quantita[indice2]));
+							strcat(buffer, "\n");
+						}
+					}
+				}
+				punta = punta->prossima;
+			}
+		}
+		invia(socketId, buffer);
 	}
 	else if(strcmp(token, "ready")) { // Terzo caso
 		// Parso il comando e notifico il td
+		int nCom, nTav;
+		token = strtok(NULL, " com-");
+		nCom = atoi(token);
+		token = strtok(NULL, "T");
+		nTav = atoi(token);
 
+		struct comanda* punta = comande[nTav];
+		for(int indice = 0; indice < nCom; indice++)
+			punta = punta->prossima;
+
+		punta->stato = in_servizio;
+		invia(socketId, "COMANDA IN SERVIZIO");
+		invia(socket_td[nTav], "ORDINAZIONE IN ARRIVO");
 	}
 	else {
 		// Errore, comando non riconosciuto
@@ -425,6 +501,9 @@ void gestisciKd(int socketId) {
 
 // Dealloca tutte le strutture
 void deallocaStrutture() {
+	// COMANDE
+	// THREAD
+
 	/* NELLA FORMA
 	void List_destory(List * list){
 	if(list == NULL)
