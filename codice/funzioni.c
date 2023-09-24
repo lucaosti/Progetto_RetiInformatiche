@@ -213,7 +213,6 @@ void gestisciClient(int socketId) {
 		strcpy(nPers, token);
 
 		token = strtok(NULL, " ");
-		struct tm when;
 		time_t dataora;
 		dataora = ; // Devo parsarla in qualche modo
 
