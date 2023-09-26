@@ -12,3 +12,5 @@ gestisciKd:
     Da finire;
 deallocaStrutture:
     Da fare.
+
+Utilizzare l'array tavolo_td[].
