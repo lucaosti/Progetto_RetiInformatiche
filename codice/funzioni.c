@@ -431,6 +431,7 @@ void gestisciTd(int socketId) {
 				totale += punta->quantita[indice] * menu[indice]->prezzo;
 			}
 			punta = punta->prossima;
+
 		}
 		strcat(buffer, "Totale: ");
 		strcat(buffer,totale);
