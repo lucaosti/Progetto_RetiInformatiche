@@ -254,7 +254,17 @@ void gestisciClient(int socketId) {
 
 		token = strtok(NULL, " ");
 		time_t dataora;
-		dataora = ; // Devo parsarla in qualche modo
+
+		struct tm tm;
+		if ( strptime(token, "%Y-%m-%d %H", &tm) != NULL ) {
+			dataora = mktime(&tm);
+		}
+		else {
+			printf("Data inserita non valida\n");
+			fflush(stdout);
+			return;
+		}
+
 
 		char disponibilita[nTavoli];
 
