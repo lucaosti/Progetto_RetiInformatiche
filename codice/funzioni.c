@@ -380,15 +380,21 @@ void gestisciTd(int socketId) {
 	else if(strcmp(token, "comanda")) { // Secondo caso
 		// Parso la comanda ed inserisco
 		struct comanda* punta = &comande[tavolo];
-		while(punta != NULL && punta->prossima != NULL)
-			punta = punta->prossima;
-
+		
 		struct comanda* com = malloc(sizeof(com));
-		punta->prossima = com;
+		
+		if(punta == NULL) {
+			punta = com;
+		}
+		else {
+			while(punta->prossima != NULL)
+				punta = punta->prossima;
+			punta->prossima = com;
+		}
 
 		token = strtok(NULL, " ");
 		while(token != NULL) {
-			
+			// Da capire
 			token = strtok(NULL, "-");
 			atoi(token);
 			token = strtok(NULL, " ");
