@@ -6,7 +6,30 @@
 
 // Carica i tavoli dal file e li mette nell'array
 void caricaTavoli() {
+	FILE *fptr;
+	char *work;
+	char str[1024];
+	fptr = fopen("tavoli.txt","r");
 	
+	if (fptr == NULL){
+       printf("Errore! Apertura file tavoli.txt non riuscita");
+       exit(1);
+   	}
+   	
+	for(int i = 0; i < nTavoli; i++){
+   		fgets(str, sizeof(str), fptr);
+   		work = strtok(str, " ");
+   		tavoli[i].nPosti = atoi(work);
+   		work = strtok(NULL, " ");
+   		strcpy(tavoli[i].sala, work);
+   		work = strtok(NULL, " ");
+   		strcpy(tavoli[i].descrizione, work);
+
+		tavoli[i].numero = i+1;
+   	}
+
+	fclose(fptr);
+
 }
 
 // Carica il menu dal file e lo mette nell'array
@@ -18,7 +41,7 @@ void caricaTavoli() {
 	fptr = fopen("menu.txt","r");
 	
 	if (fptr == NULL){
-       printf("Error! opening file menu.txt");
+       printf("Errore! Apertura file menu.txt non riuscita");
        exit(1);
    	}
 
