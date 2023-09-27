@@ -1,0 +1,12 @@
+caricaTavoli:
+    Da fare;
+gestisciClient:
+    Da parsare data_ora;
+gestisciTd:
+    - menu, fatto;
+    - comanda, da finire il parsing del piatto;
+    - conto, fatto;
+gestisciKd:
+    Da finire;
+deallocaStrutture:
+    Da fare.
