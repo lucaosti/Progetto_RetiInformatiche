@@ -268,8 +268,8 @@ void gestisciClient(int socketId) {
 
 		char disponibilita[nTavoli];
 
-		cercaDisponibilita(nPers, dataora, &buffer, &disponibilita);
 retry:
+		cercaDisponibilita(nPers, dataora, &buffer, &disponibilita);
 		// Invia il buffer con le possibilità
 		ret = invia(socketId, buffer);
 
