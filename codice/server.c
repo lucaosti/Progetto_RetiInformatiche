@@ -16,8 +16,6 @@ int main(int argc, char* argv[]){
 		socket_td[indice] = -1;
 	for(int indice = 0; indice < nMaxKd; indice++)
 		socket_kd[indice] = -1;
-	for(int indice = 0; indice < nTavoli; indice++)
-		tavolo_td[indice] = -1;
 
 	numeroComanda = 0;
 

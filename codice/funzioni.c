@@ -10,14 +10,31 @@ void caricaTavoli() {
 }
 
 // Carica il menu dal file e lo mette nell'array
-void caricaMenu() {
+	void caricaMenu() {
+	FILE *fptr;
+	int i;
+	char str[1024];
+	char *work;
+	fptr = fopen("menu.txt","r");
+	
+	if (fptr == NULL){
+       printf("Error! opening file menu.txt");
+       exit(1);
+   	}
+
 	for(int i = 0; i < nPiatti; i++) {
+		fgets(str, sizeof(str), fptr);
 		struct piatto* p = malloc(sizeof(*p));
-		strcpy(p->codice, "a");
-		strcpy(p->nome, "a");
-		p->prezzo = 1;
+		work = strtok(str, "€-");
+		strcpy(p->codice, work);
+		work = strtok(NULL, "€-");
+		strcpy(p->nome, work);
+		work = strtok(NULL, "€-");
+		p->prezzo = (int)work;
 		menu[i] = p;
 	}
+
+	fclose(fptr);
 }
 
 // Ritorna 1 nel caso ci siano attualmente delle comande
@@ -299,7 +316,7 @@ void gestisciTd(int socketId) {
 	// Trovo il tavolo collegato al TD
 	int tavolo;
 	for(tavolo = 0; tavolo < nTavoli; tavolo++)
-		if(socketId == tavolo_td[tavolo])
+		if(socketId == socket_td[tavolo])
 			break;
 
 	// Ricevi il messaggio
