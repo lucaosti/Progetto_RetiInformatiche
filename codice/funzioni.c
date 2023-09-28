@@ -198,7 +198,7 @@ int inserisci(int i, char c) {
 }
 
 // Prende i parametri della find ed inserisce nel buffer le disponibilità
-void cercaDisponibilita(int nPers, time_t dataora, char* buffer, char* disponibilita[nTavoli]) {
+void cercaDisponibilita(int nPers, time_t dataora, char* buffer, char* disponibilita) {
 	pthread_mutex_lock(&tavoli_lock);
 	pthread_mutex_lock(&prenotazioni_lock);
 	int numero = 0;
