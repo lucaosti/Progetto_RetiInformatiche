@@ -408,20 +408,22 @@ void gestisciTd(int socketId) {
 				punta = punta->prossima;
 			punta->prossima = com;
 		}
+		com->prossima = NULL;
 
 		token = strtok(NULL, " ");
 		while(token != NULL) {
-			// Da capire
-			token = strtok(NULL, "-");
-			atoi(token);
-			token = strtok(NULL, " ");
+			for (int i = 0; i < nPiatti; i++) {
+				if(strcmp(token, menu[i]->codice) != 0)
+					continue;
+				token = strtok(NULL, "-");
+				com->quantita[i] = atoi(token);
+				token = strtok(NULL, " ");
+			}
 		}
 		com->timestamp = time(NULL);
 		com->kd = socketId;
 		com->nComanda = numeroComanda++;
-		com->prossima = NULL;
 		com->stato = in_attesa;
-
 
 		pthread_mutex_unlock(&comande_lock);
 

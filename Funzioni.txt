@@ -1,2 +1,0 @@
-gestisciTd:
-    - comanda, da finire il parsing del piatto;
