@@ -26,7 +26,7 @@ int main(int argc, char* argv[]){
 	/* --- Inizio ---*/
 
 	// Stampo a video il "benvenuto" del server
-	printf(BENVENUTO_SERVER);  
+	printf(BENVENUTO_SERVER);
 	fflush(stdout);
 
 	struct sockaddr_in my_addr, cl_addr;
@@ -223,7 +223,8 @@ int main(int argc, char* argv[]){
 					// c = client, t = table device, k = kitchen device.
 					// Altrimenti, se l'ho trovato, so cosa è e lo gestisco mediante un thread, potrebbe essere una disconnessione.
 					int tipo = -1; // 0 = client; 1 = table device; 2 = kitchen device.
-					for (int j; j <= max(nMaxClient,nMaxTd,nMaxKd); j++) {
+					for (int j = 0; j <= max(nMaxClient,nMaxTd,nMaxKd); j++) {
+						// Mutua esclusione
 						if (socket_client[j%nMaxClient] == i){
 							tipo = 0;
 							break;
