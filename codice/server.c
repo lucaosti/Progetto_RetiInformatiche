@@ -43,10 +43,10 @@ int main(int argc, char* argv[]){
 	// Descrittore max
 	int fdmax;
 
-	// Creo il Socket listener
+	/* Creazione indirizzo del server */
 	listener = socket(AF_INET, SOCK_STREAM, 0);
 
-	// Creazione indirizzo di bind
+	/* Creazione indirizzo di bind */
 	memset(&my_addr, 0, sizeof(my_addr));
 	my_addr.sin_family = AF_INET;
 	my_addr.sin_port = htons(portNumber);
@@ -62,7 +62,7 @@ int main(int argc, char* argv[]){
 	/* Apro la coda */
 	listen(listener, 10);
 
-	// Reset dei descrittori
+	/* Reset dei descrittori */
 	FD_ZERO(&master);
 	FD_ZERO(&read_fds);
 

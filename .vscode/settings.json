@@ -5,7 +5,8 @@
         "strutture.h": "c",
         "in.h": "c",
         "stdlib.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "unistd.h": "c"
     },
     "cmake.configureOnOpen": true
 }
