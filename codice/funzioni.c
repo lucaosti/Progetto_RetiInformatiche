@@ -63,12 +63,15 @@ void caricaTavoli() {
 // Ritorna 1 nel caso ci siano attualmente delle comande
 // "in_preparazione" o "in_servizio"; 0 altrimenti
 int comandeInSospeso() {
+	pthread_mutex_lock(&comande_lock);
 	for (int i = 0; i < nTavoli; i++) {
-		struct comanda *c;
+		struct comanda *c = &comande[i];
 		while(c->prossima != NULL) {
-			if(c->stato == in_attesa || c->stato == in_preparazione) return 1;
+			if(c->stato == in_attesa || c->stato == in_preparazione)
+				return 1;
 		}
 	}
+	pthread_mutex_unlock(&comande_lock);
 	return 0;
 }
 
@@ -104,6 +107,7 @@ int ricevi(int j, int lunghezza,char* buffer) {
 // Prende uno stato_comanda e inserisce dentro il buffer tutte le informazioni
 // delle comande in quello stato di qualunque tavolino
 void elencoComande(char* buffer, enum stato_comanda stato) {
+	pthread_mutex_lock(&comande_lock);
 	for(int i = 0; i < nTavoli; i++) {
 		struct comanda *c;
 		c = &comande[i];
@@ -125,11 +129,13 @@ void elencoComande(char* buffer, enum stato_comanda stato) {
 			c = c->prossima;
 		}
 	}
+	pthread_mutex_unlock(&comande_lock);
 }
 
 // Prende un tavolo e inserisce dentro il buffer tutte le informazioni
 // delle comande inerenti a quel tavolino
 void elencoComandeTavolo(char* buffer, int tavolo) {
+	pthread_mutex_lock(&comande_lock);
 	struct comanda *c;
 	c = &comande[tavolo];
 	while(c != NULL) {
@@ -149,6 +155,7 @@ void elencoComandeTavolo(char* buffer, int tavolo) {
 		// Vado avanti
 		c = c->prossima;
 	}
+	pthread_mutex_unlock(&comande_lock);
 }
 
 // Inserisce in base alla lettera c, il socket id nell'array relativo
@@ -188,6 +195,9 @@ int inserisci(int i, char c) {
 
 // Prende i parametri della find ed inserisce nel buffer le disponibilità
 void cercaDisponibilita(int nPers, time_t dataora, char* buffer, char* disponibilita[nTavoli]) {
+	// Mutua esclusione sull'array Tavoli
+	pthread_mutex_lock(&tavoli_lock);
+	pthread_mutex_lock(&prenotazioni_lock);
 	int numero = 0;
 	for(int index = 0; index < nTavoli; index++) {
 		if(tavoli[index].nPosti < nPers){
@@ -216,6 +226,8 @@ void cercaDisponibilita(int nPers, time_t dataora, char* buffer, char* disponibi
 		strcat(buffer, "\n");
 		numero++;
 	}
+    pthread_mutex_unlock(&tavoli_lock);
+    pthread_mutex_unlock(&prenotazioni_lock);
 }
 
 // Gestisce UNA richiesta da parte di UN client
@@ -310,6 +322,7 @@ retry:
 			p->prossima = NULL;
 
 			// Inserisco in lista prenotazioni
+			pthread_mutex_lock(&prenotazioni_lock);
 			struct prenotazione* punta = &prenotazioni[tavolo];
 			if(punta == NULL) {
 				punta = p;
@@ -321,6 +334,7 @@ retry:
 				p->prossima = punta->prossima;
 				punta->prossima = p;
 			}
+			pthread_mutex_unlock(&prenotazioni_lock);
 
 			printf("Client %d ha effettuato una prenotazione\n", socketId);
 			fflush(stdout);
@@ -379,6 +393,7 @@ void gestisciTd(int socketId) {
 	}
 	else if(strcmp(token, "comanda")) { // Secondo caso
 		// Parso la comanda ed inserisco
+		pthread_mutex_lock(&comande_lock);
 		struct comanda* punta = &comande[tavolo];
 		
 		struct comanda* com = malloc(sizeof(com));
@@ -405,6 +420,9 @@ void gestisciTd(int socketId) {
 		com->prossima = NULL;
 		com->stato = in_attesa;
 
+
+		pthread_mutex_unlock(&comande_lock);
+
 		// Notifico tutti i KD
 		strcpy(buffer, "Nuova comanda!");
 		for(int indice = 0; indice < nMaxKd; indice++) {
@@ -414,6 +432,7 @@ void gestisciTd(int socketId) {
 		}
 	}
 	else if(strcmp(token, "conto")) { // Terzo caso
+		pthread_mutex_lock(&comande_lock);
 		// Scorro l'array comande ed invio
 		struct comanda* punta = &comande[tavolo];
 		int totale = 0;
@@ -433,6 +452,7 @@ void gestisciTd(int socketId) {
 			punta = punta->prossima;
 
 		}
+		pthread_mutex_unlock(&comande_lock);
 		strcat(buffer, "Totale: ");
 		strcat(buffer,totale);
 		strcat(buffer, "\n");
@@ -469,6 +489,8 @@ void gestisciKd(int socketId) {
 	char* token;
 	token = strtok(buffer, " ");
 	if(strcmp(token, "take")) { // Primo caso
+		pthread_mutex_lock(&comande_lock);
+
 		// Scorro l'array comande ed invio
 		struct comanda* com = NULL;
 		int nTav = -1;
@@ -504,10 +526,12 @@ void gestisciKd(int socketId) {
 			}
 		}
 		invia(socketId, buffer);
+		pthread_mutex_unlock(&comande_lock);
 	}
 	else if(strcmp(token, "show")) { // Secondo caso
 		// Scorro l'array comande ed invio
 		strcpy(buffer, "");
+		pthread_mutex_lock(&comande_lock);
 		for(int indice = 0; indice < nTavoli; indice++) {
 			struct comanda *punta = comande[indice];
 			while(punta != NULL){
@@ -530,6 +554,7 @@ void gestisciKd(int socketId) {
 				punta = punta->prossima;
 			}
 		}
+		pthread_mutex_unlock(&comande_lock);
 		invia(socketId, buffer);
 	}
 	else if(strcmp(token, "ready")) { // Terzo caso
@@ -540,6 +565,8 @@ void gestisciKd(int socketId) {
 		token = strtok(NULL, "T");
 		nTav = atoi(token);
 
+
+		pthread_mutex_lock(&comande_lock);
 		struct comanda* punta = comande[nTav];
 		for(int indice = 0; indice < nCom; indice++)
 			punta = punta->prossima;
@@ -547,6 +574,7 @@ void gestisciKd(int socketId) {
 		punta->stato = in_servizio;
 		invia(socketId, "COMANDA IN SERVIZIO");
 		invia(socket_td[nTav], "ORDINAZIONE IN ARRIVO");
+		pthread_mutex_unlock(&comande_lock);
 	}
 	else {
 		// Errore, comando non riconosciuto

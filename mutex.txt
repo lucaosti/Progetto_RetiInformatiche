@@ -1,0 +1,10 @@
+Manipolazione socket:
+- socket_client;
+- socket_td;
+- socket_kd.
+
+Strutture:
+- tavoli;
+- prenotazioni;
+- comande;
+- listaThread, non necessario.
