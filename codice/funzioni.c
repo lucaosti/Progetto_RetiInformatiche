@@ -454,8 +454,10 @@ void gestisciTd(int socketId) {
 				strcat(buffer, "\n");
 				totale += punta->quantita[indice] * menu[indice]->prezzo;
 			}
+			struct comanda* puntaVecchia;
+			puntaVecchia = punta;
 			punta = punta->prossima;
-
+			free(puntaVecchia);
 		}
 		pthread_mutex_unlock(&comande_lock);
 		strcat(buffer, "Totale: ");

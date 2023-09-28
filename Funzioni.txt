@@ -1,5 +1,2 @@
 gestisciTd:
     - comanda, da finire il parsing del piatto;
-    - cancellare le comande dopo il conto;
-deallocaStrutture:
-    Da fare.
