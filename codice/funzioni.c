@@ -32,7 +32,7 @@ void caricaTavoli() {
 }
 
 // Carica il menu dal file e lo mette nell'array
-	void caricaMenu() {
+void caricaMenu() {
 	FILE *fptr;
 	int i;
 	char str[1024];
@@ -590,16 +590,29 @@ void gestisciKd(int socketId) {
 
 // Dealloca tutte le strutture
 void deallocaStrutture() {
-	// COMANDE
-	// THREAD
-
-	/* NELLA FORMA
-	void List_destory(List * list){
-	if(list == NULL)
-		return;
-	List_destroy(list->next);
-	free(list->str);
-	free(list);
+	// Comande
+	for(int i = 0; i < nTavoli; i++) {
+		struct comanda *c = &comande[i];
+		while(c != NULL) {
+			struct comanda *c2 = &c->prossima;
+			free(c);
+			c = c2;
+		}
+	}		
+	// Thread
+	struct lis_thread *lt = &listaThread;
+	while(lt != NULL) {
+		struct lis_thread *lt2 = &lt->prossimo;
+		free(lt);
+		lt = lt2;
+	}		
+	// Prenotazioni
+	for(int i = 0; i < nTavoli; i++) {
+		struct prenotazione *p = &prenotazioni[i];
+		while(p != NULL) {
+			struct prenotazione *p2 = &p->prossima;
+			free(p);
+			p = p2;
+		}
 	}
-	*/
 }
