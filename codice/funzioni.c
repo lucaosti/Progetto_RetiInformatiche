@@ -29,7 +29,6 @@ void caricaTavoli() {
    	}
 
 	fclose(fptr);
-
 }
 
 // Carica il menu dal file e lo mette nell'array
@@ -160,6 +159,7 @@ void elencoComandeTavolo(char* buffer, int tavolo) {
 
 // Inserisce in base alla lettera c, il socket id nell'array relativo
 int inserisci(int i, char c) {
+	phtread_mutex_lock(socket_lock);
 	int j = 0;
 	switch (c)
 	{
@@ -170,7 +170,7 @@ int inserisci(int i, char c) {
 				break;
 			}
 		}
-		return 1;
+		break;
 	case 'k': // Kitchen device
 		for(; j < nMaxKd; j++){
 			if(socket_kd[j] != -1){
@@ -178,7 +178,7 @@ int inserisci(int i, char c) {
 				break;
 			}
 		}
-		return 1;
+		break;
 	case 't': // Table device
 		for(; j < nMaxTd; j++){
 			if(socket_td[j] != -1){
@@ -186,16 +186,19 @@ int inserisci(int i, char c) {
 				break;
 			}
 		}
-		return 1;
+		break;
 	
 	default:
+		phtread_mutex_unlock(socket_lock);
 		return -1;
 	}
+
+	phtread_mutex_unlock(socket_lock);
+	return 1;
 }
 
 // Prende i parametri della find ed inserisce nel buffer le disponibilità
 void cercaDisponibilita(int nPers, time_t dataora, char* buffer, char* disponibilita[nTavoli]) {
-	// Mutua esclusione sull'array Tavoli
 	pthread_mutex_lock(&tavoli_lock);
 	pthread_mutex_lock(&prenotazioni_lock);
 	int numero = 0;
@@ -425,11 +428,13 @@ void gestisciTd(int socketId) {
 
 		// Notifico tutti i KD
 		strcpy(buffer, "Nuova comanda!");
+		phtread_mutex_lock(socket_lock);
 		for(int indice = 0; indice < nMaxKd; indice++) {
 			if(socket_kd[indice] != -1) {
 				invia(socket_kd[indice], buffer);
 			}
 		}
+		phtread_mutex_unlock(socket_lock);
 	}
 	else if(strcmp(token, "conto")) { // Terzo caso
 		pthread_mutex_lock(&comande_lock);

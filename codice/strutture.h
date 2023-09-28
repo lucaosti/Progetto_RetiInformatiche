@@ -26,6 +26,7 @@
 int socket_client[nMaxClient];
 int socket_td[nMaxTd]; // associati all'indice del tavolo
 int socket_kd[nMaxKd];
+pthread_mutex_t socket_lock;
 
 // Strutture e relativi MutEx
 struct tavolo tavoli[nTavoli];
