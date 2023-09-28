@@ -6,16 +6,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <time.h>
 
-#define BENVENUTO "find --> ricerca la disponibilità per una prenotazione\nbook --> invia una prenotazione\nesc --> termina il client\n"
-
+#define BENVENUTO_CLIENT "find --> ricerca la disponibilità per una prenotazione\nbook --> invia una prenotazione\nesc --> termina il client\n"
 #define BUFFER_SIZE 1024
 #define nTavoli 16
 
 int main(int argc, char* argv[]){
 	int ret, sd, i;
 
-	struct sockaddr_in srv_addr;
+	struct sockaddr_in server_addr;
 	char buffer[BUFFER_SIZE];
 
 	// Set di descrittori da monitorare
@@ -31,13 +31,13 @@ int main(int argc, char* argv[]){
 	sd = socket(AF_INET,SOCK_STREAM,0);
 	
 	/* Creazione indirizzo del server */
-	memset(&srv_addr, 0, sizeof(srv_addr));
-	srv_addr.sin_family = AF_INET;
-	srv_addr.sin_port = htons(4242);
-	inet_pton(AF_INET, "127.0.0.1", &srv_addr.sin_addr);
+	memset(&server_addr, 0, sizeof(server_addr));
+	server_addr.sin_family = AF_INET;
+	server_addr.sin_port = htons(4242);
+	inet_pton(AF_INET, "127.0.0.1", &server_addr.sin_addr);
 	
 	/* Connessione */
-	ret = connect(sd, (struct sockaddr*)&srv_addr, sizeof(srv_addr));
+	ret = connect(sd, (struct sockaddr*)&server_addr, sizeof(server_addr));
 	
 	if(ret < 0){
 		perror("Errore in fase di connessione: \n");
@@ -56,7 +56,7 @@ int main(int argc, char* argv[]){
     fdmax = sd; 
 
     // Stampo i comandi che il client può digitare
-    printf(BENVENUTO);
+    printf(BENVENUTO_CLIENT);
 
 	for(;;){
 		// Inizializzo il set read_fds, manipolato dalla select()
