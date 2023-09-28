@@ -81,7 +81,7 @@ int main(int argc, char* argv[]){
 		// Mi blocco (potenzialmente) in attesa di descrittori pronti
 		ret = select(fdmax+1, &read_fds, NULL, NULL, NULL);
 		if(ret < 0) {
-			perror("Errore nella select:");
+			perror("Errore nella select!");
 			exit(-1);
 		}
 

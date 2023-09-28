@@ -62,6 +62,26 @@ int main(int argc, char* argv[]){
 		// Inizializzo il set read_fds, manipolato dalla select()
         read_fds = master;
 
-        
+		// Controllo i descrittori
+		ret = select(fdmax+1, &read_fds, NULL, NULL, NULL);
+		if(ret < 0) {
+			perror("Errore nella select!");
+			exit(-1);
+		}
+
+		// Scorro ogni descrittore 'i'
+		for(i = 0; i <= fdmax; i++) {
+			if(FD_ISSET(i, &read_fds)){
+				if(i == 0) { // Primo caso: comando da stdin
+					char *clientCommand;
+					scanf(" %[^\n]", buffer); // Lo inserisco nel buffer e poi lo analizzo
+					clientCommand = strtok(buffer, " ");
+					
+				}
+				else { // Secondo caso: il socket è sd
+
+				}
+			}
+		}
 	}
 }

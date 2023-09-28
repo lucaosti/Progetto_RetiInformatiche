@@ -6,57 +6,57 @@
 
 // Carica i tavoli dal file e li mette nell'array
 void caricaTavoli() {
-	FILE *fptr;
-	char *work;
+	FILE *f;
+	char *buf;
 	char str[1024];
-	fptr = fopen("tavoli.txt","r");
+	f = fopen("tavoli.txt","r");
 	
-	if (fptr == NULL){
+	if (f == NULL){
        printf("Errore! Apertura file tavoli.txt non riuscita");
-       exit(1);
+       exit(-1);
    	}
    	
 	for(int i = 0; i < nTavoli; i++){
-   		fgets(str, sizeof(str), fptr);
-   		work = strtok(str, " ");
-   		tavoli[i].nPosti = atoi(work);
-   		work = strtok(NULL, " ");
-   		strcpy(tavoli[i].sala, work);
-   		work = strtok(NULL, " ");
-   		strcpy(tavoli[i].descrizione, work);
+   		fgets(str, sizeof(str), f);
+   		buf = strtok(str, " ");
+   		tavoli[i].nPosti = atoi(buf);
+   		buf = strtok(NULL, " ");
+   		strcpy(tavoli[i].sala, buf);
+   		buf = strtok(NULL, " ");
+   		strcpy(tavoli[i].descrizione, buf);
 
 		tavoli[i].numero = i+1;
    	}
 
-	fclose(fptr);
+	fclose(f);
 }
 
 // Carica il menu dal file e lo mette nell'array
 void caricaMenu() {
-	FILE *fptr;
+	FILE *f;
 	int i;
 	char str[1024];
-	char *work;
-	fptr = fopen("menu.txt","r");
+	char *buf;
+	f = fopen("menu.txt","r");
 	
-	if (fptr == NULL){
+	if (f == NULL){
        printf("Errore! Apertura file menu.txt non riuscita");
-       exit(1);
+       exit(-1);
    	}
 
 	for(int i = 0; i < nPiatti; i++) {
-		fgets(str, sizeof(str), fptr);
+		fgets(str, sizeof(str), f);
 		struct piatto* p = malloc(sizeof(*p));
-		work = strtok(str, "€-");
-		strcpy(p->codice, work);
-		work = strtok(NULL, "€-");
-		strcpy(p->nome, work);
-		work = strtok(NULL, "€-");
-		p->prezzo = (int)work;
+		buf = strtok(str, "€-");
+		strcpy(p->codice, buf);
+		buf = strtok(NULL, "€-");
+		strcpy(p->nome, buf);
+		buf = strtok(NULL, "€-");
+		p->prezzo = (int)buf;
 		menu[i] = p;
 	}
 
-	fclose(fptr);
+	fclose(f);
 }
 
 // Ritorna 1 nel caso ci siano attualmente delle comande
