@@ -280,7 +280,6 @@ void gestisciClient(int socketId) {
 			return;
 		}
 
-
 		char disponibilita[nTavoli];
 
 retry:
