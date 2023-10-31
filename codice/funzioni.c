@@ -44,7 +44,7 @@ void caricaMenu() {
        exit(-1);
    	}
 
-	for(int i = 0; i < nPiatti; i++) {
+	for(i = 0; i < nPiatti; i++) {
 		fgets(str, sizeof(str), f);
 		struct piatto* p = malloc(sizeof(*p));
 		buf = strtok(str, "€-");
