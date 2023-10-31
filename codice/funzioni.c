@@ -53,7 +53,7 @@ void caricaMenu() {
 		buf = strtok(NULL, "€-");
 		strcpy(p->nome, buf);
 		buf = strtok(NULL, "€-");
-		p->prezzo = (int)buf;
+		p->prezzo = (int)*buf;
 		menu[i] = p;
 	}
 

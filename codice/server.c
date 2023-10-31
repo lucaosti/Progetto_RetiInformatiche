@@ -253,7 +253,7 @@ int main(int argc, char* argv[]){
 						break;
 					case 0: // Client che vuole utilizzare servizi
 						// Creo un nuovo elemento della lista di thread e lo alloco
-						struct lis_thread *p = malloc(sizeof(*p));
+						struct lis_thread *p = malloc(sizeof(struct lis_thread));
 						// Creo il thread
 						(void) pthread_create(p->t, NULL, gestisciClient, &i);
 						// Creo un puntatore per inserirlo in lista
@@ -261,11 +261,11 @@ int main(int argc, char* argv[]){
 						while(inserisciThread->prossimo != NULL)
 							inserisciThread = inserisciThread->prossimo;
 						// Lo inserisco
-						inserisciThread->prossimo = &p;
+						inserisciThread->prossimo = p;
 						break;
 					case 1: // Table device che vuole utilizzare servizi
 						// Creo un nuovo elemento della lista di thread e lo alloco
-						struct lis_thread *p = malloc(sizeof(*p));
+						struct lis_thread *p = malloc(sizeof(struct lis_thread));
 						// Creo il thread
 						(void) pthread_create(p->t, NULL, gestisciTd, &i);
 						// Creo un puntatore per inserirlo in lista
@@ -273,11 +273,11 @@ int main(int argc, char* argv[]){
 						while(inserisciThread->prossimo != NULL)
 							inserisciThread = inserisciThread->prossimo;
 						// Lo inserisco
-						inserisciThread->prossimo = &p;
+						inserisciThread->prossimo = p;
 						break;
 					case 2: // Kitchen device che vuole utilizzare servizi
 						// Creo un nuovo elemento della lista di thread e lo alloco
-						struct lis_thread *p = malloc(sizeof(*p));
+						struct lis_thread *p = malloc(sizeof(struct lis_thread));
 						// Creo il thread
 						(void) pthread_create(p->t, NULL, gestisciKd, &i);
 						// Creo un puntatore per inserirlo in lista
@@ -285,7 +285,7 @@ int main(int argc, char* argv[]){
 						while(inserisciThread->prossimo != NULL)
 							inserisciThread = inserisciThread->prossimo;
 						// Lo inserisco
-						inserisciThread->prossimo = &p;
+						inserisciThread->prossimo = p;
 						break;
 					default:
 						perror("Errore nell'identificare il socket\n");
