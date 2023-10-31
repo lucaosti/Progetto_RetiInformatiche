@@ -33,6 +33,7 @@ int main(int argc, char* argv[]){
 	struct sockaddr_in my_addr, cl_addr;
 	int ret, newfd, listener, addrlen, i, len;
 	char buffer[BUFFER_SIZE];
+	char bufferOut[BUFFER_SIZE];
 	int portNumber = atoi(argv[1]);
 
 	// Set di descrittori da monitorare
@@ -117,7 +118,7 @@ int main(int argc, char* argv[]){
 							printf("Comando 'stat' senza parametri inesistente!\n");
 							fflush(stdout);
 						}
-						else if(strcmp(*serverCommand, "T") == 0) { // Chiede lo stato di un tavolo
+						else if(strcmp(buffer, "T") == 0) { // Chiede lo stato di un tavolo
 							// Cerco il numero del tavolo e stampo l'esito
 							serverCommand = strtok(NULL, "T");
 							int tavolo = atoi(serverCommand);
@@ -127,31 +128,30 @@ int main(int argc, char* argv[]){
 								fflush(stdout);
 								break;
 							}
-							
-							elencoComandeTavolo(buffer, tavolo);
+							elencoComandeTavolo(bufferOut, tavolo);
 
-							printf(buffer);
+							printf(bufferOut);
 							fflush(stdout);
 						}
-						else if(strcmp(*serverCommand, "a") == 0) { // Chiedo le comande in attesa
+						else if(strcmp(buffer, "a") == 0) { // Chiedo le comande in attesa
 							// Scorro tutto l'array di liste, nel caso sia in attesa, la aggiungo al buffer
-							elencoComande(buffer, in_attesa);
+							elencoComande(bufferOut, in_attesa);
 
-							printf(buffer);
+							printf(bufferOut);
 							fflush(stdout);
 						}
-						else if(strcmp(*serverCommand, "p") == 0) { // Chiedo le comande in preparazione
+						else if(strcmp(buffer, "p") == 0) { // Chiedo le comande in preparazione
 							// Scorro tutto l'array di liste, nel caso sia in preparazione, la aggiungo al buffer
-							elencoComande(buffer, in_preparazione);
+							elencoComande(bufferOut, in_preparazione);
 
-							printf(buffer);
+							printf(bufferOut);
 							fflush(stdout);
 						}
-						else if(strcmp(*serverCommand, "s") == 0) { // Chiedo le comande in servizio
+						else if(strcmp(buffer, "s") == 0) { // Chiedo le comande in servizio
 							// Scorro tutto l'array di liste, nel caso sia in servizio, la aggiungo al buffer
-							elencoComande(buffer, in_servizio);
+							elencoComande(bufferOut, in_servizio);
 
-							printf(buffer);
+							printf(bufferOut);
 							fflush(stdout);
 						}
 						else { // Comando non riconosciuto
@@ -159,7 +159,7 @@ int main(int argc, char* argv[]){
 							fflush(stdout);
 						}
 					}
-					else if(strcmp(*serverCommand, "stop") == 0) { // Secondo caso: stop
+					else if(strcmp(buffer, "stop") == 0) { // Secondo caso: stop
 						// Se posso stopparmi, mando una notifica a tutti i dispositivi connessi e mi interrompo.
 						// Nel caso io non possa fermarmi (ci sono delle comande in attesa o preparazione), lo comunico e non faccio niente.
 						if( !comandeInSospeso() ) { // Mi posso fermare
@@ -169,10 +169,10 @@ int main(int argc, char* argv[]){
 							fflush(stdout);
 
 							// Invio ad ogni dispositivo connesso il messaggio "STOP"
-							strcpy(buffer,"STOP\0");
+							strcpy(bufferOut,"STOP\0");
 							for(j = 1; j < fdmax; j++) {
 								if( j == listener) continue; // Salta il listener
-								ret = invia(j, buffer);
+								ret = invia(j, bufferOut);
 								if(ret < 0){
 									perror("Errore: \n");
 									exit(1);
@@ -246,7 +246,7 @@ int main(int argc, char* argv[]){
 					case -1: // Si sta presentando
 						ret = ricevi(i, 1, buffer);
 						ret = inserisci(i, buffer[0]);
-						if( ret < 0) {
+						if(ret < 0) {
 							printf("Presentazione non riuscita: come primo messaggio non è arrivato il tipo.\n");
 							fflush(stdout);
 						}
