@@ -31,9 +31,9 @@ pthread_mutex_t socket_lock;
 // Strutture e relativi MutEx
 struct tavolo tavoli[nTavoli];
 pthread_mutex_t tavoli_lock;
-struct prenotazione* prenotazioni[nTavoli];
+struct prenotazione prenotazioni[nTavoli];
 pthread_mutex_t prenotazioni_lock;
-struct comanda* comande[nTavoli];
+struct comanda comande[nTavoli];
 pthread_mutex_t comande_lock;
 struct lis_thread* listaThread;
 pthread_mutex_t listaThread_lock;
