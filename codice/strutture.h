@@ -29,7 +29,7 @@ int socket_kd[nMaxKd];
 pthread_mutex_t socket_lock;
 
 // Strutture e relativi MutEx
-struct tavolo* tavoli[nTavoli];
+struct tavolo tavoli[nTavoli];
 pthread_mutex_t tavoli_lock;
 struct prenotazione* prenotazioni[nTavoli];
 pthread_mutex_t prenotazioni_lock;

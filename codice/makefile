@@ -1,6 +1,6 @@
 all: server client td kd
 
-server: server.c funzioni.c funzioni.h strutture.h
+server: server.c strutture.h funzioni.c funzioni.h
 	gcc -Wall -std=c11 -o server server.c funzioni.c
 
 client: client.c
