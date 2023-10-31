@@ -9,14 +9,15 @@ void caricaTavoli() {
 	FILE *f;
 	char *buf;
 	char str[1024];
+   	int i;
 	f = fopen("tavoli.txt","r");
 	
 	if (f == NULL){
        printf("Errore! Apertura file tavoli.txt non riuscita");
        exit(-1);
    	}
-   	
-	for(int i = 0; i < nTavoli; i++){
+
+	for(i = 0; i < nTavoli; i++){
    		fgets(str, sizeof(str), f);
    		buf = strtok(str, " ");
    		tavoli[i].nPosti = atoi(buf);
@@ -34,9 +35,9 @@ void caricaTavoli() {
 // Carica il menu dal file e lo mette nell'array
 void caricaMenu() {
 	FILE *f;
-	int i;
 	char str[1024];
 	char *buf;
+	int i;
 	f = fopen("menu.txt","r");
 	
 	if (f == NULL){
@@ -62,8 +63,9 @@ void caricaMenu() {
 // Ritorna 1 nel caso ci siano attualmente delle comande
 // "in_preparazione" o "in_servizio"; 0 altrimenti
 int comandeInSospeso() {
+	int i;
 	pthread_mutex_lock(&comande_lock);
-	for (int i = 0; i < nTavoli; i++) {
+	for (i = 0; i < nTavoli; i++) {
 		struct comanda *c = &comande[i];
 		while(c->prossima != NULL) {
 			if(c->stato == in_attesa || c->stato == in_preparazione)
@@ -106,8 +108,9 @@ int ricevi(int j, int lunghezza,char* buffer) {
 // Prende uno stato_comanda e inserisce dentro il buffer tutte le informazioni
 // delle comande in quello stato di qualunque tavolino
 void elencoComande(char* buffer, enum stato_comanda stato) {
+	int i, j;
 	pthread_mutex_lock(&comande_lock);
-	for(int i = 0; i < nTavoli; i++) {
+	for(i = 0; i < nTavoli; i++) {
 		struct comanda *c;
 		c = &comande[i];
 		while(c != NULL) {
@@ -116,7 +119,7 @@ void elencoComande(char* buffer, enum stato_comanda stato) {
 			strcat(buffer, " T");
 			strcat(buffer, i);
 			strcat(buffer, "\n");
-			for(int j = 0; j < nPiatti; j++) {
+			for(j = 0; j < nPiatti; j++) {
 				if(c->quantita[j] != 0) {
 					strcat(buffer, menu[j]->codice);
 					strcat(buffer, " ");
@@ -134,6 +137,7 @@ void elencoComande(char* buffer, enum stato_comanda stato) {
 // Prende un tavolo e inserisce dentro il buffer tutte le informazioni
 // delle comande inerenti a quel tavolino
 void elencoComandeTavolo(char* buffer, int tavolo) {
+	int i;
 	pthread_mutex_lock(&comande_lock);
 	struct comanda *c;
 	c = &comande[tavolo];
@@ -143,11 +147,11 @@ void elencoComandeTavolo(char* buffer, int tavolo) {
 		strcat(buffer, " ");
 		strcat(buffer, c->stato);
 		strcat(buffer, "\n");
-		for(int j = 0; j < nPiatti; j++) {
-			if(c->quantita[j] != 0) {
-				strcat(buffer, menu[j]->codice);
+		for(i = 0; i < nPiatti; i++) {
+			if(c->quantita[i] != 0) {
+				strcat(buffer, menu[i]->codice);
 				strcat(buffer, " ");
-				strcat(buffer, c->quantita[j]);
+				strcat(buffer, c->quantita[i]);
 				strcat(buffer, "\n");
 			}
 		}
@@ -159,8 +163,8 @@ void elencoComandeTavolo(char* buffer, int tavolo) {
 
 // Inserisce in base alla lettera c, il socket id nell'array relativo
 int inserisci(int i, char c) {
-	phtread_mutex_lock(socket_lock);
 	int j = 0;
+	phtread_mutex_lock(socket_lock);
 	switch (c)
 	{
 	case 'c': // Client
@@ -199,10 +203,11 @@ int inserisci(int i, char c) {
 
 // Prende i parametri della find ed inserisce nel buffer le disponibilità
 void cercaDisponibilita(int nPers, time_t dataora, char* buffer, char* disponibilita) {
+	int index;
 	pthread_mutex_lock(&tavoli_lock);
 	pthread_mutex_lock(&prenotazioni_lock);
 	int numero = 0;
-	for(int index = 0; index < nTavoli; index++) {
+	for(index = 0; index < nTavoli; index++) {
 		if(tavoli[index].nPosti < nPers){
 			disponibilita[index] = 0;
 			continue;
@@ -394,6 +399,7 @@ void gestisciTd(int socketId) {
 		invia(socketId, buffer);
 	}
 	else if(strcmp(token, "comanda")) { // Secondo caso
+		int i, indice;
 		// Parso la comanda ed inserisco
 		pthread_mutex_lock(&comande_lock);
 		struct comanda* punta = &comande[tavolo];
@@ -412,7 +418,7 @@ void gestisciTd(int socketId) {
 
 		token = strtok(NULL, " ");
 		while(token != NULL) {
-			for (int i = 0; i < nPiatti; i++) {
+			for (i = 0; i < nPiatti; i++) {
 				if(strcmp(token, menu[i]->codice) != 0)
 					continue;
 				token = strtok(NULL, "-");
@@ -430,7 +436,7 @@ void gestisciTd(int socketId) {
 		// Notifico tutti i KD
 		strcpy(buffer, "Nuova comanda!");
 		phtread_mutex_lock(socket_lock);
-		for(int indice = 0; indice < nMaxKd; indice++) {
+		for(indice = 0; indice < nMaxKd; indice++) {
 			if(socket_kd[indice] != -1) {
 				invia(socket_kd[indice], buffer);
 			}
@@ -438,12 +444,13 @@ void gestisciTd(int socketId) {
 		phtread_mutex_unlock(socket_lock);
 	}
 	else if(strcmp(token, "conto")) { // Terzo caso
+		int indice;
 		pthread_mutex_lock(&comande_lock);
 		// Scorro l'array comande ed invio
 		struct comanda* punta = &comande[tavolo];
 		int totale = 0;
 		while(punta != NULL) {
-			for(int indice = 0; indice < nPiatti; indice++) {
+			for(indice = 0; indice < nPiatti; indice++) {
 				if(punta->quantita[indice] == 0) 
 					continue;
 
@@ -497,12 +504,13 @@ void gestisciKd(int socketId) {
 	char* token;
 	token = strtok(buffer, " ");
 	if(strcmp(token, "take")) { // Primo caso
+		int indice;
 		pthread_mutex_lock(&comande_lock);
 
 		// Scorro l'array comande ed invio
 		struct comanda* com = NULL;
 		int nTav = -1;
-		for(int indice = 0; indice < nTavoli; indice++) {
+		for(indice = 0; indice < nTavoli; indice++) {
 			struct comanda *punta = comande[indice];
 			while(punta != NULL) {
 				if((com == NULL || punta->timestamp < com->timestamp) && punta->stato == in_attesa) {
@@ -525,7 +533,7 @@ void gestisciKd(int socketId) {
 		strcat(buffer, "T");
 		strcat(buffer, itoa(nTav));
 		strcat(buffer, "\n");
-		for(int indice = 0; indice < nPiatti; indice++) {
+		for(indice = 0; indice < nPiatti; indice++) {
 			if(com->quantita[indice] != 0) {
 				strcat(buffer, menu[indice]->codice);
 				strcat(buffer, "\t");
@@ -537,10 +545,11 @@ void gestisciKd(int socketId) {
 		pthread_mutex_unlock(&comande_lock);
 	}
 	else if(strcmp(token, "show")) { // Secondo caso
+		int indice, indice2;
 		// Scorro l'array comande ed invio
 		strcpy(buffer, "");
 		pthread_mutex_lock(&comande_lock);
-		for(int indice = 0; indice < nTavoli; indice++) {
+		for(indice = 0; indice < nTavoli; indice++) {
 			struct comanda *punta = comande[indice];
 			while(punta != NULL){
 				if(punta->kd == socketId && punta->stato == in_preparazione) {
@@ -550,7 +559,7 @@ void gestisciKd(int socketId) {
 					strcat(buffer, "T");
 					strcat(buffer, itoa(indice));
 					strcat(buffer, "\n");
-					for(int indice2 = 0; indice2 < nPiatti; indice2++) {
+					for(indice2 = 0; indice2 < nPiatti; indice2++) {
 						if(punta->quantita[indice2] != 0) {
 							strcat(buffer, menu[indice2]->codice);
 							strcat(buffer, "\t");
@@ -567,7 +576,7 @@ void gestisciKd(int socketId) {
 	}
 	else if(strcmp(token, "ready")) { // Terzo caso
 		// Parso il comando e notifico il td
-		int nCom, nTav;
+		int nCom, nTav, indice;
 		token = strtok(NULL, " com-");
 		nCom = atoi(token);
 		token = strtok(NULL, "T");
@@ -576,7 +585,7 @@ void gestisciKd(int socketId) {
 
 		pthread_mutex_lock(&comande_lock);
 		struct comanda* punta = comande[nTav];
-		for(int indice = 0; indice < nCom; indice++)
+		for(indice = 0; indice < nCom; indice++)
 			punta = punta->prossima;
 
 		punta->stato = in_servizio;
@@ -593,8 +602,9 @@ void gestisciKd(int socketId) {
 
 // Dealloca tutte le strutture
 void deallocaStrutture() {
+	int i;
 	// Comande
-	for(int i = 0; i < nTavoli; i++) {
+	for(i = 0; i < nTavoli; i++) {
 		struct comanda *c = &comande[i];
 		while(c != NULL) {
 			struct comanda *c2 = &c->prossima;
@@ -610,7 +620,7 @@ void deallocaStrutture() {
 		lt = lt2;
 	}		
 	// Prenotazioni
-	for(int i = 0; i < nTavoli; i++) {
+	for(i = 0; i < nTavoli; i++) {
 		struct prenotazione *p = &prenotazioni[i];
 		while(p != NULL) {
 			struct prenotazione *p2 = &p->prossima;

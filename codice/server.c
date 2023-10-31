@@ -10,11 +10,12 @@ int main(int argc, char* argv[]){
 	// permettere l'utilizzo della libreria "funzioni.c"
 
 	// Le inizializzo
-	for(int indice = 0; indice < nMaxClient; indice++)
+	int indice;
+	for(indice = 0; indice < nMaxClient; indice++)
 		socket_client[indice] = -1;
-	for(int indice = 0; indice < nMaxTd; indice++)
+	for(indice = 0; indice < nMaxTd; indice++)
 		socket_td[indice] = -1;
-	for(int indice = 0; indice < nMaxKd; indice++)
+	for(indice = 0; indice < nMaxKd; indice++)
 		socket_kd[indice] = -1;
 
 	numeroComanda = 0;
@@ -162,13 +163,14 @@ int main(int argc, char* argv[]){
 						// Se posso stopparmi, mando una notifica a tutti i dispositivi connessi e mi interrompo.
 						// Nel caso io non possa fermarmi (ci sono delle comande in attesa o preparazione), lo comunico e non faccio niente.
 						if( !comandeInSospeso() ) { // Mi posso fermare
+							int j;
 							// Comunico l'esecuzione del comando
 							printf("Comunico a tutti la chiusura del server e lo termino.\n");
 							fflush(stdout);
 
 							// Invio ad ogni dispositivo connesso il messaggio "STOP"
 							strcpy(buffer,"STOP\0");
-							for(int j = 1; j < fdmax; j++) {
+							for(j = 1; j < fdmax; j++) {
 								if( j == listener) continue; // Salta il listener
 								ret = invia(j, buffer);
 								if(ret < 0){
@@ -223,7 +225,8 @@ int main(int argc, char* argv[]){
 					// c = client, t = table device, k = kitchen device.
 					// Altrimenti, se l'ho trovato, so cosa è e lo gestisco mediante un thread, potrebbe essere una disconnessione.
 					int tipo = -1; // 0 = client; 1 = table device; 2 = kitchen device.
-					for (int j = 0; j <= max(nMaxClient,nMaxTd,nMaxKd); j++) {
+					int j;
+					for(j = 0; j <= max(nMaxClient,nMaxTd,nMaxKd); j++) {
 						// Mutua esclusione
 						if (socket_client[j%nMaxClient] == i){
 							tipo = 0;
@@ -239,7 +242,7 @@ int main(int argc, char* argv[]){
 						}
 					}
 
-					switch (tipo) {
+					switch(tipo) {
 					case -1: // Si sta presentando
 						ret = ricevi(i, 1, buffer);
 						ret = inserisci(i, buffer[0]);
