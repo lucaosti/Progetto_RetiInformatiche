@@ -21,30 +21,6 @@
 #define BUFFER_SIZE 1024
 #define BENVENUTO_SERVER "???"
 
-/* --------- Strutture globali ---------*/
-// Array per i Socket
-int socket_client[nMaxClient];
-int socket_td[nMaxTd]; // associati all'indice del tavolo
-int socket_kd[nMaxKd];
-pthread_mutex_t socket_lock;
-
-// Strutture e relativi MutEx
-struct tavolo tavoli[nTavoli];
-pthread_mutex_t tavoli_lock;
-struct prenotazione* prenotazioni[nTavoli];
-pthread_mutex_t prenotazioni_lock;
-struct comanda* comande[nTavoli];
-pthread_mutex_t comande_lock;
-struct lis_thread* listaThread;
-pthread_mutex_t listaThread_lock;
-
-// Altro
-char menu_text[nPiatti*dimEntryMeny];
-struct piatto* menu[nPiatti];
-int numeroComanda; // UUID comanda
-/* ------------------------------------ */
-
-
 /*           Gestione dei tavoli 
    ---------------------------------------
    Viene parsato il file "tavoli.txt" dopo
@@ -145,3 +121,26 @@ struct lis_thread
 	pthread_t t;
 	struct lis_thread* prossimo;
 };
+
+/* --------- Strutture globali ---------*/
+// Array per i Socket
+int socket_client[nMaxClient];
+int socket_td[nMaxTd]; // associati all'indice del tavolo
+int socket_kd[nMaxKd];
+pthread_mutex_t socket_lock;
+
+// Strutture e relativi MutEx
+struct tavolo tavoli[nTavoli];
+pthread_mutex_t tavoli_lock;
+struct prenotazione* prenotazioni[nTavoli];
+pthread_mutex_t prenotazioni_lock;
+struct comanda* comande[nTavoli];
+pthread_mutex_t comande_lock;
+struct lis_thread* listaThread;
+pthread_mutex_t listaThread_lock;
+
+// Altro
+char menu_text[nPiatti*dimEntryMeny];
+struct piatto* menu[nPiatti];
+int numeroComanda; // UUID comanda
+/* ------------------------------------ */
