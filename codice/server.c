@@ -184,7 +184,7 @@ int main(int argc, char* argv[]){
 
 							// Aspetto la fine di TUTTI i thread
 							struct lis_thread *lt;
-							lt = &listaThread;
+							lt = listaThread;
 							while(lt != NULL) {
 								pthread_join(lt->t,NULL);
 								lt = lt->prossimo;
@@ -210,7 +210,7 @@ int main(int argc, char* argv[]){
 					addrlen = sizeof(cl_addr);
 
 					// Accetto la connessione e creo il socket connesso ('newfd')
-					newfd = accept(listener, (struct sockaddr *)&cl_addr, &addrlen);
+					newfd = accept(listener, (struct sockaddr *)&cl_addr, (socklen_t*)&addrlen);
 
 					// Aggiungo il socket connesso al set dei descrittori monitorati
 					FD_SET(newfd, &master); 
