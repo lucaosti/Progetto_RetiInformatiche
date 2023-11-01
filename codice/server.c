@@ -186,7 +186,7 @@ int main(int argc, char* argv[]){
 							struct lis_thread *lt;
 							lt = listaThread;
 							while(lt != NULL) {
-								pthread_join(lt->t,NULL);
+								pthread_join(*(lt->t),NULL);
 								lt = lt->prossimo;
 							}
 
