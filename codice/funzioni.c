@@ -307,13 +307,13 @@ void *gestisciClient(void* i) {
 		else {
 			printf("Data inserita non valida\n");
 			fflush(stdout);
-			return;
+			return NULL;
 		}
 
 		char disponibilita[nTavoli];
 
 retry:
-		cercaDisponibilita(nPers, dataora, &buffer, &disponibilita);
+		cercaDisponibilita(nPers, dataora, buffer, disponibilita);
 		// Invia il buffer con le possibilità
 		ret = invia(socketId, buffer);
 
@@ -341,7 +341,7 @@ retry:
 				v--;
 			}
 			// Cerco le disponibilità attuali
-			cercaDisponibilita(nPers, dataora, &buffer, &disponibilita);
+			cercaDisponibilita(nPers, dataora, buffer, disponibilita);
 
 			if(disponibilita[tavolo] == 0) {
 				// Caso in cui non sia più disponibile l'opzione
