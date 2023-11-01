@@ -31,7 +31,7 @@ int main(int argc, char* argv[]){
 	fflush(stdout);
 
 	struct sockaddr_in my_addr, cl_addr;
-	int ret, newfd, listener, addrlen, i, len;
+	int ret, newfd, listener, addrlen, i;
 	char buffer[BUFFER_SIZE];
 	char bufferOut[BUFFER_SIZE];
 	int portNumber = atoi(argv[1]);
