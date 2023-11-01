@@ -239,7 +239,7 @@ void cercaDisponibilita(int nPers, time_t dataora, char* buffer, char* disponibi
 }
 
 // Gestisce UNA richiesta da parte di UN client
-void **gestisciClient(void* i) {
+void *gestisciClient(void* i) {
 	int *sId = (int*)i;
 	int socketId = *sId;
 	char buffer[BUFFER_SIZE];
