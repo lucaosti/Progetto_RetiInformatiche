@@ -108,7 +108,7 @@ int ricevi(int j, int lunghezza,char* buffer) {
 // Prende uno stato_comanda e inserisce dentro il buffer tutte le informazioni
 // delle comande in quello stato di qualunque tavolino
 void elencoComande(char* buffer, enum stato_comanda stato) {
-	char numeroString[32];
+	char numeroString[BUFFER_SIZE];
 	int i, j;
 	pthread_mutex_lock(&comande_lock);
 	for(i = 0; i < nTavoli; i++) {
@@ -141,7 +141,7 @@ void elencoComande(char* buffer, enum stato_comanda stato) {
 // Prende un tavolo e inserisce dentro il buffer tutte le informazioni
 // delle comande inerenti a quel tavolino
 void elencoComandeTavolo(char* buffer, int tavolo) {
-	char numeroString[32];
+	char numeroString[BUFFER_SIZE];
 	int i;
 	pthread_mutex_lock(&comande_lock);
 	struct comanda *c;
@@ -223,7 +223,7 @@ int inserisci(int i, char c) {
 
 // Prende i parametri della find ed inserisce nel buffer le disponibilità
 void cercaDisponibilita(int nPers, time_t dataora, char* buffer, char* disponibilita) {
-	char numeroString[32];
+	char numeroString[BUFFER_SIZE];
 	int index;
 	pthread_mutex_lock(&tavoli_lock);
 	pthread_mutex_lock(&prenotazioni_lock);
@@ -266,6 +266,7 @@ void *gestisciClient(void* i) {
 	int* sId = (int*)i;
 	int socketId = *sId;
 	char buffer[BUFFER_SIZE];
+	char numeroString[BUFFER_SIZE];
 
 	// Ricevi il messaggio
 	int ret;
@@ -296,7 +297,8 @@ void *gestisciClient(void* i) {
 
 		token = strtok(NULL, " ");
 		int nPers;
-		strcpy(nPers, buffer);
+		
+		strcpy(nPers, atoi(buffer));
 
 		token = strtok(NULL, " ");
 		time_t dataora;
@@ -393,7 +395,7 @@ void *gestisciTd(void* i) {
 	int* sId = (int*)i;
 	int socketId = *sId;
 	char buffer[BUFFER_SIZE];
-	char numeroString[32];
+	char numeroString[BUFFER_SIZE];
 	
 	// Trovo il tavolo collegato al TD
 	int tavolo;
@@ -515,7 +517,7 @@ void *gestisciKd(void* i) {
 	int* sId = (int*)i;
 	int socketId = *sId;
 	char buffer[BUFFER_SIZE];
-	char numeroString[32];
+	char numeroString[BUFFER_SIZE];
 
 	// Ricevi il messaggio
 	int ret;
