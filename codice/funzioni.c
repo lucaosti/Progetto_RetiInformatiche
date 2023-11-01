@@ -290,15 +290,17 @@ void *gestisciClient(void* i) {
 	if(strcmp(token, "find")) { // Primo caso
 		// Parsa la stringa e cerca i tavoli liberi
 		struct tm tm;
-		token = strtok(NULL, " ");
 		char cognome[64];
+		int nPers;
+		time_t dataora;
+		
+		token = strtok(NULL, " ");
 		strcpy(cognome, buffer);
 
 		token = strtok(NULL, " ");
-		int nPers = atoi(buffer);
+		nPers = atoi(buffer);
 
 		token = strtok(NULL, " ");
-		time_t dataora;
 
 		if ( strptime(buffer, "%Y-%m-%d %H", &tm) != NULL ) {
 			dataora = mktime(&tm);
