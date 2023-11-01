@@ -649,7 +649,7 @@ void deallocaStrutture() {
 	for(i = 0; i < nTavoli; i++) {
 		struct comanda *c = comande[i];
 		while(c != NULL) {
-			struct comanda *c2 = &c->prossima;
+			struct comanda *c2 = c->prossima;
 			free(c);
 			c = c2;
 		}
