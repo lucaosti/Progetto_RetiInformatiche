@@ -36,7 +36,7 @@ int main(int argc, char* argv[]){
 	printf(BENVENUTO_SERVER);
 	fflush(stdout);
 	
-	printf("test: 1\n");
+	printf(tavoli[3].descrizione);
 	fflush(stdout);
 
 	struct sockaddr_in my_addr, cl_addr;
