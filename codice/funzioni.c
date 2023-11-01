@@ -289,6 +289,7 @@ void *gestisciClient(void* i) {
 	token = strtok(buffer, " ");
 	if(strcmp(token, "find")) { // Primo caso
 		// Parsa la stringa e cerca i tavoli liberi
+		struct tm tm;
 		token = strtok(NULL, " ");
 		char cognome[64];
 		strcpy(cognome, buffer);
@@ -300,7 +301,6 @@ void *gestisciClient(void* i) {
 		token = strtok(NULL, " ");
 		time_t dataora;
 
-		struct tm tm;
 		if ( strptime(buffer, "%Y-%m-%d %H", &tm) != NULL ) {
 			dataora = mktime(&tm);
 		}
