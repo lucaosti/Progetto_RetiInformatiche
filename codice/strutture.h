@@ -132,16 +132,12 @@ pthread_mutex_t socket_lock;
 // Strutture e relativi MutEx
 struct tavolo tavoli[nTavoli];
 pthread_mutex_t tavoli_lock;
-pthread_mutex_init(tavoli_lock);
 struct prenotazione* prenotazioni[nTavoli];
 pthread_mutex_t prenotazioni_lock;
-pthread_mutex_init(prenotazioni_lock);
 struct comanda* comande[nTavoli];
 pthread_mutex_t comande_lock;
-pthread_mutex_init(comande_lock);
 struct lis_thread* listaThread;
 pthread_mutex_t listaThread_lock;
-pthread_mutex_init(listaThread_lock);
 
 // Altro
 char menu_text[nPiatti*dimEntryMeny];

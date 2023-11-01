@@ -18,6 +18,11 @@ int main(int argc, char* argv[]){
 	for(indice = 0; indice < nMaxKd; indice++)
 		socket_kd[indice] = -1;
 
+	pthread_mutex_init(&tavoli_lock, NULL);
+	pthread_mutex_init(&prenotazioni_lock, NULL);
+	pthread_mutex_init(&comande_lock, NULL);
+	pthread_mutex_init(&listaThread_lock, NULL);
+
 	numeroComanda = 0;
 
 	// Carico dai file "tavoli.txt" e "menu.txt"
