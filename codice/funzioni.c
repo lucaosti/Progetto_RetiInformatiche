@@ -508,6 +508,7 @@ void *gestisciTd(void* i) {
 		printf("Errore comando Table Device!\n");
 		fflush(stdout);
 	}
+	return NULL;
 }
 
 // Gestisce UNA richiesta da parte di UN kitchen device
@@ -638,6 +639,7 @@ void *gestisciKd(void* i) {
 		printf("Errore comando Kitchen Device!\n");
 		fflush(stdout);
 	}
+	return NULL;
 }
 
 // Dealloca tutte le strutture
