@@ -78,7 +78,7 @@ int comandeInSospeso() {
 
 // Invia al socket in input il messaggio dentro buffer
 int invia(int j, char* buffer) {
-	int len = hton(strlen(buffer));
+	int len = htonl(strlen(buffer));
 	int lmsg = htons(len);
 	int ret;
 
