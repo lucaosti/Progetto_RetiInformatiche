@@ -28,15 +28,15 @@ int main(int argc, char* argv[]){
 
 	// Carico dai file "tavoli.txt" e "menu.txt"
 	caricaTavoli();
-	
-	printf("test: 1\n");
-	fflush(stdout);
 	caricaMenu();
 
 	/* --- Inizio ---*/
 
 	// Stampo a video il "benvenuto" del server
 	printf(BENVENUTO_SERVER);
+	fflush(stdout);
+	
+	printf("test: 1\n");
 	fflush(stdout);
 
 	struct sockaddr_in my_addr, cl_addr;
