@@ -151,7 +151,20 @@ void elencoComandeTavolo(char* buffer, int tavolo) {
 		sprintf(numeroString, "%d", c->nComanda);
 		strcat(buffer, numeroString);
 		strcat(buffer, " ");
-		strcat(buffer, c->stato);
+		switch (c->stato) {
+			case in_attesa:
+				strcpy(numeroString,"In attesa");
+				break;
+			case in_preparazione:
+				strcpy(numeroString,"In preparazione");
+				break;
+			case in_servizio:
+				strcpy(numeroString,"In servizio");
+				break;
+			default:
+				strcpy(numeroString,"Sconosciuto");
+		}
+		strcat(buffer, numeroString);
 		strcat(buffer, "\n");
 		for(i = 0; i < nPiatti; i++) {
 			if(c->quantita[i] != 0) {
