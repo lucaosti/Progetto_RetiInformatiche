@@ -7,7 +7,7 @@
 // Carica i tavoli dal file e li mette nell'array
 void caricaTavoli() {
 	FILE *f;
-	char *buf;
+	char *buffer;
 	char str[1024];
    	int i;
 	f = fopen("../txts/tavoli.txt","r");
@@ -17,17 +17,14 @@ void caricaTavoli() {
        exit(-1);
    	}
 
-	printf("ciao!");
-	fflush(stdout);
-
 	for(i = 0; i < nTavoli; i++){
    		fgets(str, sizeof(str), f);
-   		buf = strtok(str, " ");
-   		tavoli[i].nPosti = atoi(buf);
-   		buf = strtok(NULL, " ");
-   		strcpy(tavoli[i].sala, buf);
-   		buf = strtok(NULL, " ");
-   		strcpy(tavoli[i].descrizione, buf);
+   		strtok(str, " ");
+   		tavoli[i].nPosti = atoi(buffer);
+   		strtok(NULL, " ");
+   		strcpy(tavoli[i].sala, buffer);
+   		strtok(NULL, " ");
+   		strcpy(tavoli[i].descrizione, buffer);
 
 		tavoli[i].numero = i+1;
    	}
