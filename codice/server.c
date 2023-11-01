@@ -30,7 +30,7 @@ int main(int argc, char* argv[]){
 	caricaTavoli();
 	caricaMenu();
 	
-	printf("%s\n",tavoli[3].descrizione);
+	printf("prova: %s\n",tavoli[3].descrizione);
 	fflush(stdout);
 
 	/* --- Inizio ---*/
