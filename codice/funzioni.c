@@ -355,7 +355,7 @@ retry:
 
 			// Inserisco in lista prenotazioni
 			pthread_mutex_lock(&prenotazioni_lock);
-			struct prenotazione* punta = &prenotazioni[tavolo];
+			struct prenotazione* punta = prenotazioni[tavolo];
 			if(punta == NULL) {
 				punta = p;
 			}
@@ -385,7 +385,7 @@ retry:
 		printf("Errore comando Client!\n");
 		fflush(stdout);
 	}
-	return;
+	return NULL;
 }
 
 // Gestisce UNA richiesta da parte di UN table device
@@ -423,14 +423,14 @@ void *gestisciTd(void* i) {
 	token = strtok(buffer, " ");
 	if(strcmp(token, "menu")) { // Primo caso
 		// Invio il menu
-		strcpy(buffer, menu);
+		strcpy(buffer, menu_text);
 		invia(socketId, buffer);
 	}
 	else if(strcmp(token, "comanda")) { // Secondo caso
 		int i, indice;
 		// Parso la comanda ed inserisco
 		pthread_mutex_lock(&comande_lock);
-		struct comanda* punta = &comande[tavolo];
+		struct comanda* punta = comande[tavolo];
 		
 		struct comanda* com = malloc(sizeof(com));
 		
@@ -475,7 +475,7 @@ void *gestisciTd(void* i) {
 		int indice;
 		pthread_mutex_lock(&comande_lock);
 		// Scorro l'array comande ed invio
-		struct comanda* punta = &comande[tavolo];
+		struct comanda* punta = comande[tavolo];
 		int totale = 0;
 		while(punta != NULL) {
 			for(indice = 0; indice < nPiatti; indice++) {
@@ -499,7 +499,8 @@ void *gestisciTd(void* i) {
 		}
 		pthread_mutex_unlock(&comande_lock);
 		strcat(buffer, "Totale: ");
-		strcat(buffer,totale);
+		sprintf(numeroString, "%d", totale);
+		strcat(buffer, numeroString);
 		strcat(buffer, "\n");
 	}
 	else {
