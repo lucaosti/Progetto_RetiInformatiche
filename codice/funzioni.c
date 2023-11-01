@@ -10,7 +10,7 @@ void caricaTavoli() {
 	char *buf;
 	char str[1024];
    	int i;
-	f = fopen("tavoli.txt","r");
+	f = fopen("../txts/tavoli.txt","r");
 	
 	if (f == NULL){
        printf("Errore! Apertura file tavoli.txt non riuscita");
@@ -38,7 +38,7 @@ void caricaMenu() {
 	char str[1024];
 	char *buf;
 	int i;
-	f = fopen("menu.txt","r");
+	f = fopen("../txts/menu.txt","r");
 	
 	if (f == NULL){
        printf("Errore! Apertura file menu.txt non riuscita");
