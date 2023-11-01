@@ -647,7 +647,7 @@ void deallocaStrutture() {
 	int i;
 	// Comande
 	for(i = 0; i < nTavoli; i++) {
-		struct comanda *c = &comande[i];
+		struct comanda *c = comande[i];
 		while(c != NULL) {
 			struct comanda *c2 = &c->prossima;
 			free(c);
@@ -655,17 +655,17 @@ void deallocaStrutture() {
 		}
 	}		
 	// Thread
-	struct lis_thread *lt = &listaThread;
+	struct lis_thread *lt = listaThread;
 	while(lt != NULL) {
-		struct lis_thread *lt2 = &lt->prossimo;
+		struct lis_thread *lt2 = lt->prossimo;
 		free(lt);
 		lt = lt2;
 	}		
 	// Prenotazioni
 	for(i = 0; i < nTavoli; i++) {
-		struct prenotazione *p = &prenotazioni[i];
+		struct prenotazione *p = prenotazioni[i];
 		while(p != NULL) {
-			struct prenotazione *p2 = &p->prossima;
+			struct prenotazione *p2 = p->prossima;
 			free(p);
 			p = p2;
 		}
