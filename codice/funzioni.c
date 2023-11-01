@@ -294,6 +294,7 @@ void *gestisciClient(void* i) {
 		char cognome[64];
 		int nPers;
 		time_t dataora;
+		char disponibilita[nTavoli];
 		
 		token = strtok(NULL, " ");
 		strcpy(cognome, buffer);
@@ -311,8 +312,6 @@ void *gestisciClient(void* i) {
 			fflush(stdout);
 			return NULL;
 		}
-
-		char disponibilita[nTavoli];
 
 retry:
 		cercaDisponibilita(nPers, dataora, buffer, disponibilita);
