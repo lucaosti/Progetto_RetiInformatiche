@@ -296,9 +296,7 @@ void *gestisciClient(void* i) {
 		strcpy(cognome, buffer);
 
 		token = strtok(NULL, " ");
-		int nPers;
-		
-		strcpy(nPers, atoi(buffer));
+		int nPers = atoi(buffer);
 
 		token = strtok(NULL, " ");
 		time_t dataora;
