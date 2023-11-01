@@ -258,7 +258,7 @@ int main(int argc, char* argv[]){
 						p = malloc(sizeof(struct lis_thread));
 						p->t = malloc(sizeof(pthread_t));
 						// Creo il thread
-						(void) pthread_create(p->t, NULL, gestisciClient, &i);
+						(void) pthread_create(p->t, NULL, gestisciClient, (void*)&i);
 						// Creo un puntatore per inserirlo in lista
 						inserisciThread = listaThread;
 						while(inserisciThread->prossimo != NULL)
@@ -271,7 +271,7 @@ int main(int argc, char* argv[]){
 						p = malloc(sizeof(struct lis_thread));
 						p->t = malloc(sizeof(pthread_t));
 						// Creo il thread
-						(void) pthread_create(p->t, NULL, gestisciTd, &i);
+						(void) pthread_create(p->t, NULL, gestisciTd, (void*)&i);
 						// Creo un puntatore per inserirlo in lista
 						inserisciThread = listaThread;
 						while(inserisciThread->prossimo != NULL)
@@ -284,7 +284,7 @@ int main(int argc, char* argv[]){
 						p = malloc(sizeof(struct lis_thread));
 						p->t = malloc(sizeof(pthread_t));
 						// Creo il thread
-						(void) pthread_create(p->t, NULL, gestisciKd, &i);
+						(void) pthread_create(p->t, NULL, gestisciKd, (void*)&i);
 						// Creo un puntatore per inserirlo in lista
 						inserisciThread = listaThread;
 						while(inserisciThread->prossimo != NULL)

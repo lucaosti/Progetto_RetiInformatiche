@@ -239,8 +239,9 @@ void cercaDisponibilita(int nPers, time_t dataora, char* buffer, char* disponibi
 }
 
 // Gestisce UNA richiesta da parte di UN client
-void *gestisciClient(int i) {
-	int socketId = i;
+void *gestisciClient(void* i) {
+	int* sId = (int*)i;
+	int socketId = sId;
 	char buffer[BUFFER_SIZE];
 
 	// Ricevi il messaggio
@@ -365,8 +366,9 @@ retry:
 }
 
 // Gestisce UNA richiesta da parte di UN table device
-void *gestisciTd(int i) {
-	int socketId = i;
+void *gestisciTd(void* i) {
+	int* sId = (int*)i;
+	int socketId = sId;
 	char buffer[BUFFER_SIZE];
 	
 	// Trovo il tavolo collegato al TD
@@ -482,8 +484,9 @@ void *gestisciTd(int i) {
 }
 
 // Gestisce UNA richiesta da parte di UN kitchen device
-void *gestisciKd(int i) {
-	int socketId = i;
+void *gestisciKd(void* i) {
+	int* sId = (int*)i;
+	int socketId = sId;
 	char buffer[BUFFER_SIZE];
 
 	// Ricevi il messaggio
