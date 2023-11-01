@@ -28,6 +28,9 @@ int main(int argc, char* argv[]){
 
 	// Carico dai file "tavoli.txt" e "menu.txt"
 	caricaTavoli();
+	
+	printf("test: 1\n");
+	fflush(stdout);
 	caricaMenu();
 
 	/* --- Inizio ---*/
@@ -53,9 +56,6 @@ int main(int argc, char* argv[]){
 
 	/* Creazione indirizzo del server */
 	listener = socket(AF_INET, SOCK_STREAM, 0);
-	
-	printf("test: 1\n");
-	fflush(stdout);
 
 	/* Creazione indirizzo di bind */
 	memset(&my_addr, 0, sizeof(my_addr));
