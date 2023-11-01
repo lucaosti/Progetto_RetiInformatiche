@@ -184,6 +184,7 @@ void elencoComandeTavolo(char* buffer, int tavolo) {
 // Inserisce in base alla lettera c, il socket id nell'array relativo
 int inserisci(int i, char c) {
 	int j = 0;
+	int ret = 1;
 	phtread_mutex_lock(socket_lock);
 	switch (c)
 	{
@@ -213,12 +214,12 @@ int inserisci(int i, char c) {
 		break;
 	
 	default:
-		phtread_mutex_unlock(socket_lock);
-		return -1;
+		ret = -1;
+		break;
 	}
 
 	phtread_mutex_unlock(socket_lock);
-	return 1;
+	return ret;
 }
 
 // Prende i parametri della find ed inserisce nel buffer le disponibilità
