@@ -185,7 +185,7 @@ void elencoComandeTavolo(char* buffer, int tavolo) {
 int inserisci(int i, char c) {
 	int j = 0;
 	int ret = 1;
-	phtread_mutex_lock(socket_lock);
+	pthread_mutex_lock(&socket_lock);
 	switch (c)
 	{
 	case 'c': // Client
@@ -465,7 +465,7 @@ void *gestisciTd(void* i) {
 
 		// Notifico tutti i KD
 		strcpy(buffer, "Nuova comanda!");
-		phtread_mutex_lock(socket_lock);
+		pthread_mutex_lock(&socket_lock);
 		for(indice = 0; indice < nMaxKd; indice++) {
 			if(socket_kd[indice] != -1) {
 				invia(socket_kd[indice], buffer);
