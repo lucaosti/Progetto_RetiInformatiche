@@ -3,6 +3,7 @@
 
 #include "strutture.h"
 #include "funzioni.h"
+#include <time.h>
 
 // Carica i tavoli dal file e li mette nell'array
 void caricaTavoli() {
