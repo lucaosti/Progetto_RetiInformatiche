@@ -60,6 +60,9 @@ int main(int argc, char* argv[]){
 	my_addr.sin_port = htons(portNumber);
 	my_addr.sin_addr.s_addr = INADDR_ANY;
 
+	printf("test: 1\n");
+	fflush(stdout);
+
 	/* Aggancio */
 	ret = bind(listener, (struct sockaddr*)&my_addr, sizeof(my_addr));
 	if(ret < 0){
@@ -83,7 +86,7 @@ int main(int argc, char* argv[]){
 
 	// Ciclo principale
 	for(;;) {
-		printf("for sempre");
+		printf("test: for sempre\n");
 		fflush(stdout);
 		//Imposto il set di socket da monitorare in lettura per la select()
 		read_fds = master;
