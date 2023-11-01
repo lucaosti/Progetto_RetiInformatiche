@@ -112,18 +112,18 @@ void elencoComande(char* buffer, enum stato_comanda stato) {
 	pthread_mutex_lock(&comande_lock);
 	for(i = 0; i < nTavoli; i++) {
 		struct comanda *c;
-		c = &comande[i];
+		c = comande[i];
 		while(c != NULL) {
 			strcat(buffer, "com");
 			strcat(buffer, c->nComanda);
 			strcat(buffer, " T");
-			strcat(buffer, i);
+			strcat(buffer, itoa(i));
 			strcat(buffer, "\n");
 			for(j = 0; j < nPiatti; j++) {
 				if(c->quantita[j] != 0) {
 					strcat(buffer, menu[j]->codice);
 					strcat(buffer, " ");
-					strcat(buffer, c->quantita[j]);
+					strcat(buffer, itoa(c->quantita[j]));
 					strcat(buffer, "\n");
 				}
 			}
@@ -140,10 +140,10 @@ void elencoComandeTavolo(char* buffer, int tavolo) {
 	int i;
 	pthread_mutex_lock(&comande_lock);
 	struct comanda *c;
-	c = &comande[tavolo];
+	c = comande[tavolo];
 	while(c != NULL) {
 		strcat(buffer, "com");
-		strcat(buffer, c->nComanda);
+		strcat(buffer, itoa(c->nComanda));
 		strcat(buffer, " ");
 		strcat(buffer, c->stato);
 		strcat(buffer, "\n");
@@ -151,7 +151,7 @@ void elencoComandeTavolo(char* buffer, int tavolo) {
 			if(c->quantita[i] != 0) {
 				strcat(buffer, menu[i]->codice);
 				strcat(buffer, " ");
-				strcat(buffer, c->quantita[i]);
+				strcat(buffer, itoa(c->quantita[i]));
 				strcat(buffer, "\n");
 			}
 		}
@@ -212,7 +212,7 @@ void cercaDisponibilita(int nPers, time_t dataora, char* buffer, char* disponibi
 			disponibilita[index] = 0;
 			continue;
 		}
-		struct prenotazione* punta = &prenotazioni[index];
+		struct prenotazione* punta = prenotazioni[index];
 		char esito = 1; // Non esiste bool
 		while(punta->prossima != NULL) {
 			if(punta->data_ora == dataora){
