@@ -29,14 +29,14 @@ int main(int argc, char* argv[]){
 	// Carico dai file "tavoli.txt" e "menu.txt"
 	caricaTavoli();
 	caricaMenu();
+	
+	printf(tavoli[3].descrizione);
+	fflush(stdout);
 
 	/* --- Inizio ---*/
 
 	// Stampo a video il "benvenuto" del server
 	printf(BENVENUTO_SERVER);
-	fflush(stdout);
-	
-	printf(tavoli[3].descrizione);
 	fflush(stdout);
 
 	struct sockaddr_in my_addr, cl_addr;
