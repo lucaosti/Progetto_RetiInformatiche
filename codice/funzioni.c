@@ -303,9 +303,15 @@ void *gestisciClient(void* i) {
 
 		token = strtok(NULL, " ");
 
-		strptime(buffer, "%Y-%m-%d %H", &tm_);
-		dataora = mktime(&tm_);
-		
+		if (strptime(buffer, "%Y-%m-%d %H", &tm_) != NULL) {
+			dataora = mktime(&tm_);
+		}
+		else {
+			printf("Data inserita non valida\n");
+			fflush(stdout);
+			return NULL;
+		}
+
 		char disponibilita[nTavoli];
 
 retry:
