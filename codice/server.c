@@ -28,6 +28,8 @@ int main(int argc, char* argv[]){
 
 	// Carico dai file "tavoli.txt" e "menu.txt"
 	caricaTavoli();
+	printf("ciao!");
+	fflush(stdout);
 	caricaMenu();
 
 	/* --- Inizio ---*/
