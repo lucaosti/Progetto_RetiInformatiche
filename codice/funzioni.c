@@ -218,7 +218,7 @@ int inserisci(int i, char c) {
 		break;
 	}
 
-	phtread_mutex_unlock(socket_lock);
+	pthread_mutex_unlock(&socket_lock);
 	return ret;
 }
 
@@ -471,7 +471,7 @@ void *gestisciTd(void* i) {
 				invia(socket_kd[indice], buffer);
 			}
 		}
-		phtread_mutex_unlock(socket_lock);
+		pthread_mutex_unlock(&socket_lock);
 	}
 	else if(strcmp(token, "conto")) { // Terzo caso
 		int indice;
