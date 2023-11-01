@@ -264,7 +264,7 @@ void cercaDisponibilita(int nPers, time_t dataora, char* buffer, char* disponibi
 // Gestisce UNA richiesta da parte di UN client
 void *gestisciClient(void* i) {
 	int* sId = (int*)i;
-	int socketId = (int)sId;
+	int socketId = *sId;
 	char buffer[BUFFER_SIZE];
 
 	// Ricevi il messaggio
@@ -291,17 +291,17 @@ void *gestisciClient(void* i) {
 		// Parsa la stringa e cerca i tavoli liberi
 		token = strtok(NULL, " ");
 		char cognome[64];
-		strcpy(cognome, token);
+		strcpy(cognome, buffer);
 
 		token = strtok(NULL, " ");
 		int nPers;
-		strcpy(nPers, token);
+		strcpy(nPers, buffer);
 
 		token = strtok(NULL, " ");
 		time_t dataora;
 
 		struct tm tm;
-		if ( strptime(token, "%Y-%m-%d %H", &tm) != NULL ) {
+		if ( strptime(buffer, "%Y-%m-%d %H", &tm) != NULL ) {
 			dataora = mktime(&tm);
 		}
 		else {
@@ -329,12 +329,12 @@ retry:
 			fflush(stdout);
 		}
 
-		if(strcmp(token, "book")) { // Caso book
+		if(strcmp(buffer, "book")) { // Caso book
 			token = strtok(NULL, " ");
 			
 			// Converto l'indice in tavolo
 			int tavolo = 0;
-			int v = atoi(token);
+			int v = atoi(buffer);
 			for(tavolo = 0; tavolo <= nTavoli && !v; tavolo++){
 				while(!disponibilita[tavolo])
 					tavolo++;
@@ -375,7 +375,7 @@ retry:
 			invia(socketId, buffer);
 		}
 	}
-	else if(strcmp(token, "book")) {
+	else if(strcmp(buffer, "book")) {
 		// Errore, non sono state fatte precedenti find
 		strcpy(buffer, "Errore, non sono state fatte precedenti find");
 		invia(socketId, buffer);
@@ -391,7 +391,7 @@ retry:
 // Gestisce UNA richiesta da parte di UN table device
 void *gestisciTd(void* i) {
 	int* sId = (int*)i;
-	int socketId = (int)sId;
+	int socketId = *sId;
 	char buffer[BUFFER_SIZE];
 	char numeroString[32];
 	
@@ -512,7 +512,7 @@ void *gestisciTd(void* i) {
 // Gestisce UNA richiesta da parte di UN kitchen device
 void *gestisciKd(void* i) {
 	int* sId = (int*)i;
-	int socketId = (int)sId;
+	int socketId = *sId;
 	char buffer[BUFFER_SIZE];
 	char numeroString[32];
 
