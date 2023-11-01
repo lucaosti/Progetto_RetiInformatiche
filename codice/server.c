@@ -257,7 +257,7 @@ int main(int argc, char* argv[]){
 						// Creo il thread
 						(void) pthread_create(p->t, NULL, gestisciClient, &i);
 						// Creo un puntatore per inserirlo in lista
-						struct lis_thread *inserisciThread = &listaThread;
+						struct lis_thread *inserisciThread = listaThread;
 						while(inserisciThread->prossimo != NULL)
 							inserisciThread = inserisciThread->prossimo;
 						// Lo inserisco
@@ -269,7 +269,7 @@ int main(int argc, char* argv[]){
 						// Creo il thread
 						(void) pthread_create(p->t, NULL, gestisciTd, &i);
 						// Creo un puntatore per inserirlo in lista
-						struct lis_thread *inserisciThread = &listaThread;
+						struct lis_thread *inserisciThread = listaThread;
 						while(inserisciThread->prossimo != NULL)
 							inserisciThread = inserisciThread->prossimo;
 						// Lo inserisco
@@ -281,7 +281,7 @@ int main(int argc, char* argv[]){
 						// Creo il thread
 						(void) pthread_create(p->t, NULL, gestisciKd, &i);
 						// Creo un puntatore per inserirlo in lista
-						struct lis_thread *inserisciThread = &listaThread;
+						struct lis_thread *inserisciThread = listaThread;
 						while(inserisciThread->prossimo != NULL)
 							inserisciThread = inserisciThread->prossimo;
 						// Lo inserisco
