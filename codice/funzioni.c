@@ -266,7 +266,6 @@ void *gestisciClient(void* i) {
 	int* sId = (int*)i;
 	int socketId = *sId;
 	char buffer[BUFFER_SIZE];
-	char numeroString[BUFFER_SIZE];
 
 	// Ricevi il messaggio
 	int ret;
