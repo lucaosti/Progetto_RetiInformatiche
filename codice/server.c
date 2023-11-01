@@ -29,9 +29,6 @@ int main(int argc, char* argv[]){
 	// Carico dai file "tavoli.txt" e "menu.txt"
 	caricaTavoli();
 	caricaMenu();
-	
-	printf("prova: %s\n",tavoli[3].nPosti);
-	fflush(stdout);
 
 	/* --- Inizio ---*/
 
