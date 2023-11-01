@@ -19,7 +19,7 @@
 #define nMaxTd nTavoli
 #define nMaxKd 8
 #define BUFFER_SIZE 1024
-#define BENVENUTO_SERVER "Benvenuto nel Server!\nCOMANDI DISPONIBILI:\n1) stat ->  restituisce le comande del giorno per tavolo o per status ('a', 'p' o 's') \n2) stop ->  il server si arresta (solo se non ci sono comande in attesa o in preparazione\n"
+#define BENVENUTO_SERVER "BENVENUTO NEL SERVER!\nCOMANDI DISPONIBILI:\n1) stat ->  restituisce le comande del giorno per tavolo o per status ('a', 'p' o 's') \n2) stop ->  il server si arresta (solo se non ci sono comande in attesa o in preparazione\n"
 
 /*           Gestione dei tavoli 
    ---------------------------------------
