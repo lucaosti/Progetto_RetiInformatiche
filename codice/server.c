@@ -53,15 +53,15 @@ int main(int argc, char* argv[]){
 
 	/* Creazione indirizzo del server */
 	listener = socket(AF_INET, SOCK_STREAM, 0);
+	
+	printf("test: 1\n");
+	fflush(stdout);
 
 	/* Creazione indirizzo di bind */
 	memset(&my_addr, 0, sizeof(my_addr));
 	my_addr.sin_family = AF_INET;
 	my_addr.sin_port = htons(portNumber);
 	my_addr.sin_addr.s_addr = INADDR_ANY;
-
-	printf("test: 1\n");
-	fflush(stdout);
 
 	/* Aggancio */
 	ret = bind(listener, (struct sockaddr*)&my_addr, sizeof(my_addr));
