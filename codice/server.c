@@ -22,6 +22,7 @@ int main(int argc, char* argv[]){
 	pthread_mutex_init(&prenotazioni_lock, NULL);
 	pthread_mutex_init(&comande_lock, NULL);
 	pthread_mutex_init(&listaThread_lock, NULL);
+	pthread_mutex_init(&socket_lock, NULL);
 
 	numeroComanda = 0;
 
