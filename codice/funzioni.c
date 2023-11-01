@@ -290,7 +290,7 @@ void *gestisciClient(void* i) {
 	token = strtok(buffer, " ");
 	if(strcmp(token, "find")) { // Primo caso
 		// Parsa la stringa e cerca i tavoli liberi
-		struct tm tm;
+		struct tm tm_;
 		char cognome[64];
 		int nPers;
 		time_t dataora;
@@ -303,15 +303,9 @@ void *gestisciClient(void* i) {
 
 		token = strtok(NULL, " ");
 
-		if ( strptime(buffer, "%Y-%m-%d %H", &tm) != NULL ) {
-			dataora = mktime(&tm);
-		}
-		else {
-			printf("Data inserita non valida\n");
-			fflush(stdout);
-			return NULL;
-		}
-
+		strptime(buffer, "%Y-%m-%d %H", &tm_);
+		dataora = mktime(&tm_);
+		
 		char disponibilita[nTavoli];
 
 retry:
