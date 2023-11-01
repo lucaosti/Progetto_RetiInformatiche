@@ -116,7 +116,8 @@ void elencoComande(char* buffer, enum stato_comanda stato) {
 		c = comande[i];
 		while(c != NULL) {
 			strcat(buffer, "com");
-			strcat(buffer, c->nComanda);
+			sprintf(numeroString, "%d", c->nComanda);
+			strcat(buffer, numeroString);
 			strcat(buffer, " T");
 			sprintf(numeroString, "%d", i);
 			strcat(buffer, numeroString);
