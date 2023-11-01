@@ -108,6 +108,7 @@ int ricevi(int j, int lunghezza,char* buffer) {
 // Prende uno stato_comanda e inserisce dentro il buffer tutte le informazioni
 // delle comande in quello stato di qualunque tavolino
 void elencoComande(char* buffer, enum stato_comanda stato) {
+	char numeroString[32];
 	int i, j;
 	pthread_mutex_lock(&comande_lock);
 	for(i = 0; i < nTavoli; i++) {
@@ -117,13 +118,15 @@ void elencoComande(char* buffer, enum stato_comanda stato) {
 			strcat(buffer, "com");
 			strcat(buffer, c->nComanda);
 			strcat(buffer, " T");
-			strcat(buffer, itoa(i));
+			sprintf(numeroString, "%d", i);
+			strcat(buffer, numeroString);
 			strcat(buffer, "\n");
 			for(j = 0; j < nPiatti; j++) {
 				if(c->quantita[j] != 0) {
 					strcat(buffer, menu[j]->codice);
 					strcat(buffer, " ");
-					strcat(buffer, itoa(c->quantita[j]));
+					sprintf(numeroString, "%d", c->quantita[j]);
+					strcat(buffer, numeroString);
 					strcat(buffer, "\n");
 				}
 			}
@@ -137,13 +140,15 @@ void elencoComande(char* buffer, enum stato_comanda stato) {
 // Prende un tavolo e inserisce dentro il buffer tutte le informazioni
 // delle comande inerenti a quel tavolino
 void elencoComandeTavolo(char* buffer, int tavolo) {
+	char numeroString[32];
 	int i;
 	pthread_mutex_lock(&comande_lock);
 	struct comanda *c;
 	c = comande[tavolo];
 	while(c != NULL) {
 		strcat(buffer, "com");
-		strcat(buffer, itoa(c->nComanda));
+		sprintf(numeroString, "%d", c->nComanda);
+		strcat(buffer, numeroString);
 		strcat(buffer, " ");
 		strcat(buffer, c->stato);
 		strcat(buffer, "\n");
@@ -151,7 +156,8 @@ void elencoComandeTavolo(char* buffer, int tavolo) {
 			if(c->quantita[i] != 0) {
 				strcat(buffer, menu[i]->codice);
 				strcat(buffer, " ");
-				strcat(buffer, itoa(c->quantita[i]));
+				sprintf(numeroString, "%d", c->quantita[i]);
+				strcat(buffer, numeroString);
 				strcat(buffer, "\n");
 			}
 		}
@@ -203,6 +209,7 @@ int inserisci(int i, char c) {
 
 // Prende i parametri della find ed inserisce nel buffer le disponibilità
 void cercaDisponibilita(int nPers, time_t dataora, char* buffer, char* disponibilita) {
+	char numeroString[32];
 	int index;
 	pthread_mutex_lock(&tavoli_lock);
 	pthread_mutex_lock(&prenotazioni_lock);
@@ -224,9 +231,11 @@ void cercaDisponibilita(int nPers, time_t dataora, char* buffer, char* disponibi
 			continue;
 		// Tavolo buono
 		disponibilita[index] = 1;
-		strcat(buffer, itoa(numero));
+		sprintf(numeroString, "%d", numero);
+		strcat(buffer, numeroString);
 		strcat(buffer, ") T");
-		strcat(buffer, itoa(index));
+		sprintf(numeroString, "%d", index);
+		strcat(buffer, numeroString);
 		strcat(buffer, " ");
 		strcat(buffer, tavoli[index].sala);
 		strcat(buffer, " ");
@@ -370,6 +379,7 @@ void *gestisciTd(void* i) {
 	int* sId = (int*)i;
 	int socketId = sId;
 	char buffer[BUFFER_SIZE];
+	char numeroString[32];
 	
 	// Trovo il tavolo collegato al TD
 	int tavolo;
@@ -460,9 +470,11 @@ void *gestisciTd(void* i) {
 
 				strcat(buffer, menu[indice]->codice);
 				strcat(buffer, " ");
-				strcat(buffer, itoa(punta->quantita[indice]));
+				sprintf(numeroString, "%d", punta->quantita[indice]);
+				strcat(buffer, numeroString);
 				strcat(buffer, " ");
-				strcat(buffer, itoa(punta->quantita[indice]*menu[indice]->prezzo));
+				sprintf(numeroString, "%d", punta->quantita[indice]*menu[indice]->prezzo);
+				strcat(buffer, numeroString);
 				strcat(buffer, "\n");
 				totale += punta->quantita[indice] * menu[indice]->prezzo;
 			}
@@ -488,6 +500,7 @@ void *gestisciKd(void* i) {
 	int* sId = (int*)i;
 	int socketId = sId;
 	char buffer[BUFFER_SIZE];
+	char numeroString[32];
 
 	// Ricevi il messaggio
 	int ret;
@@ -534,16 +547,19 @@ void *gestisciKd(void* i) {
 		com->stato = in_preparazione;
 
 		strcpy(buffer, "com");
-		strcat(buffer, itoa(com->nComanda));
+		sprintf(numeroString, "%d", com->nComanda);
+		strcat(buffer, numeroString);
 		strcat(buffer, "\t");
 		strcat(buffer, "T");
-		strcat(buffer, itoa(nTav));
+		sprintf(numeroString, "%d", nTav);
+		strcat(buffer, numeroString);
 		strcat(buffer, "\n");
 		for(indice = 0; indice < nPiatti; indice++) {
 			if(com->quantita[indice] != 0) {
 				strcat(buffer, menu[indice]->codice);
 				strcat(buffer, "\t");
-				strcat(buffer, itoa(com->quantita[indice]));
+				sprintf(numeroString, "%d", com->quantita[indice]);
+				strcat(buffer, numeroString);
 				strcat(buffer, "\n");
 			}
 		}
@@ -560,16 +576,19 @@ void *gestisciKd(void* i) {
 			while(punta != NULL){
 				if(punta->kd == socketId && punta->stato == in_preparazione) {
 					strcat(buffer, "com");
-					strcat(buffer, itoa(punta->nComanda));
+					sprintf(numeroString, "%d", punta->nComanda);
+					strcat(buffer, numeroString);
 					strcat(buffer, "\t");
 					strcat(buffer, "T");
-					strcat(buffer, itoa(indice));
+					sprintf(numeroString, "%d", indice);
+					strcat(buffer, numeroString);
 					strcat(buffer, "\n");
 					for(indice2 = 0; indice2 < nPiatti; indice2++) {
 						if(punta->quantita[indice2] != 0) {
 							strcat(buffer, menu[indice2]->codice);
 							strcat(buffer, "\t");
-							strcat(buffer, itoa(punta->quantita[indice2]));
+							sprintf(numeroString, "%d", punta->quantita[indice2]);
+							strcat(buffer, numeroString);
 							strcat(buffer, "\n");
 						}
 					}
