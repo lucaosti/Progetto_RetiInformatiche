@@ -35,13 +35,13 @@ int inserisci(int i, char c);
 void cercaDisponibilita(int nPers, time_t dataora, char* buffer, char* disponibilita);
 
 // Gestisce UNA richiesta da parte di un client
-void *gestisciClient(void* i);
+void *gestisciClient(int i);
 
 // Gestisce UNA richiesta da parte di un table device
-void *gestisciTd(void* i);
+void *gestisciTd(int i);
 
 // Gestisce UNA richiesta da parte di un kitchen device
-void *gestisciKd(void* i);
+void *gestisciKd(int i);
 
 // Dealloca tutte le strutture
 void deallocaStrutture();
