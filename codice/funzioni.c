@@ -17,6 +17,9 @@ void caricaTavoli() {
        exit(-1);
    	}
 
+	printf("ciao!");
+	fflush(stdout);
+
 	for(i = 0; i < nTavoli; i++){
    		fgets(str, sizeof(str), f);
    		buf = strtok(str, " ");
