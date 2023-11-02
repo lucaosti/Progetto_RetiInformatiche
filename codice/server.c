@@ -42,6 +42,8 @@ int main(int argc, char* argv[]){
 	char bufferOut[BUFFER_SIZE];
 	int portNumber = atoi(argv[1]);
 
+	printf("test: for sempre\n");
+	fflush(stdout);
 	// Set di descrittori da monitorare
 	fd_set master;
 
@@ -54,8 +56,6 @@ int main(int argc, char* argv[]){
 	/* Creazione indirizzo del server */
 	listener = socket(AF_INET, SOCK_STREAM, 0);
 
-	printf("test: for sempre\n");
-		fflush(stdout);
 
 	/* Creazione indirizzo di bind */
 	memset(&my_addr, 0, sizeof(my_addr));
