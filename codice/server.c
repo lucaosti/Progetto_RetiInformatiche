@@ -256,10 +256,8 @@ int main(int argc, char* argv[]){
 					switch(tipo) {
 						case -1: // Si sta presentando
 							riceviLunghezza(i, &lmsg);
-							ret = ricevi(i, lmsg, bufferOut);
+							ret = ricevi(i, lmsg, &bufferOut);
 							printf(bufferOut);
-							fflush(stdout);
-							printf("ANO\n");
 							fflush(stdout);
 							ret = inserisci(i, bufferOut[0]);
 							if(ret < 0) {
