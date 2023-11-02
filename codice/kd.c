@@ -73,7 +73,7 @@ int main(int argc, char* argv[]){
 	}
 
 	// Comunico al server il tipo "kitched device" = "k"
-	invia(sd, "k\n");
+	invia(sd, "k");
 
 	// Reset dei descrittori
 	FD_ZERO(&master);
