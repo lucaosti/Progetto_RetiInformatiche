@@ -20,7 +20,7 @@ void caricaTavoli() {
 	for(i = 0; i < nTavoli; i++){
 		fgets(buffer, sizeof(buffer), f);
 		serverCommand = strtok(buffer, " ");
-		tavoli[i].nPosti = atoi(*serverCommand);
+		tavoli[i].nPosti = atoi(serverCommand);
 		serverCommand = strtok(NULL, " ");
 		strcpy(tavoli[i].sala, serverCommand);
 		serverCommand = strtok(NULL, " ");
