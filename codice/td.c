@@ -46,7 +46,6 @@ int main(int argc, char* argv[]){
 
 	struct sockaddr_in server_addr;
 	char buffer[BUFFER_SIZE];
-	char *tdCommand;
 
 	// Set di descrittori da monitorare
 	fd_set master;
