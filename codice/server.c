@@ -30,8 +30,6 @@ int main(int argc, char* argv[]){
 	caricaTavoli();
 	caricaMenu();
 
-	printf(tavoli[2].descrizione);
-	fflush(stdout);
 	printf(tavoli[2].nPosti);
 	fflush(stdout);
 	printf(tavoli[2].numero);
