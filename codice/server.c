@@ -258,6 +258,8 @@ int main(int argc, char* argv[]){
 					switch(tipo) {
 						case -1: // Si sta presentando
 							ret = ricevi(i, 1, bufferOut);
+							printf(bufferOut);
+							fflush(stdout);
 							ret = inserisci(i, bufferOut[0]);
 							if(ret < 0) {
 								printf("Presentazione non riuscita: come primo messaggio non è arrivato il tipo.\n");
