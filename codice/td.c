@@ -74,7 +74,8 @@ int main(int argc, char* argv[]){
 	}
 
 	// Comunico al server il tipo "table device" = "t"
-	invia(sd, "t");
+	strcpy(buffer, "t");
+	invia(sd, &buffer);
 
 	// Reset dei descrittori
 	FD_ZERO(&master);

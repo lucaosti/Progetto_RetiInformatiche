@@ -73,7 +73,8 @@ int main(int argc, char* argv[]){
 	}
 
 	// Comunico al server il tipo "client" = "c"
-	invia(sd, "c");
+	strcpy(buffer, "c");
+	invia(sd, &buffer);
 
 	// Reset dei descrittori
     FD_ZERO(&master);
