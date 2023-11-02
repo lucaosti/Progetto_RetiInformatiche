@@ -85,6 +85,7 @@ int main(int argc, char* argv[]){
 	for(;;) {
 		printf("test: for sempre\n");
 		fflush(stdout);
+
 		//Imposto il set di socket da monitorare in lettura per la select()
 		read_fds = master;
 
@@ -240,11 +241,11 @@ int main(int argc, char* argv[]){
 							tipo = 0;
 							break;
 						}
-						if (socket_td[j%nMaxTd] == i){
+						else if (socket_td[j%nMaxTd] == i){
 							tipo = 1;
 							break;
 						}
-						if (socket_kd[j%nMaxKd] == i){
+						else if (socket_kd[j%nMaxKd] == i){
 							tipo = 2;
 							break;
 						}
@@ -253,57 +254,57 @@ int main(int argc, char* argv[]){
 					struct lis_thread *p;
 					struct lis_thread *inserisciThread;
 					switch(tipo) {
-					case -1: // Si sta presentando
-						ret = ricevi(i, 1, bufferOut);
-						ret = inserisci(i, bufferOut[0]);
-						if(ret < 0) {
-							printf("Presentazione non riuscita: come primo messaggio non è arrivato il tipo.\n");
-							fflush(stdout);
-						}
-						break;
-					case 0: // Client che vuole utilizzare servizi
-						// Creo un nuovo elemento della lista di thread e lo alloco
-						p = malloc(sizeof(struct lis_thread));
-						p->t = malloc(sizeof(pthread_t));
-						// Creo il thread
-						(void) pthread_create(p->t, NULL, gestisciClient, (void*)&i);
-						// Creo un puntatore per inserirlo in lista
-						inserisciThread = listaThread;
-						while(inserisciThread->prossimo != NULL)
-							inserisciThread = inserisciThread->prossimo;
-						// Lo inserisco
-						inserisciThread->prossimo = p;
-						break;
-					case 1: // Table device che vuole utilizzare servizi
-						// Creo un nuovo elemento della lista di thread e lo alloco
-						p = malloc(sizeof(struct lis_thread));
-						p->t = malloc(sizeof(pthread_t));
-						// Creo il thread
-						(void) pthread_create(p->t, NULL, gestisciTd, (void*)&i);
-						// Creo un puntatore per inserirlo in lista
-						inserisciThread = listaThread;
-						while(inserisciThread->prossimo != NULL)
-							inserisciThread = inserisciThread->prossimo;
-						// Lo inserisco
-						inserisciThread->prossimo = p;
-						break;
-					case 2: // Kitchen device che vuole utilizzare servizi
-						// Creo un nuovo elemento della lista di thread e lo alloco
-						p = malloc(sizeof(struct lis_thread));
-						p->t = malloc(sizeof(pthread_t));
-						// Creo il thread
-						(void) pthread_create(p->t, NULL, gestisciKd, (void*)&i);
-						// Creo un puntatore per inserirlo in lista
-						inserisciThread = listaThread;
-						while(inserisciThread->prossimo != NULL)
-							inserisciThread = inserisciThread->prossimo;
-						// Lo inserisco
-						inserisciThread->prossimo = p;
-						break;
-					default:
-						perror("Errore nell'identificare il socket\n");
-						exit(-1);
-						break;
+						case -1: // Si sta presentando
+							ret = ricevi(i, 1, bufferOut);
+							ret = inserisci(i, bufferOut[0]);
+							if(ret < 0) {
+								printf("Presentazione non riuscita: come primo messaggio non è arrivato il tipo.\n");
+								fflush(stdout);
+							}
+							break;
+						case 0: // Client che vuole utilizzare servizi
+							// Creo un nuovo elemento della lista di thread e lo alloco
+							p = malloc(sizeof(struct lis_thread));
+							p->t = malloc(sizeof(pthread_t));
+							// Creo il thread
+							(void) pthread_create(p->t, NULL, gestisciClient, (void*)&i);
+							// Creo un puntatore per inserirlo in lista
+							inserisciThread = listaThread;
+							while(inserisciThread->prossimo != NULL)
+								inserisciThread = inserisciThread->prossimo;
+							// Lo inserisco
+							inserisciThread->prossimo = p;
+							break;
+						case 1: // Table device che vuole utilizzare servizi
+							// Creo un nuovo elemento della lista di thread e lo alloco
+							p = malloc(sizeof(struct lis_thread));
+							p->t = malloc(sizeof(pthread_t));
+							// Creo il thread
+							(void) pthread_create(p->t, NULL, gestisciTd, (void*)&i);
+							// Creo un puntatore per inserirlo in lista
+							inserisciThread = listaThread;
+							while(inserisciThread->prossimo != NULL)
+								inserisciThread = inserisciThread->prossimo;
+							// Lo inserisco
+							inserisciThread->prossimo = p;
+							break;
+						case 2: // Kitchen device che vuole utilizzare servizi
+							// Creo un nuovo elemento della lista di thread e lo alloco
+							p = malloc(sizeof(struct lis_thread));
+							p->t = malloc(sizeof(pthread_t));
+							// Creo il thread
+							(void) pthread_create(p->t, NULL, gestisciKd, (void*)&i);
+							// Creo un puntatore per inserirlo in lista
+							inserisciThread = listaThread;
+							while(inserisciThread->prossimo != NULL)
+								inserisciThread = inserisciThread->prossimo;
+							// Lo inserisco
+							inserisciThread->prossimo = p;
+							break;
+						default:
+							perror("Errore nell'identificare il socket\n");
+							exit(-1);
+							break;
 					}
 				}
 			}

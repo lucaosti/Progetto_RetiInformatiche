@@ -13,7 +13,7 @@ void caricaTavoli() {
 	f = fopen("../txts/tavoli.txt","r");
 	
 	if (f == NULL){
-       printf("Errore! Apertura file tavoli.txt non riuscita");
+       printf("Errore! Apertura file tavoli.txt non riuscita\n");
        exit(-1);
    	}
 
@@ -41,7 +41,7 @@ void caricaMenu() {
 	f = fopen("../txts/menu.txt","r");
 	
 	if (f == NULL){
-       printf("Errore! Apertura file menu.txt non riuscita");
+       printf("Errore! Apertura file menu.txt non riuscita\n");
        exit(-1);
    	}
 
@@ -99,7 +99,7 @@ int riceviLunghezza(int j, int *lmsg) {
 }
 
 // Riceve dal socket in input il messaggio e lo mette dentro buffer
-int ricevi(int j, int lunghezza,char* buffer) {
+int ricevi(int j, int lunghezza, char* buffer) {
 	int ret;
 	ret = recv(j, (void*)buffer, lunghezza, 0);
 	return ret;
@@ -275,11 +275,13 @@ void *gestisciClient(void* i) {
 	if(ret == 0) {
 		printf("Client disconnesso\n");
 		fflush(stdout);
+		return NULL;
 	}
 	ret = ricevi(socketId, lmsg, buffer);
 	if(ret == 0) {
 		printf("Client disconnesso\n");
 		fflush(stdout);
+		return NULL;
 	}
 
 	// Gestisce i tipi di comandi:
@@ -323,11 +325,13 @@ retry:
 		if(ret == 0) {
 			printf("Client disconnesso\n");
 			fflush(stdout);
+			return NULL;
 		}
 		ret = ricevi(socketId, lmsg, buffer);
 		if(ret == 0) {
 			printf("Client disconnesso\n");
 			fflush(stdout);
+			return NULL;
 		}
 
 		token = strtok(buffer, " ");
@@ -374,13 +378,13 @@ retry:
 			printf("Client %d ha effettuato una prenotazione\n", socketId);
 			fflush(stdout);
 
-			strcpy(buffer, "PRENOTAZIONE EFFETTUATA");
+			strcpy(buffer, "PRENOTAZIONE EFFETTUATA\n");
 			invia(socketId, buffer);
 		}
 	}
 	else if(strcmp(token, "book")) {
 		// Errore, non sono state fatte precedenti find
-		strcpy(buffer, "Errore, non sono state fatte precedenti find");
+		strcpy(buffer, "Errore, non sono state fatte precedenti find\n");
 		invia(socketId, buffer);
 	}
 	else {
@@ -409,19 +413,21 @@ void *gestisciTd(void* i) {
 	int lmsg = 0;
 	ret = riceviLunghezza(socketId, &lmsg);
 	if(ret == 0) {
-		printf("Client disconnesso\n");
+		printf("TD disconnesso\n");
 		fflush(stdout);
+		return NULL;
 	}
 	ret = ricevi(socketId, lmsg, buffer);
 	if(ret == 0) {
-		printf("Client disconnesso\n");
+		printf("TD disconnesso\n");
 		fflush(stdout);
+		return NULL;
 	}
 
 	// Gestisce i tipi di comandi:
 	//   - menu;
 	//   - comanda;
-	//   - conto;
+	//   - conto.
 	char* token;
 	token = strtok(buffer, " ");
 	if(strcmp(token, "menu") == 0) { // Primo caso
@@ -527,13 +533,15 @@ void *gestisciKd(void* i) {
 	int lmsg = 0;
 	ret = riceviLunghezza(socketId, &lmsg);
 	if(ret == 0) {
-		printf("Client disconnesso\n");
+		printf("KD disconnesso\n");
 		fflush(stdout);
+		return NULL;
 	}
 	ret = ricevi(socketId, lmsg, buffer);
 	if(ret == 0) {
-		printf("Client disconnesso\n");
+		printf("KD disconnesso\n");
 		fflush(stdout);
+		return NULL;
 	}
 
 	// Gestisce i tipi di comandi:
@@ -560,7 +568,7 @@ void *gestisciKd(void* i) {
 			}
 		}
 		if(nTav == -1) {
-			invia(socketId, "Non ci sono comande");
+			invia(socketId, "Non ci sono comande\n");
 		}
 
 		com->kd = socketId;
@@ -634,8 +642,8 @@ void *gestisciKd(void* i) {
 			punta = punta->prossima;
 
 		punta->stato = in_servizio;
-		invia(socketId, "COMANDA IN SERVIZIO");
-		invia(socket_td[nTav], "ORDINAZIONE IN ARRIVO");
+		invia(socketId, "COMANDA IN SERVIZIO\n");
+		invia(socket_td[nTav], "ORDINAZIONE IN ARRIVO\n");
 		pthread_mutex_unlock(&comande_lock);
 	}
 	else {

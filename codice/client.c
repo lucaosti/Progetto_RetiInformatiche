@@ -10,7 +10,6 @@
 
 #define BENVENUTO_CLIENT "find --> ricerca la disponibilità per una prenotazione\nbook --> invia una prenotazione\nesc --> termina il client\n"
 #define BUFFER_SIZE 1024
-#define nTavoli 16
 
 // Invia al socket in input il messaggio dentro buffer
 int invia(int j, char* buffer) {
@@ -27,12 +26,25 @@ int invia(int j, char* buffer) {
 	return ret;
 }
 
+// Ricevi dal socket in input la lunghezza del messaggio e lo mette dentro lmsg
+int riceviLunghezza(int j, int *lmsg) {
+	int ret;
+	ret = recv(j, (void*)lmsg, sizeof(uint16_t), 0);
+	return ret;
+}
+
+// Riceve dal socket in input il messaggio e lo mette dentro buffer
+int ricevi(int j, int lunghezza, char* buffer) {
+	int ret;
+	ret = recv(j, (void*)buffer, lunghezza, 0);
+	return ret;
+}
+
 int main(int argc, char* argv[]){
-	int ret, sd, i;
+	int ret, sd, i, lmsg;
 
 	struct sockaddr_in server_addr;
 	char buffer[BUFFER_SIZE];
-	char *clientCommand;
 
 	// Set di descrittori da monitorare
 	fd_set master;
@@ -59,6 +71,9 @@ int main(int argc, char* argv[]){
 		perror("Errore in fase di connessione: \n");
 		exit(1);
 	}
+
+	// Comunico al server il tipo "client" = "c"
+	invia(sd, "c\n");
 
 	// Reset dei descrittori
     FD_ZERO(&master);
@@ -89,12 +104,14 @@ int main(int argc, char* argv[]){
 		for(i = 0; i <= fdmax; i++) {
 			if(FD_ISSET(i, &read_fds)){
 				if(i == 0) { // Primo caso: comando da stdin
-					scanf(" %[^\n]", buffer); // Lo inserisco nel buffer e poi lo analizzo
-					clientCommand = strtok(buffer, " ");
-					
+					scanf(" %[^\n]", buffer); // Lo inserisco nel buffer
+					invia(sd, buffer);
 				}
 				else { // Secondo caso: il socket è sd
-
+					riceviLunghezza(sd, &lmsg);
+					ricevi(sd, lmsg, buffer);
+					printf(buffer);
+					fflush(stdout);
 				}
 			}
 		}
