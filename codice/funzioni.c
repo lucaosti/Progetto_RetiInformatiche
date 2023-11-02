@@ -9,25 +9,25 @@ void caricaTavoli() {
 	FILE *f;
 	char buffer[BUFFER_SIZE];
 	char* serverCommand;
-   	int i;
+	int i;
 	f = fopen("../txts/tavoli.txt","r");
 	
 	if (f == NULL){
        printf("Errore! Apertura file tavoli.txt non riuscita\n");
        exit(-1);
-   	}
+	}
 
 	for(i = 0; i < nTavoli; i++){
-   		fgets(buffer, sizeof(buffer), f);
-   		serverCommand = strtok(buffer, " ");
-   		tavoli[i].nPosti = atoi(serverCommand);
-   		serverCommand = strtok(NULL, " ");
-   		strcpy(tavoli[i].sala, serverCommand);
-   		serverCommand = strtok(NULL, " ");
-   		strcpy(tavoli[i].descrizione, serverCommand);
+		fgets(buffer, sizeof(buffer), f);
+		serverCommand = strtok(buffer, " ");
+		tavoli[i].nPosti = atoi(serverCommand);
+		serverCommand = strtok(NULL, " ");
+		strcpy(tavoli[i].sala, serverCommand);
+		serverCommand = strtok(NULL, " ");
+		strcpy(tavoli[i].descrizione, serverCommand);
 
 		tavoli[i].numero = i+1;
-   	}
+	}
 
 	fclose(f);
 }
@@ -43,7 +43,7 @@ void caricaMenu() {
 	if (f == NULL){
        printf("Errore! Apertura file menu.txt non riuscita\n");
        exit(-1);
-   	}
+	}
 
 	for(i = 0; i < nPiatti; i++) {
 		fgets(buffer, sizeof(buffer), f);
