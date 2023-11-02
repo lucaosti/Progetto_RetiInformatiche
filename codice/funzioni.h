@@ -45,3 +45,6 @@ void *gestisciKd(void* i);
 
 // Dealloca tutte le strutture
 void deallocaStrutture();
+
+// Trova il massimo tra 3 interi
+int max(v1, v2, v3);

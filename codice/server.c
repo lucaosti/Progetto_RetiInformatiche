@@ -235,7 +235,7 @@ int main(int argc, char* argv[]){
 					// Altrimenti, se l'ho trovato, so cosa è e lo gestisco mediante un thread, potrebbe essere una disconnessione.
 					int tipo = -1; // 0 = client; 1 = table device; 2 = kitchen device.
 					int j;
-					for(j = 0; j <= nMaxClient+nMaxTd+nMaxKd; j++) {
+					for(j = 0; j <= max(nMaxClient, nMaxTd, nMaxKd); j++) {
 						// Mutua esclusione
 						if (socket_client[j%nMaxClient] == i){
 							tipo = 0;

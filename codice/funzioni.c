@@ -683,3 +683,18 @@ void deallocaStrutture() {
 		}
 	}
 }
+
+// Trova il massimo tra 3 interi
+int max(int v1, int v2, int v3) {
+    int max_value = v1;
+
+    if (v2 > max_value) {
+        max_value = v2;
+    }
+
+    if (v3 > max_value) {
+        max_value = v3;
+    }
+
+    return max_value;
+}
