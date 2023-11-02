@@ -37,13 +37,13 @@ int main(int argc, char* argv[]){
 	fflush(stdout);
 
 	struct sockaddr_in my_addr, cl_addr;
+	printf("ANO\n");
+	fflush(stdout);
 	int ret, newfd, listener, addrlen, i;
 	char buffer[BUFFER_SIZE];
 	char bufferOut[BUFFER_SIZE];
 	int portNumber = atoi(argv[1]);
 
-	printf("ANO\n");
-	fflush(stdout);
 
 	// Set di descrittori da monitorare
 	fd_set master;
