@@ -66,6 +66,7 @@ int main(int argc, char* argv[]){
 	if(ret < 0){
 		perror("Bind non riuscita\n");
 		exit(0);
+		return -1;
 	}
 
 	/* Apro la coda */
