@@ -37,11 +37,11 @@ int main(int argc, char* argv[]){
 	fflush(stdout);
 
 	struct sockaddr_in my_addr, cl_addr;
-	printf("ANO\n");
-	fflush(stdout);
 	int ret, newfd, listener, addrlen, i;
 	char buffer[BUFFER_SIZE];
 	char bufferOut[BUFFER_SIZE];
+	printf("ANO\n");
+	fflush(stdout);
 	int portNumber = atoi(argv[1]);
 
 
