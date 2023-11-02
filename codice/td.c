@@ -104,6 +104,7 @@ int main(int argc, char* argv[]){
 		// Scorro ogni descrittore 'i'
 		for(i = 0; i <= fdmax; i++) {
 			if(FD_ISSET(i, &read_fds)){
+				strcpt(buffer, "");
 				if(i == 0) { // Primo caso: comando da stdin
 					scanf(" %[^\n]", buffer); // Lo inserisco nel buffer
 					if(strcmp(buffer, "help") == 0){
