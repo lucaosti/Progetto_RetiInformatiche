@@ -261,6 +261,7 @@ int main(int argc, char* argv[]){
 							if(ret < 0) {
 								printf("Presentazione non riuscita: come primo messaggio non è arrivato il tipo.\n");
 								fflush(stdout);
+								return -1;
 							}
 							break;
 						case 0: // Client che vuole utilizzare servizi
