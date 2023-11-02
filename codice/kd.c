@@ -86,8 +86,9 @@ int main(int argc, char* argv[]){
 	// Tengo traccia del nuovo fdmax
 	fdmax = sd;
 
-	// Stampo i comandi che il client può digitare
+	// Stampo i comandi che il kitchen device può digitare
 	printf(BENVENUTO_KD);
+	fflush(stdin);
 
 	for(;;){
 		// Inizializzo il set read_fds, manipolato dalla select()

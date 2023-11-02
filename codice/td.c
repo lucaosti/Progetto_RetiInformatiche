@@ -87,7 +87,7 @@ int main(int argc, char* argv[]){
 	// Tengo traccia del nuovo fdmax
 	fdmax = sd;
 
-	// Stampo i comandi che il client può digitare
+	// Stampo i comandi che il table device può digitare
 	printf(BENVENUTO_TD);
 	fflush(stdin);
 
