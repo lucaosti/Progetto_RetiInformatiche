@@ -254,6 +254,7 @@ int main(int argc, char* argv[]){
 					struct lis_thread *inserisciThread;
 					switch(tipo) {
 						case -1: // Si sta presentando
+							riceviLunghezza(i, NULL);
 							ret = ricevi(i, 1, bufferOut);
 							printf(bufferOut);
 							fflush(stdout);
