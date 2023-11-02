@@ -259,6 +259,8 @@ int main(int argc, char* argv[]){
 							ret = ricevi(i, lmsg, bufferOut);
 							printf(bufferOut);
 							fflush(stdout);
+							printf("ANO\n");
+							fflush(stdout);
 							ret = inserisci(i, bufferOut[0]);
 							if(ret < 0) {
 								printf("Presentazione non riuscita: come primo messaggio non è arrivato il tipo.\n");
