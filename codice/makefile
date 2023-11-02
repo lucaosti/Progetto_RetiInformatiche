@@ -1,7 +1,7 @@
 all: server client td kd
 
 server: server.c strutture.h funzioni.c funzioni.h
-	gcc -Wall -o server server.c funzioni.c
+	gcc -Wall -o server server.c funzioni.c -lpthread
 
 client: client.c
 	gcc -Wall -o client client.c
