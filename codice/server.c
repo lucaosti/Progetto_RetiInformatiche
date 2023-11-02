@@ -258,8 +258,8 @@ int main(int argc, char* argv[]){
 						case -1: // Si sta presentando
 							riceviLunghezza(i, &lmsg);
 							ret = ricevi(i, lmsg, &bufferOut);
-							printf(bufferOut);
-							fflush(stdout);
+							//printf(bufferOut);
+							//fflush(stdout);
 							ret = inserisci(i, bufferOut[0]);
 							if(ret < 0) {
 								printf("Presentazione non riuscita: come primo messaggio non è arrivato il tipo.\n");
