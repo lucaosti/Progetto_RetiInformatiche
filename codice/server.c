@@ -42,8 +42,9 @@ int main(int argc, char* argv[]){
 	char bufferOut[BUFFER_SIZE];
 	int portNumber = atoi(argv[1]);
 
-	printf("test: for sempre\n");
+	printf("ANO\n");
 	fflush(stdout);
+
 	// Set di descrittori da monitorare
 	fd_set master;
 
