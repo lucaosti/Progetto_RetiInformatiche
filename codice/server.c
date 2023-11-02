@@ -252,10 +252,11 @@ int main(int argc, char* argv[]){
 					
 					struct lis_thread *p;
 					struct lis_thread *inserisciThread;
+					int lmsg;
 					switch(tipo) {
 						case -1: // Si sta presentando
-							riceviLunghezza(i, NULL);
-							ret = ricevi(i, 1, bufferOut);
+							riceviLunghezza(i, &lmsg);
+							ret = ricevi(i, lmsg, bufferOut);
 							printf(bufferOut);
 							fflush(stdout);
 							ret = inserisci(i, bufferOut[0]);
