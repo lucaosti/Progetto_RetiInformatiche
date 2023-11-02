@@ -54,6 +54,9 @@ int main(int argc, char* argv[]){
 	/* Creazione indirizzo del server */
 	listener = socket(AF_INET, SOCK_STREAM, 0);
 
+	printf("test: for sempre\n");
+		fflush(stdout);
+
 	/* Creazione indirizzo di bind */
 	memset(&my_addr, 0, sizeof(my_addr));
 	my_addr.sin_family = AF_INET;
