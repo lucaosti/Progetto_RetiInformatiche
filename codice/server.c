@@ -40,9 +40,9 @@ int main(int argc, char* argv[]){
 	int ret, newfd, listener, addrlen, i;
 	char buffer[BUFFER_SIZE];
 	char bufferOut[BUFFER_SIZE];
+	int portNumber = atoi(argv[1]);
 	printf("ANO\n");
 	fflush(stdout);
-	int portNumber = atoi(argv[1]);
 
 
 	// Set di descrittori da monitorare
