@@ -85,9 +85,6 @@ int main(int argc, char* argv[]){
 
 	// Ciclo principale
 	for(;;) {
-		printf("test: for sempre\n");
-		fflush(stdout);
-
 		//Imposto il set di socket da monitorare in lettura per la select()
 		read_fds = master;
 
