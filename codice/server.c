@@ -30,11 +30,19 @@ int main(int argc, char* argv[]){
 	caricaTavoli();
 	caricaMenu();
 
-	printf(tavoli[2].nPosti);
-	fflush(stdout);
-	printf(tavoli[2].numero);
-	fflush(stdout);
-	printf(tavoli[2].sala);
+	char bufferprova[BUFFER_SIZE] = "";
+
+	for(indice = 0; indice < nTavoli; indice++){
+		strcat(bufferprova, itoa(tavoli[indice].nPosti));
+		strcat(bufferprova, "\n");
+		strcat(bufferprova, tavoli[indice].descrizione);
+		strcat(bufferprova, "\n");
+		strcat(bufferprova, itoa(tavoli[indice].numero));
+		strcat(bufferprova, "\n");
+		strcat(bufferprova, tavoli[indice].sala);
+		strcat(bufferprova, "\n");
+	}
+	printf(bufferprova);
 	fflush(stdout);
 
 	/* --- Inizio ---*/
