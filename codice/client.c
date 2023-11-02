@@ -12,11 +12,27 @@
 #define BUFFER_SIZE 1024
 #define nTavoli 16
 
+// Invia al socket in input il messaggio dentro buffer
+int invia(int j, char* buffer) {
+	int len = htonl(strlen(buffer));
+	int lmsg = htons(len);
+	int ret;
+
+	// Invio la dimensione del messaggio
+	ret = send(j, (void*) &lmsg, sizeof(uint16_t), 0);
+	// Invio il messaggio
+	ret = send(j, (void*) buffer, len, 0);
+
+	// Comunico l'esito
+	return ret;
+}
+
 int main(int argc, char* argv[]){
 	int ret, sd, i;
 
 	struct sockaddr_in server_addr;
 	char buffer[BUFFER_SIZE];
+	char *clientCommand;
 
 	// Set di descrittori da monitorare
 	fd_set master;
@@ -53,7 +69,7 @@ int main(int argc, char* argv[]){
     FD_SET(0, &master); 
 
 	// Tengo traccia del nuovo fdmax
-    fdmax = sd; 
+    fdmax = sd;
 
     // Stampo i comandi che il client può digitare
     printf(BENVENUTO_CLIENT);
@@ -73,7 +89,6 @@ int main(int argc, char* argv[]){
 		for(i = 0; i <= fdmax; i++) {
 			if(FD_ISSET(i, &read_fds)){
 				if(i == 0) { // Primo caso: comando da stdin
-					char *clientCommand;
 					scanf(" %[^\n]", buffer); // Lo inserisco nel buffer e poi lo analizzo
 					clientCommand = strtok(buffer, " ");
 					

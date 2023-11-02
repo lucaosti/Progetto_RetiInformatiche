@@ -110,7 +110,7 @@ int main(int argc, char* argv[]){
 					// Ci sono due casi:
 					//   - stat, con i relativi sotto casi;
 					//   - stop.
-					if(strcmp(buffer, "stat") == 0) { // Primo caso: stat
+					if(strcmp(serverCommand, "stat") == 0) { // Primo caso: stat
 						// Ci sono diversi casi
 						//   - Nessun parametro, restituisce lo stato di tutte le comande giornaliere;
 						//   - "T<nTavolo>"", restituisce tutte le comande relative al tavolo table relative al pasto in corso;
@@ -126,7 +126,7 @@ int main(int argc, char* argv[]){
 							printf("Comando 'stat' senza parametri inesistente!\n");
 							fflush(stdout);
 						}
-						else if(strcmp(buffer, "T") == 0) { // Chiede lo stato di un tavolo
+						else if(strcmp(serverCommand, "T") == 0) { // Chiede lo stato di un tavolo
 							// Cerco il numero del tavolo e stampo l'esito
 							serverCommand = strtok(NULL, "T");
 							int tavolo = atoi(serverCommand);
@@ -141,21 +141,21 @@ int main(int argc, char* argv[]){
 							printf(bufferOut);
 							fflush(stdout);
 						}
-						else if(strcmp(buffer, "a") == 0) { // Chiedo le comande in attesa
+						else if(strcmp(serverCommand, "a") == 0) { // Chiedo le comande in attesa
 							// Scorro tutto l'array di liste, nel caso sia in attesa, la aggiungo al buffer
 							elencoComande(bufferOut, in_attesa);
 
 							printf(bufferOut);
 							fflush(stdout);
 						}
-						else if(strcmp(buffer, "p") == 0) { // Chiedo le comande in preparazione
+						else if(strcmp(serverCommand, "p") == 0) { // Chiedo le comande in preparazione
 							// Scorro tutto l'array di liste, nel caso sia in preparazione, la aggiungo al buffer
 							elencoComande(bufferOut, in_preparazione);
 
 							printf(bufferOut);
 							fflush(stdout);
 						}
-						else if(strcmp(buffer, "s") == 0) { // Chiedo le comande in servizio
+						else if(strcmp(serverCommand, "s") == 0) { // Chiedo le comande in servizio
 							// Scorro tutto l'array di liste, nel caso sia in servizio, la aggiungo al buffer
 							elencoComande(bufferOut, in_servizio);
 
@@ -167,7 +167,7 @@ int main(int argc, char* argv[]){
 							fflush(stdout);
 						}
 					}
-					else if(strcmp(buffer, "stop") == 0) { // Secondo caso: stop
+					else if(strcmp(serverCommand, "stop") == 0) { // Secondo caso: stop
 						// Se posso stopparmi, mando una notifica a tutti i dispositivi connessi e mi interrompo.
 						// Nel caso io non possa fermarmi (ci sono delle comande in attesa o preparazione), lo comunico e non faccio niente.
 						if( !comandeInSospeso() ) { // Mi posso fermare
@@ -254,8 +254,8 @@ int main(int argc, char* argv[]){
 					struct lis_thread *inserisciThread;
 					switch(tipo) {
 					case -1: // Si sta presentando
-						ret = ricevi(i, 1, buffer);
-						ret = inserisci(i, buffer[0]);
+						ret = ricevi(i, 1, bufferOut);
+						ret = inserisci(i, bufferOut[0]);
 						if(ret < 0) {
 							printf("Presentazione non riuscita: come primo messaggio non è arrivato il tipo.\n");
 							fflush(stdout);

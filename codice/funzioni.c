@@ -8,6 +8,7 @@
 void caricaTavoli() {
 	FILE *f;
 	char buffer[BUFFER_SIZE];
+	char* serverCommand;
    	int i;
 	f = fopen("../txts/tavoli.txt","r");
 	
@@ -18,12 +19,12 @@ void caricaTavoli() {
 
 	for(i = 0; i < nTavoli; i++){
    		fgets(buffer, sizeof(buffer), f);
-   		strtok(buffer, " ");
-   		tavoli[i].nPosti = atoi(buffer);
-   		strtok(NULL, " ");
-   		strcpy(tavoli[i].sala, buffer);
-   		strtok(NULL, " ");
-   		strcpy(tavoli[i].descrizione, buffer);
+   		serverCommand = strtok(buffer, " ");
+   		tavoli[i].nPosti = atoi(serverCommand);
+   		serverCommand = strtok(NULL, " ");
+   		strcpy(tavoli[i].sala, serverCommand);
+   		serverCommand = strtok(NULL, " ");
+   		strcpy(tavoli[i].descrizione, serverCommand);
 
 		tavoli[i].numero = i+1;
    	}
@@ -34,8 +35,8 @@ void caricaTavoli() {
 // Carica il menu dal file e lo mette nell'array
 void caricaMenu() {
 	FILE *f;
-	char str[1024];
-	char *buf;
+	char buffer[BUFFER_SIZE];
+	char *serverCommand;
 	int i;
 	f = fopen("../txts/menu.txt","r");
 	
@@ -45,14 +46,14 @@ void caricaMenu() {
    	}
 
 	for(i = 0; i < nPiatti; i++) {
-		fgets(str, sizeof(str), f);
+		fgets(buffer, sizeof(buffer), f);
 		struct piatto* p = malloc(sizeof(*p));
-		buf = strtok(str, "€-");
-		strcpy(p->codice, buf);
-		buf = strtok(NULL, "€-");
-		strcpy(p->nome, buf);
-		buf = strtok(NULL, "€-");
-		p->prezzo = (int)*buf;
+		serverCommand = strtok(buffer, "€-");
+		strcpy(p->codice, serverCommand);
+		serverCommand = strtok(NULL, "€-");
+		strcpy(p->nome, serverCommand);
+		serverCommand = strtok(NULL, "€-");
+		p->prezzo = (int)*serverCommand;
 		menu[i] = p;
 	}
 
@@ -329,12 +330,14 @@ retry:
 			fflush(stdout);
 		}
 
-		if(strcmp(buffer, "book")) { // Caso book
+		token = strtok(buffer, " ");
+
+		if(strcmp(token, "book")) { // Caso book
 			token = strtok(NULL, " ");
 			
 			// Converto l'indice in tavolo
 			int tavolo = 0;
-			int v = atoi(buffer);
+			int v = atoi(token);
 			for(tavolo = 0; tavolo <= nTavoli && !v; tavolo++){
 				while(!disponibilita[tavolo])
 					tavolo++;
@@ -348,7 +351,7 @@ retry:
 				goto retry;
 			}
 			// Salvo la prenotazione
-			struct prenotazione* p = malloc(sizeof(*p));
+			struct prenotazione* p = malloc(sizeof(struct prenotazione));
 			strcpy(p->cognome, cognome);
 			p->data_ora = dataora;
 			p->prossima = NULL;
@@ -375,7 +378,7 @@ retry:
 			invia(socketId, buffer);
 		}
 	}
-	else if(strcmp(buffer, "book")) {
+	else if(strcmp(token, "book")) {
 		// Errore, non sono state fatte precedenti find
 		strcpy(buffer, "Errore, non sono state fatte precedenti find");
 		invia(socketId, buffer);
@@ -421,18 +424,18 @@ void *gestisciTd(void* i) {
 	//   - conto;
 	char* token;
 	token = strtok(buffer, " ");
-	if(strcmp(token, "menu")) { // Primo caso
+	if(strcmp(token, "menu") == 0) { // Primo caso
 		// Invio il menu
 		strcpy(buffer, menu_text);
 		invia(socketId, buffer);
 	}
-	else if(strcmp(token, "comanda")) { // Secondo caso
+	else if(strcmp(token, "comanda") == 0) { // Secondo caso
 		int i, indice;
 		// Parso la comanda ed inserisco
 		pthread_mutex_lock(&comande_lock);
 		struct comanda* punta = comande[tavolo];
 		
-		struct comanda* com = malloc(sizeof(com));
+		struct comanda* com = malloc(sizeof(struct comanda));
 		
 		if(punta == NULL) {
 			punta = com;
@@ -502,6 +505,7 @@ void *gestisciTd(void* i) {
 		sprintf(numeroString, "%d", totale);
 		strcat(buffer, numeroString);
 		strcat(buffer, "\n");
+		invia(socketId, buffer);
 	}
 	else {
 		// Errore, comando non riconosciuto
