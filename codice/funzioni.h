@@ -47,4 +47,4 @@ void *gestisciKd(void* i);
 void deallocaStrutture();
 
 // Trova il massimo tra 3 interi
-int max(v1, v2, v3);
+int max(int v1, int v2, int v3);
