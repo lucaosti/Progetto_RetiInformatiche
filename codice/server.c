@@ -41,9 +41,9 @@ int main(int argc, char* argv[]){
 	char buffer[BUFFER_SIZE];
 	char bufferOut[BUFFER_SIZE];
 	int portNumber = atoi(argv[1]);
+
 	printf("ANO\n");
 	fflush(stdout);
-
 
 	// Set di descrittori da monitorare
 	fd_set master;
