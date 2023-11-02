@@ -27,7 +27,7 @@ int main(int argc, char* argv[]){
 	numeroComanda = 0;
 
 	// Carico dai file "tavoli.txt" e "menu.txt"
-	//caricaTavoli();
+	caricaTavoli();
 	caricaMenu();
 
 	/* --- Inizio ---*/
