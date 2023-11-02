@@ -30,32 +30,6 @@ int main(int argc, char* argv[]){
 	caricaTavoli();
 	caricaMenu();
 
-	char bufferprova[BUFFER_SIZE] = "";
-	char temp[BUFFER_SIZE]; // Utilizzeremo questa variabile temporanea per formattare i dati
-
-	for (indice = 0; indice < nTavoli; indice++) {
-		// Formatta il numero di posti
-		sprintf(temp, "%d", tavoli[indice].nPosti);
-		strcat(bufferprova, temp);
-		strcat(bufferprova, "\n");
-
-		// Formatta la descrizione
-		strcat(bufferprova, tavoli[indice].descrizione);
-		strcat(bufferprova, "\n");
-
-		// Formatta il numero del tavolo
-		sprintf(temp, "%d", tavoli[indice].numero);
-		strcat(bufferprova, temp);
-		strcat(bufferprova, "\n");
-
-		// Formatta la sala
-		strcat(bufferprova, tavoli[indice].sala);
-		strcat(bufferprova, "\n");
-	}
-
-	printf(bufferprova);
-	fflush(stdout);
-
 	/* --- Inizio ---*/
 
 	// Stampo a video il "benvenuto" del server
