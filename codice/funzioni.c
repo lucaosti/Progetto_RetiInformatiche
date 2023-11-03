@@ -278,12 +278,16 @@ void *gestisciClient(void* i) {
 	if(ret == 0) {
 		printf("Client disconnesso\n");
 		fflush(stdout);
+		close(i);
+		FD_CLR(i, &master);
 		return NULL;
 	}
 	ret = ricevi(socketId, lmsg, buffer);
 	if(ret == 0) {
 		printf("Client disconnesso\n");
 		fflush(stdout);
+		close(i);
+		FD_CLR(i, &master);
 		return NULL;
 	}
 
@@ -328,12 +332,16 @@ retry:
 		if(ret == 0) {
 			printf("Client disconnesso\n");
 			fflush(stdout);
+			close(i);
+			FD_CLR(i, &master);
 			return NULL;
 		}
 		ret = ricevi(socketId, lmsg, buffer);
 		if(ret == 0) {
 			printf("Client disconnesso\n");
 			fflush(stdout);
+			close(i);
+			FD_CLR(i, &master);
 			return NULL;
 		}
 
@@ -418,12 +426,16 @@ void *gestisciTd(void* i) {
 	if(ret == 0) {
 		printf("TD disconnesso\n");
 		fflush(stdout);
+		close(i);
+		FD_CLR(i, &master);
 		return NULL;
 	}
 	ret = ricevi(socketId, lmsg, buffer);
 	if(ret == 0) {
 		printf("TD disconnesso\n");
 		fflush(stdout);
+		close(i);
+		FD_CLR(i, &master);
 		return NULL;
 	}
 
@@ -509,6 +521,7 @@ void *gestisciTd(void* i) {
 			punta = punta->prossima;
 			free(puntaVecchia);
 		}
+		comande[tavolo] = NULL;
 		pthread_mutex_unlock(&comande_lock);
 		strcat(buffer, "Totale: ");
 		sprintf(numeroString, "%d", totale);
@@ -538,12 +551,16 @@ void *gestisciKd(void* i) {
 	if(ret == 0) {
 		printf("KD disconnesso\n");
 		fflush(stdout);
+		close(i);
+		FD_CLR(i, &master);
 		return NULL;
 	}
 	ret = ricevi(socketId, lmsg, buffer);
 	if(ret == 0) {
 		printf("KD disconnesso\n");
 		fflush(stdout);
+		close(i);
+		FD_CLR(i, &master);
 		return NULL;
 	}
 

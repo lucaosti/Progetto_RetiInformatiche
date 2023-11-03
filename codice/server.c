@@ -23,6 +23,7 @@ int main(int argc, char* argv[]){
 	pthread_mutex_init(&comande_lock, NULL);
 	pthread_mutex_init(&listaThread_lock, NULL);
 	pthread_mutex_init(&socket_lock, NULL);
+	pthread_mutex_init(&fd_lock, NULL);
 
 	numeroComanda = 0;
 
@@ -41,15 +42,6 @@ int main(int argc, char* argv[]){
 	char buffer[BUFFER_SIZE];
 	char bufferOut[BUFFER_SIZE];
 	int portNumber = atoi(argv[1]);
-
-	// Set di descrittori da monitorare
-	fd_set master;
-
-	// Set dei descrittori pronti
-	fd_set read_fds;
-
-	// Descrittore max
-	int fdmax;
 
 	/* Creazione indirizzo del server */
 	listener = socket(AF_INET, SOCK_STREAM, 0);
@@ -86,7 +78,9 @@ int main(int argc, char* argv[]){
 	// Ciclo principale
 	for(;;) {
 		//Imposto il set di socket da monitorare in lettura per la select()
+		pthread_mutex_lock(&fd_lock);
 		read_fds = master;
+		pthread_mutex_unlock(&fd_lock);
 
 		// Mi blocco (potenzialmente) in attesa di descrittori pronti
 		ret = select(fdmax+1, &read_fds, NULL, NULL, NULL);
@@ -186,7 +180,9 @@ int main(int argc, char* argv[]){
 									exit(1);
 								}
 								close(j);
+								pthread_mutex_lock(&fd_lock);
 								FD_CLR(j, &master);
+								pthread_mutex_unlock(&fd_lock);
 							}
 							close(listener);
 
@@ -221,12 +217,14 @@ int main(int argc, char* argv[]){
 					newfd = accept(listener, (struct sockaddr *)&cl_addr, (socklen_t*)&addrlen);
 
 					// Aggiungo il socket connesso al set dei descrittori monitorati
+					pthread_mutex_lock(&fd_lock);
 					FD_SET(newfd, &master); 
 
 					// Aggiorno l'ID del massimo descrittore
 					if(newfd > fdmax) { 
 						fdmax = newfd;  
 					}
+					pthread_mutex_unlock(&fd_lock);
 				}
 				else { // Terzo caso: richiesta da un socket già connesso
 					// Cerco il socket nelle mie strutture, se non c'è mi sta per forza comunicando cosa è: tramite un char (1 byte);

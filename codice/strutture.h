@@ -144,3 +144,16 @@ char menu_text[nPiatti*dimEntryMeny];
 struct piatto* menu[nPiatti];
 int numeroComanda; // UUID comanda
 /* ------------------------------------ */
+
+/* ------- Strutture globali FD ------- */
+// Set di descrittori da monitorare
+fd_set master;
+
+// Set dei descrittori pronti
+fd_set read_fds;
+
+// Descrittore max
+int fdmax;
+
+pthread_mutex_t fd_lock;
+/* ------------------------------------ */
