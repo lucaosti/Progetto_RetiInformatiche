@@ -95,7 +95,7 @@ int invia(int j, char* buffer) {
 int riceviLunghezza(int j, int *lmsg) {
 	int ret;
 	ret = recv(j, (void*)lmsg, sizeof(uint16_t), 0);
-	return ntohs(ret);
+	return ret;
 }
 
 // Riceve dal socket in input il messaggio e lo mette dentro buffer
