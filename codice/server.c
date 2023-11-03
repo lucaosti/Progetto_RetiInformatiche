@@ -261,10 +261,23 @@ int main(int argc, char* argv[]){
 							printf(bufferOut);
 							fflush(stdout);
 							ret = inserisci(i, bufferOut[0]);
-							if(ret < 0) {
-								printf("Presentazione non riuscita: come primo messaggio non è arrivato il tipo.\n");
-								fflush(stdout);
-								return -1;
+							switch(ret) {
+								case -1:
+									printf("Presentazione non riuscita: come primo messaggio non è arrivato il tipo\n");
+									fflush(stdout);
+									return -1;
+								case 0:
+									printf("Collegato Client\n");
+									fflush(stdout);
+									break;
+								case 1:
+									printf("Collegato Kitche Device\n");
+									fflush(stdout);
+									break;
+								case 2:
+									printf("Collegato Table Device\n");
+									fflush(stdout);
+									break;
 							}
 							break;
 						case 0: // Client che vuole utilizzare servizi
