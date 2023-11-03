@@ -279,7 +279,7 @@ void *gestisciClient(void* i) {
 		printf("Client disconnesso\n");
 		fflush(stdout);
 		close(i);
-		FD_CLR(i, &master);
+		FD_CLR(socketId, &master);
 		return NULL;
 	}
 	ret = ricevi(socketId, lmsg, buffer);
@@ -287,7 +287,7 @@ void *gestisciClient(void* i) {
 		printf("Client disconnesso\n");
 		fflush(stdout);
 		close(i);
-		FD_CLR(i, &master);
+		FD_CLR(socketId, &master);
 		return NULL;
 	}
 
@@ -333,7 +333,7 @@ retry:
 			printf("Client disconnesso\n");
 			fflush(stdout);
 			close(i);
-			FD_CLR(i, &master);
+			FD_CLR(socketId, &master);
 			return NULL;
 		}
 		ret = ricevi(socketId, lmsg, buffer);
@@ -341,7 +341,7 @@ retry:
 			printf("Client disconnesso\n");
 			fflush(stdout);
 			close(i);
-			FD_CLR(i, &master);
+			FD_CLR(socketId, &master);
 			return NULL;
 		}
 
@@ -427,7 +427,7 @@ void *gestisciTd(void* i) {
 		printf("TD disconnesso\n");
 		fflush(stdout);
 		close(i);
-		FD_CLR(i, &master);
+		FD_CLR(socketId, &master);
 		return NULL;
 	}
 	ret = ricevi(socketId, lmsg, buffer);
@@ -435,7 +435,7 @@ void *gestisciTd(void* i) {
 		printf("TD disconnesso\n");
 		fflush(stdout);
 		close(i);
-		FD_CLR(i, &master);
+		FD_CLR(socketId, &master);
 		return NULL;
 	}
 
@@ -552,7 +552,7 @@ void *gestisciKd(void* i) {
 		printf("KD disconnesso\n");
 		fflush(stdout);
 		close(i);
-		FD_CLR(i, &master);
+		FD_CLR(socketId, &master);
 		return NULL;
 	}
 	ret = ricevi(socketId, lmsg, buffer);
@@ -560,7 +560,7 @@ void *gestisciKd(void* i) {
 		printf("KD disconnesso\n");
 		fflush(stdout);
 		close(i);
-		FD_CLR(i, &master);
+		FD_CLR(socketId, &master);
 		return NULL;
 	}
 
