@@ -254,7 +254,11 @@ int main(int argc, char* argv[]){
 					switch(tipo) {
 						case -1: // Si sta presentando
 							ret = riceviLunghezza(i, &lmsg);
-							ricevi(i, lmsg, bufferOut);
+							printf("test %d\n", ret);
+							fflush(stdout);
+							ret = ricevi(i, lmsg, bufferOut);
+							printf("test %d\n", ret);
+							fflush(stdout);
 							ret = inserisci(i, bufferOut);
 							switch(ret) {
 								case -1:
