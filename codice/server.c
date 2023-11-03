@@ -301,7 +301,7 @@ int main(int argc, char* argv[]){
 
 							printf("Test: Si sputtana tra qui\n");
 							fflush(stdout);
-
+/*
 							p = malloc(sizeof(struct lis_thread));
 							p->t = malloc(sizeof(pthread_t));
 							// Creo il thread
@@ -315,7 +315,7 @@ int main(int argc, char* argv[]){
 
 							printf("Test: e qui\n");
 							fflush(stdout);
-
+*/
 							printf("Creo thread per un table device\n");
 							fflush(stdout);
 
