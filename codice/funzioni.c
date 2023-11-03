@@ -184,13 +184,13 @@ void elencoComandeTavolo(char* buffer, int tavolo) {
 // Inserisce in base alla lettera c, il socket id nell'array relativo
 int inserisci(int i, char *c) {
 	int j = 0;
-	int ret;
+	int ret = -1;
 	pthread_mutex_lock(&socket_lock);
 	switch (c[0])
 	{
 	case 'c': // Client
 		for(; j < nMaxClient; j++){
-			if(socket_client[j] != -1){
+			if(socket_client[j] == -1){
 				socket_client[j] = i;
 				ret = 0;
 				break;
@@ -199,7 +199,7 @@ int inserisci(int i, char *c) {
 		break;
 	case 'k': // Kitchen device
 		for(; j < nMaxKd; j++){
-			if(socket_kd[j] != -1){
+			if(socket_kd[j] == -1){
 				socket_kd[j] = i;
 				ret = 1;
 				break;
@@ -208,7 +208,7 @@ int inserisci(int i, char *c) {
 		break;
 	case 't': // Table device
 		for(; j < nMaxTd; j++){
-			if(socket_td[j] != -1){
+			if(socket_td[j] == -1){
 				socket_td[j] = i;
 				ret = 2;
 				break;
