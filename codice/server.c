@@ -299,7 +299,7 @@ int main(int argc, char* argv[]){
 						case 1: // Table device che vuole utilizzare servizi
 							// Creo un nuovo elemento della lista di thread e lo alloco
 
-							printf("Si sputtana tra qui\n");
+							printf("Test: Si sputtana tra qui\n");
 							fflush(stdout);
 
 							p = malloc(sizeof(struct lis_thread));
@@ -313,7 +313,7 @@ int main(int argc, char* argv[]){
 							// Lo inserisco
 							inserisciThread->prossimo = p;
 
-							printf("e qui\n");
+							printf("Test: e qui\n");
 							fflush(stdout);
 
 							printf("Creo thread per un table device\n");

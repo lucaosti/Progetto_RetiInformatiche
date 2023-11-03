@@ -123,7 +123,7 @@ int main(int argc, char* argv[]){
 				else { // Secondo caso: il socket è sd
 					ret = riceviLunghezza(sd, &lmsg);
 					if(ret == 0) {
-						printf("Server chiuso\n");
+						printf("Server chiuso involontariamente\n");
 						fflush(stdout);
 						close(i);
 						return 0;
