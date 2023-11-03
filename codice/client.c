@@ -114,7 +114,13 @@ int main(int argc, char* argv[]){
 					invia(sd, buffer);
 				}
 				else { // Secondo caso: il socket è sd
-					riceviLunghezza(sd, &lmsg);
+					ret = riceviLunghezza(sd, &lmsg);
+					if(ret == 0) {
+						printf("Server chiuso\n");
+						fflush(stdout);
+						close(i);
+						return 0;
+					}
 					ricevi(sd, lmsg, buffer);
 					if(strcmp(buffer, "STOP\0") == 0){
 						printf("Server chiuso\n");

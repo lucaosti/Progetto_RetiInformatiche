@@ -107,14 +107,20 @@ int main(int argc, char* argv[]){
 
 		// Scorro ogni descrittore 'i'
 		for(i = 0; i <= fdmax; i++) {
-			if(FD_ISSET(i, &read_fds)){
+			if(FD_ISSET(i, &read_fds)) {
 				strcpy(buffer, "");
 				if(i == 0) { // Primo caso: comando da stdin
 					scanf(" %[^\n]", buffer); // Lo inserisco nel buffer
 					invia(sd, buffer);
 				}
 				else { // Secondo caso: il socket è sd
-					riceviLunghezza(sd, &lmsg);
+					ret = riceviLunghezza(sd, &lmsg);
+					if(ret == 0) {
+						printf("Server chiuso\n");
+						fflush(stdout);
+						close(i);
+						return 0;
+					}
 					ricevi(sd, lmsg, buffer);
 					if(strcmp(buffer, "STOP\0") == 0){
 						printf("Server chiuso\n");
