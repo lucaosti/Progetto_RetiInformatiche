@@ -211,6 +211,8 @@ int inserisci(int i, char *c) {
 			if(socket_td[j] != -1){
 				socket_td[j] = i;
 				ret = 2;
+				printf("test: TD!\n");
+				fflush(stdin);
 				break;
 			}
 		}
