@@ -257,7 +257,7 @@ int main(int argc, char* argv[]){
 							printf("test: lunghezza %d\n", ret);
 							fflush(stdout);
 							ricevi(i, lmsg, bufferOut);
-							printf("test: ricevuto %d\n", ret);
+							printf("test: ricevuto %s\n", bufferOut);
 							fflush(stdout);
 							ret = inserisci(i, bufferOut);
 							switch(ret) {
