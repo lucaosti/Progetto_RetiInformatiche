@@ -277,7 +277,9 @@ int main(int argc, char* argv[]){
 									fflush(stdout);
 									break;
 								default:
-									printf("Errore nell'inserimento\n");
+									printf("Errore nell'inserimento ");
+									fflush(stdout);
+									printf(i);
 									fflush(stdout);
 									break;
 							}
