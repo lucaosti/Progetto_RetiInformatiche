@@ -29,7 +29,7 @@ void elencoComande(char* buffer, enum stato_comanda stato);
 void elencoComandeTavolo(char* buffer, int tavolo);
 
 // Inserisce in base alla lettera c, il socket id nell'array relativo
-int inserisci(int i, char c);
+int inserisci(int i, char* c);
 
 // Prende i parametri della find ed inserisce nel buffer le disponibilità
 void cercaDisponibilita(int nPers, time_t dataora, char* buffer, char* disponibilita);

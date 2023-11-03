@@ -182,11 +182,11 @@ void elencoComandeTavolo(char* buffer, int tavolo) {
 }
 
 // Inserisce in base alla lettera c, il socket id nell'array relativo
-int inserisci(int i, char c) {
+int inserisci(int i, char *c) {
 	int j = 0;
 	int ret;
 	pthread_mutex_lock(&socket_lock);
-	switch (c)
+	switch (c[0])
 	{
 	case 'c': // Client
 		for(; j < nMaxClient; j++){

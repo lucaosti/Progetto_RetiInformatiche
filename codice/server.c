@@ -255,7 +255,7 @@ int main(int argc, char* argv[]){
 						case -1: // Si sta presentando
 							riceviLunghezza(i, &lmsg);
 							ricevi(i, lmsg, bufferOut);
-							ret = inserisci(i, bufferOut[0]);
+							ret = inserisci(i, bufferOut);
 							switch(ret) {
 								case -1:
 									printf("Presentazione non riuscita: come primo messaggio non è arrivato il tipo\n");
