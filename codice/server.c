@@ -253,8 +253,12 @@ int main(int argc, char* argv[]){
 					int lmsg;
 					switch(tipo) {
 						case -1: // Si sta presentando
-							riceviLunghezza(i, &lmsg);
+							ret = riceviLunghezza(i, &lmsg);
+							printf("test: lunghezza %d\n", ret);
+							fflush(stdout);
 							ricevi(i, lmsg, bufferOut);
+							printf("test: ricevuto %d\n", ret);
+							fflush(stdout);
 							ret = inserisci(i, bufferOut);
 							switch(ret) {
 								case -1:
@@ -274,9 +278,7 @@ int main(int argc, char* argv[]){
 									fflush(stdout);
 									break;
 								default:
-									printf("Errore nell'inserimento ");
-									fflush(stdout);
-									printf("%d\n",i);
+									printf("Errore nell'inserimento %d\n", i);
 									fflush(stdout);
 									break;
 							}
