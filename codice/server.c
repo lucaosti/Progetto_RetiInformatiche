@@ -256,8 +256,6 @@ int main(int argc, char* argv[]){
 							ret = riceviLunghezza(i, &lmsg);
 							ricevi(i, lmsg, bufferOut);
 							ret = inserisci(i, bufferOut);
-							printf("test: ret = %d\n", ret);
-							fflush(stdout);
 							switch(ret) {
 								case -1:
 									printf("Presentazione non riuscita: come primo messaggio non è arrivato il tipo\n");
@@ -293,6 +291,10 @@ int main(int argc, char* argv[]){
 								inserisciThread = inserisciThread->prossimo;
 							// Lo inserisco
 							inserisciThread->prossimo = p;
+
+							printf("Creo thread per un client\n");
+							fflush(stdout);
+
 							break;
 						case 1: // Table device che vuole utilizzare servizi
 							// Creo un nuovo elemento della lista di thread e lo alloco
@@ -306,6 +308,10 @@ int main(int argc, char* argv[]){
 								inserisciThread = inserisciThread->prossimo;
 							// Lo inserisco
 							inserisciThread->prossimo = p;
+
+							printf("Creo thread per un table device\n");
+							fflush(stdout);
+
 							break;
 						case 2: // Kitchen device che vuole utilizzare servizi
 							// Creo un nuovo elemento della lista di thread e lo alloco
@@ -319,6 +325,10 @@ int main(int argc, char* argv[]){
 								inserisciThread = inserisciThread->prossimo;
 							// Lo inserisco
 							inserisciThread->prossimo = p;
+
+							printf("Creo thread per un kitchen device\n");
+							fflush(stdout);
+
 							break;
 						default:
 							perror("Errore nell'identificare il socket\n");
