@@ -293,7 +293,7 @@ void *gestisciClient(void* i) {
 	//       - disconnessione, cancella il socketId da socket_client e termina il thread.
 	char* token;
 	token = strtok(buffer, " ");
-	if(strcmp(token, "find")) { // Primo caso
+	if(strcmp(token, "find") == 0) { // Primo caso
 		// Parsa la stringa e cerca i tavoli liberi
 		struct tm tm_;
 		char cognome[64];
@@ -339,7 +339,7 @@ retry:
 
 		token = strtok(buffer, " ");
 
-		if(strcmp(token, "book")) { // Caso book
+		if(strcmp(token, "book") == 0) { // Caso book
 			token = strtok(NULL, " ");
 			
 			// Converto l'indice in tavolo
@@ -385,7 +385,7 @@ retry:
 			invia(socketId, buffer);
 		}
 	}
-	else if(strcmp(token, "book")) {
+	else if(strcmp(token, "book") == 0) {
 		// Errore, non sono state fatte precedenti find
 		strcpy(buffer, "Errore, non sono state fatte precedenti find\n");
 		invia(socketId, buffer);
@@ -483,7 +483,7 @@ void *gestisciTd(void* i) {
 		}
 		pthread_mutex_unlock(&socket_lock);
 	}
-	else if(strcmp(token, "conto")) { // Terzo caso
+	else if(strcmp(token, "conto") == 0) { // Terzo caso
 		int indice;
 		pthread_mutex_lock(&comande_lock);
 		// Scorro l'array comande ed invio
@@ -553,7 +553,7 @@ void *gestisciKd(void* i) {
 	//   - ready <comanda>, solo se presente tra quelle in_preparazione del kd.
 	char* token;
 	token = strtok(buffer, " ");
-	if(strcmp(token, "take")) { // Primo caso
+	if(strcmp(token, "take") == 0) { // Primo caso
 		int indice;
 		pthread_mutex_lock(&comande_lock);
 
@@ -597,7 +597,7 @@ void *gestisciKd(void* i) {
 		invia(socketId, buffer);
 		pthread_mutex_unlock(&comande_lock);
 	}
-	else if(strcmp(token, "show")) { // Secondo caso
+	else if(strcmp(token, "show") == 0) { // Secondo caso
 		int indice, indice2;
 		// Scorro l'array comande ed invio
 		strcpy(buffer, "");
@@ -630,7 +630,7 @@ void *gestisciKd(void* i) {
 		pthread_mutex_unlock(&comande_lock);
 		invia(socketId, buffer);
 	}
-	else if(strcmp(token, "ready")) { // Terzo caso
+	else if(strcmp(token, "ready") == 0) { // Terzo caso
 		// Parso il comando e notifico il td
 		int nCom, nTav, indice;
 		token = strtok(NULL, " com-");

@@ -99,7 +99,6 @@ int main(int argc, char* argv[]){
 		for(i = 0; i <= fdmax; i++) {
 			// Il descrittore 'i' è pronto se la select lo ha lasciato nel set "read_fds"
 			if(FD_ISSET(i, &read_fds)) {
-				strcpy(buffer, "");
 				// Ci sono tre casi:
 				//   - ho ricevuto un comando (stdin);
 				//   - ho ricevuto una nuova richiesta di connessione;
@@ -183,7 +182,7 @@ int main(int argc, char* argv[]){
 								if( j == listener) continue; // Salta il listener
 								ret = invia(j, bufferOut);
 								if(ret < 0){
-									perror("Errore: \n");
+									perror("Errore invio chiusura server\n");
 									exit(1);
 								}
 								close(j);
