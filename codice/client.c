@@ -76,7 +76,7 @@ int main(int argc, char* argv[]){
 	}
 
 	// Comunico al server il tipo "client" = "c"
-	strcpy(buffer, "c");
+	strcpy(buffer, "c\0");
 	invia(sd, buffer);
 
 	// Reset dei descrittori

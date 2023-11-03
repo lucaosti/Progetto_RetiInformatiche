@@ -254,7 +254,7 @@ int main(int argc, char* argv[]){
 					switch(tipo) {
 						case -1: // Si sta presentando
 							ret = riceviLunghezza(i, &lmsg);
-							ricevi(i, lmsg, bufferOut);
+							ricevi(i, lmsg+1, bufferOut);
 							ret = inserisci(i, bufferOut);
 							switch(ret) {
 								case -1:
@@ -312,10 +312,10 @@ int main(int argc, char* argv[]){
 								inserisciThread = inserisciThread->prossimo;
 							// Lo inserisco
 							inserisciThread->prossimo = p;
+*/
 
 							printf("Test: e qui\n");
 							fflush(stdout);
-*/
 							printf("Creo thread per un table device\n");
 							fflush(stdout);
 
