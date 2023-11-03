@@ -207,12 +207,12 @@ int inserisci(int i, char *c) {
 		}
 		break;
 	case 't': // Table device
+		printf("test: TD!\n");
+		fflush(stdin);
 		for(; j < nMaxTd; j++){
 			if(socket_td[j] != -1){
 				socket_td[j] = i;
 				ret = 2;
-				printf("test: TD!\n");
-				fflush(stdin);
 				break;
 			}
 		}
