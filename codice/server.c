@@ -254,12 +254,10 @@ int main(int argc, char* argv[]){
 					switch(tipo) {
 						case -1: // Si sta presentando
 							ret = riceviLunghezza(i, &lmsg);
-							printf("test: lunghezza %d\n", ret);
-							fflush(stdout);
 							ricevi(i, lmsg, bufferOut);
-							printf("test: ricevuto %s\n", bufferOut);
-							fflush(stdout);
 							ret = inserisci(i, bufferOut);
+							printf("test: ret = %d\n", ret);
+							fflush(stdout);
 							switch(ret) {
 								case -1:
 									printf("Presentazione non riuscita: come primo messaggio non è arrivato il tipo\n");
