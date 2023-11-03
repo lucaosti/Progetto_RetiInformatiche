@@ -314,10 +314,10 @@ int main(int argc, char* argv[]){
 							// Lo inserisco
 							inserisciThread->prossimo = p;
 
+*/
+
 							printf("Creo thread per un table device\n");
 							fflush(stdout);
-
-*/
 							break;
 						case 2: // Kitchen device che vuole utilizzare servizi
 							// Creo un nuovo elemento della lista di thread e lo alloco
