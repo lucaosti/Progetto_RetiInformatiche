@@ -254,7 +254,7 @@ int main(int argc, char* argv[]){
 					switch(tipo) {
 						case -1: // Si sta presentando
 							ret = riceviLunghezza(i, &lmsg);
-							ricevi(i, lmsg+1, bufferOut);
+							ricevi(i, lmsg, bufferOut);
 							ret = inserisci(i, bufferOut);
 							switch(ret) {
 								case -1:
