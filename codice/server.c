@@ -279,7 +279,7 @@ int main(int argc, char* argv[]){
 								default:
 									printf("Errore nell'inserimento ");
 									fflush(stdout);
-									printf(i);
+									printf("%d\n",i);
 									fflush(stdout);
 									break;
 							}
