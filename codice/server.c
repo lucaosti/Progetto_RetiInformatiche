@@ -276,6 +276,10 @@ int main(int argc, char* argv[]){
 									printf("Collegato Table Device\n");
 									fflush(stdout);
 									break;
+								default:
+									printf("Errore nell'inserimento\n");
+									fflush(stdout);
+									break;
 							}
 							break;
 						case 0: // Client che vuole utilizzare servizi
