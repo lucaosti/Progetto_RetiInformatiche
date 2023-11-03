@@ -96,6 +96,7 @@ int main(int argc, char* argv[]){
 	fflush(stdin);
 
 	for(;;){
+		/*
 		// Inizializzo il set read_fds, manipolato dalla select()
 		read_fds = master;
 
@@ -139,5 +140,6 @@ int main(int argc, char* argv[]){
 				}
 			}
 		}
+		*/
 	}
 }
