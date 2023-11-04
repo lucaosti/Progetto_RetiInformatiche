@@ -120,7 +120,7 @@ int main(int argc, char* argv[]){
 							printf("Comando 'stat' senza parametri inesistente!\n");
 							fflush(stdout);
 						}
-						else if(strcmp(serverCommand, "T") == 0) { // Chiede lo stato di un tavolo
+						else if(strncmp(serverCommand, "T", 1) == 0) { // Chiede lo stato di un tavolo
 							// Cerco il numero del tavolo e stampo l'esito
 							serverCommand = strtok(NULL, "T");
 							int tavolo = atoi(serverCommand);
