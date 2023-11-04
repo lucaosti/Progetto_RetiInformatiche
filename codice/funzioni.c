@@ -275,7 +275,7 @@ void *gestisciClient(void* i) {
 	fflush(stdout);
 
 	// Ricevi il messaggio
-	int ret;
+	int ret, indice;
 	int lmsg = 0;
 	ret = riceviLunghezza(socketId, &lmsg);
 	if(ret == 0) {
@@ -283,6 +283,9 @@ void *gestisciClient(void* i) {
 		fflush(stdout);
 		close(socketId);
 		FD_CLR(socketId, &master);
+		for(indice = 0; indice < nMaxClient; indice++)
+			if(socketId == socket_client[indice])
+				socket_client[indice] = -1;
 		return NULL;
 	}
 	ret = ricevi(socketId, lmsg, buffer);
@@ -291,6 +294,9 @@ void *gestisciClient(void* i) {
 		fflush(stdout);
 		close(socketId);
 		FD_CLR(socketId, &master);
+		for(indice = 0; indice < nMaxClient; indice++)
+			if(socketId == socket_client[indice])
+				socket_client[indice] = -1;
 		return NULL;
 	}
 
@@ -337,6 +343,9 @@ retry:
 			fflush(stdout);
 			close(socketId);
 			FD_CLR(socketId, &master);
+			for(indice = 0; indice < nMaxClient; indice++)
+				if(socketId == socket_client[indice])
+					socket_client[indice] = -1;
 			return NULL;
 		}
 		ret = ricevi(socketId, lmsg, buffer);
@@ -345,6 +354,9 @@ retry:
 			fflush(stdout);
 			close(socketId);
 			FD_CLR(socketId, &master);
+			for(indice = 0; indice < nMaxClient; indice++)
+				if(socketId == socket_client[indice])
+					socket_client[indice] = -1;
 			return NULL;
 		}
 
@@ -426,7 +438,7 @@ void *gestisciTd(void* i) {
 			break;
 
 	// Ricevi il messaggio
-	int ret;
+	int ret, indice;
 	int lmsg = 0;
 	ret = riceviLunghezza(socketId, &lmsg);
 	if(ret == 0) {
@@ -434,6 +446,9 @@ void *gestisciTd(void* i) {
 		fflush(stdout);
 		close(socketId);
 		FD_CLR(socketId, &master);
+		for(indice = 0; indice < nMaxTd; indice++)
+			if(socketId == socket_td[indice])
+				socket_td[indice] = -1;
 		return NULL;
 	}
 	ret = ricevi(socketId, lmsg, buffer);
@@ -442,6 +457,9 @@ void *gestisciTd(void* i) {
 		fflush(stdout);
 		close(socketId);
 		FD_CLR(socketId, &master);
+		for(indice = 0; indice < nMaxTd; indice++)
+			if(socketId == socket_td[indice])
+				socket_td[indice] = -1;
 		return NULL;
 	}
 
@@ -554,7 +572,7 @@ void *gestisciKd(void* i) {
 	fflush(stdout);
 
 	// Ricevi il messaggio
-	int ret;
+	int ret, indice;
 	int lmsg = 0;
 	ret = riceviLunghezza(socketId, &lmsg);
 	if(ret == 0) {
@@ -562,6 +580,9 @@ void *gestisciKd(void* i) {
 		fflush(stdout);
 		close(socketId);
 		FD_CLR(socketId, &master);
+		for(indice = 0; indice < nMaxKd; indice++)
+			if(socketId == socket_kd[indice])
+				socket_kd[indice] = -1;
 		return NULL;
 	}
 	ret = ricevi(socketId, lmsg, buffer);
@@ -570,6 +591,9 @@ void *gestisciKd(void* i) {
 		fflush(stdout);
 		close(socketId);
 		FD_CLR(socketId, &master);
+		for(indice = 0; indice < nMaxKd; indice++)
+			if(socketId == socket_kd[indice])
+				socket_kd[indice] = -1;
 		return NULL;
 	}
 
