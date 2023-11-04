@@ -174,7 +174,7 @@ int main(int argc, char* argv[]){
 							strcpy(bufferOut,"STOP\0");
 							for(j = 1; j < fdmax; j++) {
 								if(j == listener) continue; // Salta il listener
-								if(ISSET(i, &master)) continue; // Nel caso lo abbia già chiuso
+								if(FD_ISSET(i, &master)) continue; // Nel caso lo abbia già chiuso
 								ret = invia(j, bufferOut);
 								if(ret < 0){
 									perror("Errore invio chiusura server\n");
