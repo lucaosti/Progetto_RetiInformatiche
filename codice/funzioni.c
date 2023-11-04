@@ -430,7 +430,7 @@ void *gestisciTd(void* i) {
 	char buffer[BUFFER_SIZE];
 	char numeroString[BUFFER_SIZE];
 
-	printf("Avviato thread table device\n");
+	printf("Avviato thread table device %d\n", socketId);
 	fflush(stdout);
 	
 	// Trovo il tavolo collegato al TD
