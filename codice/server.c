@@ -83,7 +83,7 @@ int main(int argc, char* argv[]){
 		pthread_mutex_unlock(&fd_lock);
 
 		// Mi blocco (potenzialmente) in attesa di descrittori pronti
-		struct timeval tv = {600, 0};
+		struct timeval tv = {0, 0}; // timeout = 0
 		pthread_mutex_lock(&fd_lock);
 		ret = select(fdmax+1, &read_fds, NULL, NULL, &tv); // metto un timeout poiché modifico master
 		pthread_mutex_unlock(&fd_lock);
