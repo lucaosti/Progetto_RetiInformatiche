@@ -48,11 +48,10 @@ void caricaMenu() {
 	for(i = 0; i < nPiatti; i++) {
 		fgets(buffer, sizeof(buffer), f);
 		strcat(menu_text, buffer);
-		serverCommand = strtok(buffer, "€-");
+		serverCommand = strtok(buffer, " ");
 		strcpy(menu[i].codice, serverCommand);
-		serverCommand = strtok(NULL, "€-");
-		strcpy(menu[i].nome, serverCommand);
-		serverCommand = strtok(NULL, "€-");
+		serverCommand = strtok(NULL, "€");
+		serverCommand = strtok(NULL, "€");
 		menu[i].prezzo = atoi(serverCommand);
 	}
 

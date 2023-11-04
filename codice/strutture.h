@@ -66,7 +66,6 @@ struct prenotazione
 struct piatto
 {
 	char codice[2];
-	char nome[64];
 	int prezzo;
 	/* 
 	Il tavolo non è necessario poiché corrisponde
