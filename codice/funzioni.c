@@ -517,7 +517,7 @@ void *gestisciTd(void* i) {
 		}
 
 		while(token != NULL) {
-			for (i = 0; i < nPiatti; i++) {
+			for (i = 0; i < nPiatti && token != NULL; i++) {
 				token = strtok(NULL, " -");
 				if(strcmp(token, menu[i].codice) != 0)
 					continue;
