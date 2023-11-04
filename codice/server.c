@@ -300,11 +300,15 @@ int main(int argc, char* argv[]){
 							(void) pthread_create(p->t, NULL, gestisciClient, (void*)&i);
 							// Creo un puntatore per inserirlo in lista
 							inserisciThread = listaThread;
-							while(inserisciThread != NULL && inserisciThread->prossimo != NULL)
-								inserisciThread = inserisciThread->prossimo;
-							// Lo inserisco
-							inserisciThread->prossimo = p;
+							if(inserisciThread == NULL) {
 
+							}
+							else {
+								while(inserisciThread != NULL && inserisciThread->prossimo != NULL)
+									inserisciThread = inserisciThread->prossimo;
+								// Lo inserisco
+								inserisciThread->prossimo = p;
+							}
 							printf("Creo thread per un client\n");
 							fflush(stdout);
 
@@ -313,18 +317,22 @@ int main(int argc, char* argv[]){
 							// Creo un nuovo elemento della lista di thread e lo alloco
 							p = (struct lis_thread*)malloc(sizeof(struct lis_thread));
 							p->t = (pthread_t*)malloc(sizeof(pthread_t));
-
-							printf("test: c'arriva?\n");
-							fflush(stdout);
-
 							// Creo il thread
 							(void) pthread_create(p->t, NULL, gestisciTd, (void*)&i);
 							// Creo un puntatore per inserirlo in lista
 							inserisciThread = listaThread;
-							while(inserisciThread != NULL && inserisciThread->prossimo != NULL)
-								inserisciThread = inserisciThread->prossimo;
-							// Lo inserisco
-							inserisciThread->prossimo = p;
+							if(inserisciThread == NULL) {
+								inserisciThread = p;
+							}
+							else {
+								while(inserisciThread->prossimo != NULL)
+									inserisciThread = inserisciThread->prossimo;
+								// Lo inserisco
+								inserisciThread->prossimo = p;
+							}
+							printf("test: c'arriva?\n");
+							fflush(stdout);
+
 
 							printf("Creo thread per un table device\n");
 							fflush(stdout);
@@ -338,11 +346,15 @@ int main(int argc, char* argv[]){
 							(void) pthread_create(p->t, NULL, gestisciKd, (void*)&i);
 							// Creo un puntatore per inserirlo in lista
 							inserisciThread = listaThread;
-							while(inserisciThread != NULL && inserisciThread->prossimo != NULL)
-								inserisciThread = inserisciThread->prossimo;
-							// Lo inserisco
-							inserisciThread->prossimo = p;
+							if(inserisciThread == NULL) {
 
+							}
+							else {
+								while(inserisciThread != NULL && inserisciThread->prossimo != NULL)
+									inserisciThread = inserisciThread->prossimo;
+								// Lo inserisco
+								inserisciThread->prossimo = p;
+							}
 							printf("Creo thread per un kitchen device\n");
 							fflush(stdout);
 
