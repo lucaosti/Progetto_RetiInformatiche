@@ -48,14 +48,13 @@ void caricaMenu() {
 	for(i = 0; i < nPiatti; i++) {
 		fgets(buffer, sizeof(buffer), f);
 		strcat(menu_text, buffer);
-		struct piatto* p = malloc(sizeof(*p));
 		serverCommand = strtok(buffer, "€-");
-		strcpy(p->codice, serverCommand);
+		strcpy(menu[i].codice, serverCommand);
 		serverCommand = strtok(NULL, "€-");
-		strcpy(p->nome, serverCommand);
+		strcpy(menu[i].nome, serverCommand);
 		serverCommand = strtok(NULL, "€-");
-		p->prezzo = (int)*serverCommand;
-		menu[i] = p;
+		fprintf(buffer, atoi(serverCommand));
+		strcpy(menu[i].prezzo, buffer);
 	}
 
 	strcat(menu_text, "\n");
@@ -127,7 +126,7 @@ void elencoComande(char* buffer, enum stato_comanda stato) {
 			strcat(buffer, "\n");
 			for(j = 0; j < nPiatti; j++) {
 				if(c->quantita[j] != 0) {
-					strcat(buffer, menu[j]->codice);
+					strcat(buffer, menu[j].codice);
 					strcat(buffer, " ");
 					sprintf(numeroString, "%d", c->quantita[j]);
 					strcat(buffer, numeroString);
@@ -171,7 +170,7 @@ void elencoComandeTavolo(char* buffer, int tavolo) {
 		strcat(buffer, "\n");
 		for(i = 0; i < nPiatti; i++) {
 			if(c->quantita[i] != 0) {
-				strcat(buffer, menu[i]->codice);
+				strcat(buffer, menu[i].codice);
 				strcat(buffer, " ");
 				sprintf(numeroString, "%d", c->quantita[i]);
 				strcat(buffer, numeroString);
@@ -519,17 +518,17 @@ void *gestisciTd(void* i) {
 			punta->prossima = com;
 		}
 
-		printf("codice: %s\n%s\n%s\n", menu[0]->codice, menu[1]->codice, menu[2]->codice);
+		printf("test: %s\n%s\n%s\n", menu[0].codice, menu[1].codice, menu[2].codice);
 		fflush(stdout);
 
 		while(token != NULL) {
 			for (i = 0; i < nPiatti; i++) {
 				token = strtok(NULL, " -");
-				if(strcmp(token, menu[i]->codice) != 0)
+				if(strcmp(token, menu[i].codice) != 0)
 					continue;
 				token = strtok(NULL, " -");
 				com->quantita[i] = atoi(token);
-				printf("comanda: %s %d\n", menu[i]->codice, com->quantita[i]);
+				printf("comanda: %s %d\n", menu[i].codice, com->quantita[i]);
 				fflush(stdout);
 			}
 		}
@@ -571,15 +570,15 @@ void *gestisciTd(void* i) {
 				if(punta->quantita[indice] == 0) 
 					continue;
 
-				strcat(buffer, menu[indice]->codice);
+				strcat(buffer, menu[indice].codice);
 				strcat(buffer, " ");
 				sprintf(numeroString, "%d", punta->quantita[indice]);
 				strcat(buffer, numeroString);
 				strcat(buffer, " ");
-				sprintf(numeroString, "%d", punta->quantita[indice]*menu[indice]->prezzo);
+				sprintf(numeroString, "%d", punta->quantita[indice]*menu[indice].prezzo);
 				strcat(buffer, numeroString);
 				strcat(buffer, "\n");
-				totale += punta->quantita[indice] * menu[indice]->prezzo;
+				totale += punta->quantita[indice] * menu[indice].prezzo;
 			}
 			struct comanda* puntaVecchia;
 			puntaVecchia = punta;
@@ -686,7 +685,7 @@ void *gestisciKd(void* i) {
 		strcat(buffer, "\n");
 		for(indice = 0; indice < nPiatti; indice++) {
 			if(com->quantita[indice] != 0) {
-				strcat(buffer, menu[indice]->codice);
+				strcat(buffer, menu[indice].codice);
 				strcat(buffer, "\t");
 				sprintf(numeroString, "%d", com->quantita[indice]);
 				strcat(buffer, numeroString);
@@ -715,7 +714,7 @@ void *gestisciKd(void* i) {
 					strcat(buffer, "\n");
 					for(indice2 = 0; indice2 < nPiatti; indice2++) {
 						if(punta->quantita[indice2] != 0) {
-							strcat(buffer, menu[indice2]->codice);
+							strcat(buffer, menu[indice2].codice);
 							strcat(buffer, "\t");
 							sprintf(numeroString, "%d", punta->quantita[indice2]);
 							strcat(buffer, numeroString);
