@@ -120,9 +120,9 @@ int main(int argc, char* argv[]){
 							printf("Comando 'stat' senza parametri inesistente!\n");
 							fflush(stdout);
 						}
-						else if(strcmp(serverCommand, "T") == 0) { // Chiede lo stato di un tavolo
+						else if(strcmp(serverCommand[0], "T") == 0) { // Chiede lo stato di un tavolo
 							// Cerco il numero del tavolo e stampo l'esito
-							serverCommand = strtok(NULL, "T");
+							serverCommand[0] = "0";
 							int tavolo = atoi(serverCommand);
 
 							if(tavolo > nMaxTd || tavolo == 0) {
