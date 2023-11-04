@@ -110,6 +110,7 @@ int ricevi(int j, int lunghezza, char* buffer) {
 void elencoComande(char* buffer, enum stato_comanda stato) {
 	char numeroString[BUFFER_SIZE];
 	int i, j;
+	strcpy(buffer, "\0");
 	pthread_mutex_lock(&comande_lock);
 	for(i = 0; i < nTavoli; i++) {
 		struct comanda *c;
@@ -143,6 +144,7 @@ void elencoComande(char* buffer, enum stato_comanda stato) {
 void elencoComandeTavolo(char* buffer, int tavolo) {
 	char numeroString[BUFFER_SIZE];
 	int i;
+	strcpy(buffer, "\0");
 	pthread_mutex_lock(&comande_lock);
 	struct comanda *c;
 	c = comande[tavolo];
@@ -527,8 +529,6 @@ void *gestisciTd(void* i) {
 				fflush(stdout);
 			}
 		}
-		printf("Test: sono qui");
-		fflush(stdout);
 
 		com->prossima = NULL;
 		com->timestamp = time(NULL);
