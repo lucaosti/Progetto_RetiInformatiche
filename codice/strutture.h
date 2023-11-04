@@ -118,7 +118,7 @@ struct comanda
 
 struct lis_thread
 {
-	pthread_t* t;
+	pthread_t t;
 	struct lis_thread* prossimo;
 };
 
