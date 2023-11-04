@@ -543,6 +543,8 @@ void *gestisciTd(void* i) {
 		for(indice = 0; indice < nMaxKd; indice++) {
 			if(socket_kd[indice] != -1) {
 				invia(socket_kd[indice], buffer);
+				printf("Notificato kitchen device %d\n", socket_kd[indice]); // Enumerazione non 0-based
+				fflush(stdout);
 			}
 		}
 		pthread_mutex_unlock(&socket_lock);
