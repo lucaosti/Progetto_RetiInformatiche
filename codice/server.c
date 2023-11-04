@@ -259,8 +259,7 @@ int main(int argc, char* argv[]){
 					
 					struct lis_thread *p;
 					struct lis_thread *inserisciThread;
-					int lmsg;
-					int ithread = i;
+					int lmsg, posto;
 
 					printf("test: %d\n",i);
 					fflush(stdout);
@@ -297,12 +296,15 @@ int main(int argc, char* argv[]){
 							}
 							break;
 						case 0: // Client che vuole utilizzare servizi
+							for(posto = 0; posto < nMaxClient; posto++)
+								if(i == socket_client[posto]) break;
+
 							FD_CLR(i, &master);
 							// Creo un nuovo elemento della lista di thread e lo alloco
 							p = (struct lis_thread*)malloc(sizeof(struct lis_thread));
 							p->t = (pthread_t*)malloc(sizeof(pthread_t));
 							// Creo il thread
-							(void) pthread_create(p->t, NULL, gestisciClient, (void*)&ithread);
+							(void) pthread_create(p->t, NULL, gestisciClient, (void*)&socket_client[posto]);
 							// Creo un puntatore per inserirlo in lista
 							inserisciThread = listaThread;
 							if(inserisciThread == NULL) {
@@ -319,12 +321,15 @@ int main(int argc, char* argv[]){
 
 							break;
 						case 1: // Table device che vuole utilizzare servizi
+							for(posto = 0; posto < nMaxTd; posto++)
+								if(i == socket_td[posto]) break;
+
 							FD_CLR(i, &master);
 							// Creo un nuovo elemento della lista di thread e lo alloco
 							p = (struct lis_thread*)malloc(sizeof(struct lis_thread));
 							p->t = (pthread_t*)malloc(sizeof(pthread_t));
 							// Creo il thread
-							(void) pthread_create(p->t, NULL, gestisciTd, (void*)&ithread);
+							(void) pthread_create(p->t, NULL, gestisciTd, (void*)&socket_td[posto]);
 							// Creo un puntatore per inserirlo in lista
 							inserisciThread = listaThread;
 							if(inserisciThread == NULL) {
@@ -342,12 +347,15 @@ int main(int argc, char* argv[]){
 							
 							break;
 						case 2: // Kitchen device che vuole utilizzare servizi
+							for(posto = 0; posto < nMaxKd; posto++)
+								if(i == socket_kd[posto]) break;
+
 							FD_CLR(i, &master);
 							// Creo un nuovo elemento della lista di thread e lo alloco
 							p = (struct lis_thread*)malloc(sizeof(struct lis_thread));
 							p->t = (pthread_t*)malloc(sizeof(pthread_t));
 							// Creo il thread
-							(void) pthread_create(p->t, NULL, gestisciKd, (void*)&ithread);
+							(void) pthread_create(p->t, NULL, gestisciKd, (void*)&socket_kd[posto]);
 							// Creo un puntatore per inserirlo in lista
 							inserisciThread = listaThread;
 							if(inserisciThread == NULL) {
