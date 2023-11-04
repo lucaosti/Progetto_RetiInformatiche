@@ -439,6 +439,9 @@ void *gestisciTd(void* i) {
 		if(socketId == socket_td[tavolo])
 			break;
 
+	printf("Richiesta da tavolo %d\n", tavolo);
+	fflush(stdout);
+
 	// Ricevi il messaggio
 	int ret, indice;
 	int lmsg = 0;
