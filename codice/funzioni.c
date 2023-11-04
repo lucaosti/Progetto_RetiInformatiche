@@ -271,6 +271,9 @@ void *gestisciClient(void* i) {
 	int socketId = *sId;
 	char buffer[BUFFER_SIZE];
 
+	printf("Avviato thread client\n");
+	fflush(stdout);
+
 	// Ricevi il messaggio
 	int ret;
 	int lmsg = 0;
@@ -412,6 +415,9 @@ void *gestisciTd(void* i) {
 	int socketId = *sId;
 	char buffer[BUFFER_SIZE];
 	char numeroString[BUFFER_SIZE];
+
+	printf("Avviato thread table device\n");
+	fflush(stdout);
 	
 	// Trovo il tavolo collegato al TD
 	int tavolo;
@@ -543,6 +549,9 @@ void *gestisciKd(void* i) {
 	int socketId = *sId;
 	char buffer[BUFFER_SIZE];
 	char numeroString[BUFFER_SIZE];
+
+	printf("Avviato thread kitchen device\n");
+	fflush(stdout);
 
 	// Ricevi il messaggio
 	int ret;
