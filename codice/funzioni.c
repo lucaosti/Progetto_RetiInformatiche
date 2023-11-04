@@ -328,7 +328,7 @@ void *gestisciClient(void* i) {
 		else {
 			printf("Data inserita non valida\n");
 			fflush(stdout);
-			FD_SET(i, &master);
+			FD_SET(socketId, &master);
 			return NULL;
 		}
 
@@ -419,7 +419,7 @@ retry:
 		printf("Errore comando Client!\n");
 		fflush(stdout);
 	}
-	FD_SET(i, &master);
+	FD_SET(socketId, &master);
 	return NULL;
 }
 
@@ -560,7 +560,7 @@ void *gestisciTd(void* i) {
 		printf("Errore comando Table Device!\n");
 		fflush(stdout);
 	}
-	FD_SET(i, &master);
+	FD_SET(socketId, &master);
 	return NULL;
 }
 
@@ -707,7 +707,7 @@ void *gestisciKd(void* i) {
 		printf("Errore comando Kitchen Device!\n");
 		fflush(stdout);
 	}
-	FD_SET(i, &master);
+	FD_SET(socketId, &master);
 	return NULL;
 }
 
