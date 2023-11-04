@@ -173,7 +173,8 @@ int main(int argc, char* argv[]){
 							// Invio ad ogni dispositivo connesso il messaggio "STOP"
 							strcpy(bufferOut,"STOP\0");
 							for(j = 1; j < fdmax; j++) {
-								if( j == listener) continue; // Salta il listener
+								if(j == listener) continue; // Salta il listener
+								if(ISSET(i, &master)) continue; // Nel caso lo abbia già chiuso
 								ret = invia(j, bufferOut);
 								if(ret < 0){
 									perror("Errore invio chiusura server\n");
