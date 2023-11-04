@@ -83,20 +83,13 @@ int main(int argc, char* argv[]){
 		pthread_mutex_unlock(&fd_lock);
 
 		// Mi blocco (potenzialmente) in attesa di descrittori pronti
+		struct timeval tv = {600, 0};
 		pthread_mutex_lock(&fd_lock);
-		ret = select(fdmax+1, &read_fds, NULL, NULL, NULL);
+		ret = select(fdmax+1, &read_fds, NULL, NULL, &tv); // metto un timeout poiché modifico master
 		pthread_mutex_unlock(&fd_lock);
 		if(ret < 0) {
 			perror("Errore nella select!");
 			exit(-1);
-		}
-
-		for(i = 0; i <= fdmax; i++) {
-			// Il descrittore 'i' è pronto se la select lo ha lasciato nel set "read_fds"
-			if(FD_ISSET(i, &master)) {
-				printf("Test: master %d\n", i);
-				fflush(stdout);
-			}
 		}
 
 		// Scorro ogni descrittore 'i'
