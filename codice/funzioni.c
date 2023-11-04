@@ -53,7 +53,7 @@ void caricaMenu() {
 		serverCommand = strtok(NULL, "€-");
 		strcpy(menu[i].nome, serverCommand);
 		serverCommand = strtok(NULL, "€-");
-		fprintf(buffer, atoi(serverCommand));
+		fprintf(buffer, "%d", serverCommand);
 		strcpy(menu[i].prezzo, buffer);
 	}
 
