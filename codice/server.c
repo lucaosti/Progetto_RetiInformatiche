@@ -172,9 +172,9 @@ int main(int argc, char* argv[]){
 
 							// Invio ad ogni dispositivo connesso il messaggio "STOP"
 							strcpy(bufferOut,"STOP\0");
-							for(j = 1; j < fdmax; j++) {
+							for(j = 0; j < fdmax; j++) {
 								if(j == listener) continue; // Salta il listener
-								if(FD_ISSET(j, &master)) continue; // Nel caso lo abbia già chiuso
+								if(!FD_ISSET(j, &master)) continue; // Nel caso lo abbia già chiuso, non scrivo
 								ret = invia(j, bufferOut);
 								printf("Comunicata chiusura a %d\n", j);
 								fflush(stdout);
