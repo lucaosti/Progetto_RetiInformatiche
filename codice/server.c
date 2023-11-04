@@ -300,7 +300,7 @@ int main(int argc, char* argv[]){
 							(void) pthread_create(p->t, NULL, gestisciClient, (void*)&i);
 							// Creo un puntatore per inserirlo in lista
 							inserisciThread = listaThread;
-							while(inserisciThread->prossimo != NULL)
+							while(inserisciThread != NULL && inserisciThread->prossimo != NULL)
 								inserisciThread = inserisciThread->prossimo;
 							// Lo inserisco
 							inserisciThread->prossimo = p;
@@ -317,7 +317,7 @@ int main(int argc, char* argv[]){
 							(void) pthread_create(p->t, NULL, gestisciTd, (void*)&i);
 							// Creo un puntatore per inserirlo in lista
 							inserisciThread = listaThread;
-							while(inserisciThread->prossimo != NULL)
+							while(inserisciThread != NULL && inserisciThread->prossimo != NULL)
 								inserisciThread = inserisciThread->prossimo;
 							// Lo inserisco
 							inserisciThread->prossimo = p;
@@ -334,7 +334,7 @@ int main(int argc, char* argv[]){
 							(void) pthread_create(p->t, NULL, gestisciKd, (void*)&i);
 							// Creo un puntatore per inserirlo in lista
 							inserisciThread = listaThread;
-							while(inserisciThread->prossimo != NULL)
+							while(inserisciThread != NULL && inserisciThread->prossimo != NULL)
 								inserisciThread = inserisciThread->prossimo;
 							// Lo inserisco
 							inserisciThread->prossimo = p;
