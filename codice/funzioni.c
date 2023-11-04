@@ -524,6 +524,7 @@ void *gestisciTd(void* i) {
 				token = strtok(NULL, " -");
 				if(strcmp(token, menu[i]->codice) != 0)
 					continue;
+				token = strtok(NULL, " -");
 				com->quantita[i] = atoi(token);
 				printf("comanda: %s %d\n", menu[i]->codice, com->quantita[i]);
 				fflush(stdout);
