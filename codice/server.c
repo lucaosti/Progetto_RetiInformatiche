@@ -313,6 +313,10 @@ int main(int argc, char* argv[]){
 							// Creo un nuovo elemento della lista di thread e lo alloco
 							p = (struct lis_thread*)malloc(sizeof(struct lis_thread));
 							p->t = (pthread_t*)malloc(sizeof(pthread_t));
+
+							printf("test: c'arriva?\n");
+							fflush(stdout);
+
 							// Creo il thread
 							(void) pthread_create(p->t, NULL, gestisciTd, (void*)&i);
 							// Creo un puntatore per inserirlo in lista
