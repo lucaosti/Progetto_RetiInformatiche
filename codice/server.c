@@ -260,6 +260,9 @@ int main(int argc, char* argv[]){
 					struct lis_thread *p;
 					struct lis_thread *inserisciThread;
 					int lmsg;
+
+					printf("test: %d\n",i);
+					fflush(stdout);
 					switch(tipo) {
 						case -1: // Si sta presentando
 							ret = riceviLunghezza(i, &lmsg);
