@@ -430,7 +430,7 @@ void *gestisciTd(void* i) {
 	char buffer[BUFFER_SIZE];
 	char numeroString[BUFFER_SIZE];
 
-	printf("Avviato thread table device %d\n", socketId);
+	printf("Avviato thread table device\n");
 	fflush(stdout);
 	
 	// Trovo il tavolo collegato al TD
@@ -439,7 +439,7 @@ void *gestisciTd(void* i) {
 		if(socketId == socket_td[tavolo])
 			break;
 
-	printf("Richiesta da tavolo %d, %d != %d\n", tavolo, socket_td[0], socketId);
+	printf("Richiesta da tavolo %d, [0 = %d, 1 = %d, 2 = %d] != %d\n", tavolo, socket_td[0], socket_td[1], socket_td[2], socketId);
 	fflush(stdout);
 
 	// Ricevi il messaggio
