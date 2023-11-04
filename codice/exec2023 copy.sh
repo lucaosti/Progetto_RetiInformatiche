@@ -32,9 +32,9 @@
   done
 
 # 2.3 esecuzione di 2 kitchen device sulle porte 6001 e 6002
-	#gnome-terminal -x sh -c "./kd 6000; exec bash"
-	#gnome-terminal -x sh -c "./kd 6001; exec bash"
+	gnome-terminal -x sh -c "./kd 6000; exec bash"
+	gnome-terminal -x sh -c "./kd 6001; exec bash"
 
 
 # 2.4 esecuzione di un client sulla porta 7000
-	#gnome-terminal -x sh -c "./cli 7000; exec bash"
+	gnome-terminal -x sh -c "./cli 7000; exec bash"
