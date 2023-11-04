@@ -122,7 +122,8 @@ int main(int argc, char* argv[]){
 						}
 						else if(strcmp(serverCommand[0], "T") == 0) { // Chiede lo stato di un tavolo
 							// Cerco il numero del tavolo e stampo l'esito
-							serverCommand[0] = "0";
+							serverCommand = strtok(NULL, "T");
+							serverCommand = strtok(NULL, "T");
 							int tavolo = atoi(serverCommand);
 
 							if(tavolo > nMaxTd || tavolo == 0) {
