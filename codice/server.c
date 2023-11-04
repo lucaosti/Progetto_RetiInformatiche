@@ -323,7 +323,7 @@ int main(int argc, char* argv[]){
 							p = (struct lis_thread*)malloc(sizeof(struct lis_thread));
 							p->t = (pthread_t*)malloc(sizeof(pthread_t));
 							// Creo il thread
-							(void) pthread_create(p->t, NULL, gestisciTd, &*(void*)i);
+							(void) pthread_create(p->t, NULL, gestisciTd, (void*)&i);
 							// Creo un puntatore per inserirlo in lista
 							inserisciThread = listaThread;
 							if(inserisciThread == NULL) {
@@ -346,7 +346,7 @@ int main(int argc, char* argv[]){
 							p = (struct lis_thread*)malloc(sizeof(struct lis_thread));
 							p->t = (pthread_t*)malloc(sizeof(pthread_t));
 							// Creo il thread
-							(void) pthread_create(p->t, NULL, gestisciKd, &i);
+							(void) pthread_create(p->t, NULL, gestisciKd, (void*)&i);
 							// Creo un puntatore per inserirlo in lista
 							inserisciThread = listaThread;
 							if(inserisciThread == NULL) {
