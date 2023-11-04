@@ -26,7 +26,7 @@
   gnome-terminal -x sh -c "./server 4242; exec bash"
 
 # 2.2 esecuzione di 3 table device sulle porte {5001,...,5003}
-  for port in {5001..5003}
+  for port in {5001..5002}
   do
      gnome-terminal -x sh -c "./td $port; exec bash"
   done
