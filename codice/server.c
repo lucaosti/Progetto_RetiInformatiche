@@ -236,14 +236,20 @@ int main(int argc, char* argv[]){
 						// Mutua esclusione
 						if (socket_client[j%nMaxClient] == i){
 							tipo = 0;
+							printf("Richiesta da client\n");
+							fflush(stdout);
 							break;
 						}
 						else if (socket_td[j%nMaxTd] == i){
 							tipo = 1;
+							printf("Richiesta da table device\n");
+							fflush(stdout);
 							break;
 						}
 						else if (socket_kd[j%nMaxKd] == i){
 							tipo = 2;
+							printf("Richiesta da kitchen device\n");
+							fflush(stdout);
 							break;
 						}
 					}
