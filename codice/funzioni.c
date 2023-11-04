@@ -47,6 +47,7 @@ void caricaMenu() {
 
 	for(i = 0; i < nPiatti; i++) {
 		fgets(buffer, sizeof(buffer), f);
+		strcat(menu_text, buffer);
 		struct piatto* p = malloc(sizeof(*p));
 		serverCommand = strtok(buffer, "€-");
 		strcpy(p->codice, serverCommand);
@@ -476,9 +477,15 @@ void *gestisciTd(void* i) {
 		// Invio il menu
 		strcpy(buffer, menu_text);
 		invia(socketId, buffer);
+		printf("Invio il menu al tavolo %d\n", tavoli[tavolo].numero); // Enumerazione non 0-based
+		fflush(stdout);
 	}
 	else if(strcmp(token, "comanda") == 0) { // Secondo caso
 		int i, indice;
+
+		printf("Nuova comanda dal tavolo %d\n", tavoli[tavolo].numero); // Enumerazione non 0-based
+		fflush(stdout);
+
 		// Parso la comanda ed inserisco
 		pthread_mutex_lock(&comande_lock);
 		struct comanda* punta = comande[tavolo];
@@ -524,6 +531,10 @@ void *gestisciTd(void* i) {
 	}
 	else if(strcmp(token, "conto") == 0) { // Terzo caso
 		int indice;
+
+		printf("Conto richiesto dal tavolo %d\n", tavoli[tavolo].numero); // Enumerazione non 0-based
+		fflush(stdout);
+
 		pthread_mutex_lock(&comande_lock);
 		// Scorro l'array comande ed invio
 		struct comanda* punta = comande[tavolo];
