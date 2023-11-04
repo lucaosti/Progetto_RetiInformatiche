@@ -302,7 +302,7 @@ int main(int argc, char* argv[]){
 							// Creo un puntatore per inserirlo in lista
 							inserisciThread = listaThread;
 							if(inserisciThread == NULL) {
-
+								inserisciThread = p;
 							}
 							else {
 								while(inserisciThread != NULL && inserisciThread->prossimo != NULL)
@@ -332,11 +332,8 @@ int main(int argc, char* argv[]){
 								// Lo inserisco
 								inserisciThread->prossimo = p;
 							}
-							printf("test: c'arriva?\n");
-							fflush(stdout);
 
-
-							printf("Creo thread per un table device\n");
+							printf("Creo thread per un table device %d\n", i);
 							fflush(stdout);
 							
 							break;
@@ -350,7 +347,7 @@ int main(int argc, char* argv[]){
 							// Creo un puntatore per inserirlo in lista
 							inserisciThread = listaThread;
 							if(inserisciThread == NULL) {
-
+								inserisciThread = p;
 							}
 							else {
 								while(inserisciThread != NULL && inserisciThread->prossimo != NULL)
