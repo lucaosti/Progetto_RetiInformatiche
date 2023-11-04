@@ -423,8 +423,8 @@ retry:
 }
 
 // Gestisce UNA richiesta da parte di UN table device
-void *gestisciTd(int i) {
-	int socketId = /*(int *)*/i;
+void *gestisciTd(void* i) {
+	int socketId = *(int *)i;
 	char buffer[BUFFER_SIZE];
 	char numeroString[BUFFER_SIZE];
 
