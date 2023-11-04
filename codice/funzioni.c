@@ -58,6 +58,8 @@ void caricaMenu() {
 		menu[i] = p;
 	}
 
+	strcat(menu_text, "\n");
+
 	fclose(f);
 }
 
