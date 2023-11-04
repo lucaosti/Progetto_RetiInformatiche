@@ -518,18 +518,19 @@ void *gestisciTd(void* i) {
 				punta = punta->prossima;
 			punta->prossima = com;
 		}
-		com->prossima = NULL;
 
-		token = strtok(NULL, " ");
 		while(token != NULL) {
 			for (i = 0; i < nPiatti; i++) {
 				if(strcmp(token, menu[i]->codice) != 0)
 					continue;
-				token = strtok(NULL, "-");
+				token = strtok(NULL, " -");
 				com->quantita[i] = atoi(token);
-				token = strtok(NULL, " ");
+				printf("comanda: %s %d\n", menu[i]->codice, com->quantita[i]);
+				fflush(stdout);
 			}
 		}
+
+		com->prossima = NULL;
 		com->timestamp = time(NULL);
 		com->kd = socketId;
 		com->nComanda = numeroComanda++;
