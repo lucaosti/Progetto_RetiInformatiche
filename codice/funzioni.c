@@ -515,14 +515,14 @@ void *gestisciTd(void* i) {
 				punta = punta->prossima;
 			punta->prossima = com;
 		}
-
+		token = strtok(NULL, " -");
 		while(token != NULL) {
 			for (i = 0; i < nPiatti && token != NULL; i++) {
-				token = strtok(NULL, " -");
 				if(strcmp(token, menu[i].codice) != 0)
 					continue;
 				token = strtok(NULL, " -");
 				com->quantita[i] = atoi(token);
+				token = strtok(NULL, " -");
 				printf("comanda: %s %d\n", menu[i].codice, com->quantita[i]);
 				fflush(stdout);
 			}
