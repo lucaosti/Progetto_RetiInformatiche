@@ -437,7 +437,7 @@ void *gestisciTd(void* i) {
 		if(socketId == socket_td[tavolo])
 			break;
 
-	printf("Richiesta da tavolo %d, [0 = %d, 1 = %d, 2 = %d] != %d\n", tavolo, socket_td[0], socket_td[1], socket_td[2], socketId);
+	printf("Richiesta da tavolo %d\n", tavoli[tavolo].numero); // Enumerazione non 0-based
 	fflush(stdout);
 
 	// Ricevi il messaggio
