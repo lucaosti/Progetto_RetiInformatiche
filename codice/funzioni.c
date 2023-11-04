@@ -519,7 +519,7 @@ void *gestisciTd(void* i) {
 			punta->prossima = com;
 		}
 
-		printf("codice: %s\n", menu[0]->codice);
+		printf("codice: %s\n%s\n%s\n", menu[0]->codice, menu[1]->codice, menu[2]->codice);
 		fflush(stdout);
 
 		while(token != NULL) {
