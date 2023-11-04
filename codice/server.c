@@ -293,7 +293,7 @@ int main(int argc, char* argv[]){
 							}
 							break;
 						case 0: // Client che vuole utilizzare servizi
-							FD_CLC(i, &master);
+							FD_CLR(i, &master);
 							// Creo un nuovo elemento della lista di thread e lo alloco
 							p = (struct lis_thread*)malloc(sizeof(struct lis_thread));
 							p->t = (pthread_t*)malloc(sizeof(pthread_t));
@@ -315,7 +315,7 @@ int main(int argc, char* argv[]){
 
 							break;
 						case 1: // Table device che vuole utilizzare servizi
-							FD_CLC(i, &master);
+							FD_CLR(i, &master);
 							// Creo un nuovo elemento della lista di thread e lo alloco
 							p = (struct lis_thread*)malloc(sizeof(struct lis_thread));
 							p->t = (pthread_t*)malloc(sizeof(pthread_t));
@@ -341,7 +341,7 @@ int main(int argc, char* argv[]){
 							
 							break;
 						case 2: // Kitchen device che vuole utilizzare servizi
-							FD_CLC(i, &master);
+							FD_CLR(i, &master);
 							// Creo un nuovo elemento della lista di thread e lo alloco
 							p = (struct lis_thread*)malloc(sizeof(struct lis_thread));
 							p->t = (pthread_t*)malloc(sizeof(pthread_t));

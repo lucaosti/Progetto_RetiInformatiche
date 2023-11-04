@@ -207,7 +207,7 @@ int inserisci(int i, char *c) {
 		}
 		break;
 	case 't': // Table device
-		for(; j < nMaxTd; j++){
+		for(; j < nMaxTd; j++){ // Ipotizzo l'accensione ordinata
 			if(socket_td[j] == -1){
 				socket_td[j] = i;
 				ret = 2;
