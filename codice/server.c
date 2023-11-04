@@ -123,7 +123,6 @@ int main(int argc, char* argv[]){
 						else if(strcmp(serverCommand, "T") == 0) { // Chiede lo stato di un tavolo
 							// Cerco il numero del tavolo e stampo l'esito
 							serverCommand = strtok(NULL, "T");
-							serverCommand = strtok(NULL, "T");
 							int tavolo = atoi(serverCommand);
 
 							if(tavolo > nMaxTd || tavolo == 0) {
@@ -165,7 +164,7 @@ int main(int argc, char* argv[]){
 					else if(strcmp(serverCommand, "stop") == 0) { // Secondo caso: stop
 						// Se posso stopparmi, mando una notifica a tutti i dispositivi connessi e mi interrompo.
 						// Nel caso io non possa fermarmi (ci sono delle comande in attesa o preparazione), lo comunico e non faccio niente.
-						if( !comandeInSospeso() ) { // Mi posso fermare
+						if(!comandeInSospeso()) { // Mi posso fermare
 							int j;
 							// Comunico l'esecuzione del comando
 							printf("Comunico a tutti la chiusura del server e lo termino.\n");
