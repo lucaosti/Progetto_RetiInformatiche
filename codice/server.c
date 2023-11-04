@@ -83,7 +83,9 @@ int main(int argc, char* argv[]){
 		pthread_mutex_unlock(&fd_lock);
 
 		// Mi blocco (potenzialmente) in attesa di descrittori pronti
+		pthread_mutex_lock(&fd_lock);
 		ret = select(fdmax+1, &read_fds, NULL, NULL, NULL);
+		pthread_mutex_unlock(&fd_lock);
 		if(ret < 0) {
 			perror("Errore nella select!");
 			exit(-1);
@@ -93,6 +95,10 @@ int main(int argc, char* argv[]){
 		for(i = 0; i <= fdmax; i++) {
 			// Il descrittore 'i' è pronto se la select lo ha lasciato nel set "read_fds"
 			if(FD_ISSET(i, &read_fds)) {
+
+				printf("Test: Servo %d\n", i);
+				fflush(stdout);
+
 				// Ci sono tre casi:
 				//   - ho ricevuto un comando (stdin);
 				//   - ho ricevuto una nuova richiesta di connessione;
