@@ -284,9 +284,6 @@ void *gestisciClient(void* i) {
 		printf("Client disconnesso\n");
 		fflush(stdout);
 		close(socketId);
-		pthread_mutex_lock(&fd_lock);
-		FD_CLR(socketId, &master);
-		pthread_mutex_unlock(&fd_lock);
 		for(indice = 0; indice < nMaxClient; indice++)
 			if(socketId == socket_client[indice])
 				socket_client[indice] = -1;
@@ -299,9 +296,6 @@ void *gestisciClient(void* i) {
 		printf("Client disconnesso\n");
 		fflush(stdout);
 		close(socketId);
-		pthread_mutex_lock(&fd_lock);
-		FD_CLR(socketId, &master);
-		pthread_mutex_unlock(&fd_lock);
 		for(indice = 0; indice < nMaxClient; indice++)
 			if(socketId == socket_client[indice])
 				socket_client[indice] = -1;
@@ -357,9 +351,6 @@ retry:
 			printf("Client disconnesso\n");
 			fflush(stdout);
 			close(socketId);
-			pthread_mutex_lock(&fd_lock);
-			FD_CLR(socketId, &master);
-			pthread_mutex_unlock(&fd_lock);
 			for(indice = 0; indice < nMaxClient; indice++)
 				if(socketId == socket_client[indice])
 					socket_client[indice] = -1;
@@ -372,9 +363,6 @@ retry:
 			printf("Client disconnesso\n");
 			fflush(stdout);
 			close(socketId);
-			pthread_mutex_lock(&fd_lock);
-			FD_CLR(socketId, &master);
-			pthread_mutex_unlock(&fd_lock);
 			for(indice = 0; indice < nMaxClient; indice++)
 				if(socketId == socket_client[indice])
 					socket_client[indice] = -1;
@@ -477,9 +465,6 @@ void *gestisciTd(void* i) {
 		printf("TD disconnesso\n");
 		fflush(stdout);
 		close(socketId);
-		pthread_mutex_lock(&fd_lock);
-		FD_CLR(socketId, &master);
-		pthread_mutex_unlock(&fd_lock);
 		for(indice = 0; indice < nMaxTd; indice++)
 			if(socketId == socket_td[indice])
 				socket_td[indice] = -1;
@@ -492,9 +477,6 @@ void *gestisciTd(void* i) {
 		printf("TD disconnesso\n");
 		fflush(stdout);
 		close(socketId);
-		pthread_mutex_lock(&fd_lock);
-		FD_CLR(socketId, &master);
-		pthread_mutex_unlock(&fd_lock);
 		for(indice = 0; indice < nMaxTd; indice++)
 			if(socketId == socket_td[indice])
 				socket_td[indice] = -1;
@@ -635,9 +617,6 @@ void *gestisciKd(void* i) {
 		printf("KD disconnesso\n");
 		fflush(stdout);
 		close(socketId);
-		pthread_mutex_lock(&fd_lock);
-		FD_CLR(socketId, &master);
-		pthread_mutex_unlock(&fd_lock);
 		for(indice = 0; indice < nMaxKd; indice++)
 			if(socketId == socket_kd[indice])
 				socket_kd[indice] = -1;
@@ -650,9 +629,6 @@ void *gestisciKd(void* i) {
 		printf("KD disconnesso\n");
 		fflush(stdout);
 		close(socketId);
-		pthread_mutex_lock(&fd_lock);
-		FD_CLR(socketId, &master);
-		pthread_mutex_unlock(&fd_lock);
 		for(indice = 0; indice < nMaxKd; indice++)
 			if(socketId == socket_kd[indice])
 				socket_kd[indice] = -1;
