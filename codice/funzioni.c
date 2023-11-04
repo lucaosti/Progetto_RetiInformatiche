@@ -273,9 +273,6 @@ void *gestisciClient(void* i) {
 	printf("Avviato thread client\n");
 	fflush(stdout);
 
-	printf("test:sid %d\n", socketId);
-	fflush(stdout);
-
 	// Ricevi il messaggio
 	int ret, indice;
 	int lmsg = 0;

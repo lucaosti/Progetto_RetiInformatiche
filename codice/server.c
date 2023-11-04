@@ -38,7 +38,7 @@ int main(int argc, char* argv[]){
 	fflush(stdout);
 
 	struct sockaddr_in my_addr, cl_addr;
-	int ret, newfd, listener, addrlen, i;
+	int ret, newfd, listener, addrlen, i, ithread;
 	char buffer[BUFFER_SIZE];
 	char bufferOut[BUFFER_SIZE];
 	int portNumber = atoi(argv[1]);
@@ -260,6 +260,7 @@ int main(int argc, char* argv[]){
 					struct lis_thread *p;
 					struct lis_thread *inserisciThread;
 					int lmsg;
+					int ithread = i;
 
 					printf("test: %d\n",i);
 					fflush(stdout);
@@ -301,7 +302,7 @@ int main(int argc, char* argv[]){
 							p = (struct lis_thread*)malloc(sizeof(struct lis_thread));
 							p->t = (pthread_t*)malloc(sizeof(pthread_t));
 							// Creo il thread
-							(void) pthread_create(p->t, NULL, gestisciClient, (void*)&i);
+							(void) pthread_create(p->t, NULL, gestisciClient, (void*)&ithread);
 							// Creo un puntatore per inserirlo in lista
 							inserisciThread = listaThread;
 							if(inserisciThread == NULL) {
@@ -323,7 +324,7 @@ int main(int argc, char* argv[]){
 							p = (struct lis_thread*)malloc(sizeof(struct lis_thread));
 							p->t = (pthread_t*)malloc(sizeof(pthread_t));
 							// Creo il thread
-							(void) pthread_create(p->t, NULL, gestisciTd, (void*)&i);
+							(void) pthread_create(p->t, NULL, gestisciTd, (void*)&ithread);
 							// Creo un puntatore per inserirlo in lista
 							inserisciThread = listaThread;
 							if(inserisciThread == NULL) {
@@ -346,7 +347,7 @@ int main(int argc, char* argv[]){
 							p = (struct lis_thread*)malloc(sizeof(struct lis_thread));
 							p->t = (pthread_t*)malloc(sizeof(pthread_t));
 							// Creo il thread
-							(void) pthread_create(p->t, NULL, gestisciKd, (void*)&i);
+							(void) pthread_create(p->t, NULL, gestisciKd, (void*)&ithread);
 							// Creo un puntatore per inserirlo in lista
 							inserisciThread = listaThread;
 							if(inserisciThread == NULL) {
