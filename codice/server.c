@@ -176,7 +176,7 @@ int main(int argc, char* argv[]){
 								if(j == listener) continue; // Salta il listener
 								if(!FD_ISSET(j, &master)) continue; // Nel caso lo abbia già chiuso, non scrivo
 								ret = invia(j, bufferOut);
-								printf("Comunicata chiusura a %d\n", j);
+								printf("Comunicata chiusura al sd %d\n", j);
 								fflush(stdout);
 								if(ret < 0){
 									perror("Errore invio chiusura server\n");
