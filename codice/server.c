@@ -303,7 +303,9 @@ int main(int argc, char* argv[]){
 							for(posto = 0; posto < nMaxClient; posto++)
 								if(i == socket_client[posto]) break;
 
+							pthread_mutex_lock(&fd_lock);
 							FD_CLR(i, &master);
+							pthread_mutex_unlock(&fd_lock);
 							// Creo un nuovo elemento della lista di thread e lo alloco
 							p = (struct lis_thread*)malloc(sizeof(struct lis_thread));
 							p->t = (pthread_t*)malloc(sizeof(pthread_t));
@@ -328,7 +330,9 @@ int main(int argc, char* argv[]){
 							for(posto = 0; posto < nMaxTd; posto++)
 								if(i == socket_td[posto]) break;
 
+							pthread_mutex_lock(&fd_lock);
 							FD_CLR(i, &master);
+							pthread_mutex_unlock(&fd_lock);
 							// Creo un nuovo elemento della lista di thread e lo alloco
 							p = (struct lis_thread*)malloc(sizeof(struct lis_thread));
 							p->t = (pthread_t*)malloc(sizeof(pthread_t));
@@ -354,7 +358,9 @@ int main(int argc, char* argv[]){
 							for(posto = 0; posto < nMaxKd; posto++)
 								if(i == socket_kd[posto]) break;
 
+							pthread_mutex_lock(&fd_lock);
 							FD_CLR(i, &master);
+							pthread_mutex_unlock(&fd_lock);
 							// Creo un nuovo elemento della lista di thread e lo alloco
 							p = (struct lis_thread*)malloc(sizeof(struct lis_thread));
 							p->t = (pthread_t*)malloc(sizeof(pthread_t));
