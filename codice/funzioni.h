@@ -38,7 +38,7 @@ void cercaDisponibilita(int nPers, time_t dataora, char* buffer, char* disponibi
 void *gestisciClient(void* i);
 
 // Gestisce UNA richiesta da parte di un table device
-void *gestisciTd(void* i);
+void *gestisciTd(int i);
 
 // Gestisce UNA richiesta da parte di un kitchen device
 void *gestisciKd(void* i);
