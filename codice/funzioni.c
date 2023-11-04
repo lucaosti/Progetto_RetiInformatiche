@@ -519,8 +519,6 @@ void *gestisciTd(void* i) {
 			punta->prossima = com;
 		}
 
-		printf("Test: sono qui");
-		fflush(stdout);
 		while(token != NULL) {
 			for (i = 0; i < nPiatti; i++) {
 				if(strcmp(token, menu[i]->codice) != 0)
@@ -531,6 +529,8 @@ void *gestisciTd(void* i) {
 				fflush(stdout);
 			}
 		}
+		printf("Test: sono qui");
+		fflush(stdout);
 
 		com->prossima = NULL;
 		com->timestamp = time(NULL);
