@@ -193,7 +193,7 @@ int main(int argc, char* argv[]){
 							struct lis_thread *lt;
 							lt = listaThread;
 							while(lt != NULL) {
-								pthread_join(lt->t, NULL);
+								pthread_join(*(lt->t),NULL);
 								lt = lt->prossimo;
 							}
 
@@ -294,8 +294,8 @@ int main(int argc, char* argv[]){
 							break;
 						case 0: // Client che vuole utilizzare servizi
 							// Creo un nuovo elemento della lista di thread e lo alloco
-							p = malloc(sizeof(struct lis_thread));
-							p->t = malloc(sizeof(pthread_t));
+							p = (struct lis_thread*)malloc(sizeof(struct lis_thread));
+							p->t = (pthread_t*)malloc(sizeof(pthread_t));
 							// Creo il thread
 							(void) pthread_create(p->t, NULL, gestisciClient, (void*)&i);
 							// Creo un puntatore per inserirlo in lista
@@ -311,8 +311,8 @@ int main(int argc, char* argv[]){
 							break;
 						case 1: // Table device che vuole utilizzare servizi
 							// Creo un nuovo elemento della lista di thread e lo alloco
-							p = malloc(sizeof(struct lis_thread));
-							p->t = malloc(sizeof(pthread_t));
+							p = (struct lis_thread*)malloc(sizeof(struct lis_thread));
+							p->t = (pthread_t*)malloc(sizeof(pthread_t));
 							// Creo il thread
 							(void) pthread_create(p->t, NULL, gestisciTd, (void*)&i);
 							// Creo un puntatore per inserirlo in lista
@@ -328,8 +328,8 @@ int main(int argc, char* argv[]){
 							break;
 						case 2: // Kitchen device che vuole utilizzare servizi
 							// Creo un nuovo elemento della lista di thread e lo alloco
-							p = malloc(sizeof(struct lis_thread));
-							p->t = malloc(sizeof(pthread_t));
+							p = (struct lis_thread*)malloc(sizeof(struct lis_thread));
+							p->t = (pthread_t*)malloc(sizeof(pthread_t));
 							// Creo il thread
 							(void) pthread_create(p->t, NULL, gestisciKd, (void*)&i);
 							// Creo un puntatore per inserirlo in lista
