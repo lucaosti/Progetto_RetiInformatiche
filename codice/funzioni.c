@@ -288,6 +288,8 @@ void *gestisciClient(void* i) {
 		for(indice = 0; indice < nMaxClient; indice++)
 			if(socketId == socket_client[indice])
 				socket_client[indice] = -1;
+		printf("Terminato thread client\n");
+		fflush(stdout);
 		return NULL;
 	}
 	ret = ricevi(socketId, lmsg, buffer);
@@ -299,6 +301,8 @@ void *gestisciClient(void* i) {
 		for(indice = 0; indice < nMaxClient; indice++)
 			if(socketId == socket_client[indice])
 				socket_client[indice] = -1;
+		printf("Terminato thread client\n");
+		fflush(stdout);
 		return NULL;
 	}
 
@@ -331,6 +335,8 @@ void *gestisciClient(void* i) {
 			printf("Data inserita non valida\n");
 			fflush(stdout);
 			FD_SET(socketId, &master);
+			printf("Terminato thread client\n");
+			fflush(stdout);
 			return NULL;
 		}
 
@@ -349,6 +355,8 @@ retry:
 			for(indice = 0; indice < nMaxClient; indice++)
 				if(socketId == socket_client[indice])
 					socket_client[indice] = -1;
+			printf("Terminato thread client\n");
+			fflush(stdout);
 			return NULL;
 		}
 		ret = ricevi(socketId, lmsg, buffer);
@@ -360,6 +368,8 @@ retry:
 			for(indice = 0; indice < nMaxClient; indice++)
 				if(socketId == socket_client[indice])
 					socket_client[indice] = -1;
+			printf("Terminato thread client\n");
+			fflush(stdout);
 			return NULL;
 		}
 
@@ -422,6 +432,10 @@ retry:
 		fflush(stdout);
 	}
 	FD_SET(socketId, &master);
+
+	printf("Terminato thread client\n");
+	fflush(stdout);
+
 	return NULL;
 }
 
@@ -455,6 +469,8 @@ void *gestisciTd(void* i) {
 		for(indice = 0; indice < nMaxTd; indice++)
 			if(socketId == socket_td[indice])
 				socket_td[indice] = -1;
+		printf("Terminato thread table device\n");
+		fflush(stdout);
 		return NULL;
 	}
 	ret = ricevi(socketId, lmsg, buffer);
@@ -466,6 +482,8 @@ void *gestisciTd(void* i) {
 		for(indice = 0; indice < nMaxTd; indice++)
 			if(socketId == socket_td[indice])
 				socket_td[indice] = -1;
+		printf("Terminato thread table device\n");
+		fflush(stdout);
 		return NULL;
 	}
 
@@ -575,6 +593,10 @@ void *gestisciTd(void* i) {
 		fflush(stdout);
 	}
 	FD_SET(socketId, &master);
+
+	printf("Terminato thread table device\n");
+	fflush(stdout);
+
 	return NULL;
 }
 
@@ -599,6 +621,8 @@ void *gestisciKd(void* i) {
 		for(indice = 0; indice < nMaxKd; indice++)
 			if(socketId == socket_kd[indice])
 				socket_kd[indice] = -1;
+		printf("Terminato thread kitchen device\n");
+		fflush(stdout);
 		return NULL;
 	}
 	ret = ricevi(socketId, lmsg, buffer);
@@ -610,6 +634,8 @@ void *gestisciKd(void* i) {
 		for(indice = 0; indice < nMaxKd; indice++)
 			if(socketId == socket_kd[indice])
 				socket_kd[indice] = -1;
+		printf("Terminato thread kitchen device\n");
+		fflush(stdout);
 		return NULL;
 	}
 
@@ -721,6 +747,10 @@ void *gestisciKd(void* i) {
 		fflush(stdout);
 	}
 	FD_SET(socketId, &master);
+
+	printf("Terminato thread kitchen device\n");
+	fflush(stdout);
+
 	return NULL;
 }
 
