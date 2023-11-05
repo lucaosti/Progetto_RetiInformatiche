@@ -335,7 +335,7 @@ void *gestisciClient(void* i) {
 
 		token = strtok(NULL, " ");
 
-		printf("Test, cognome = %s\n", token);
+		printf("Test, data = %s\n", token);
 		fflush(stdout);
 
 		if (strptime(token, "%d-%m-%y %H", &tm_) != NULL) {
