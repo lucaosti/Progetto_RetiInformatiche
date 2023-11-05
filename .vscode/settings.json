@@ -8,7 +8,9 @@
         "stdio.h": "c",
         "unistd.h": "c",
         "inet.h": "c",
-        "types.h": "c"
+        "types.h": "c",
+        "string.h": "c",
+        "time.h": "c"
     },
     "cmake.configureOnOpen": true
 }
