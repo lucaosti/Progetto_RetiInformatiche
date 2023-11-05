@@ -266,9 +266,9 @@ void cercaDisponibilita(int nPers, char* dataora, char* buffer, char* disponibil
 		strcat(buffer, tavoli[index].sala);
 		strcat(buffer, " ");
 		strcat(buffer, tavoli[index].descrizione);
-		//strcat(buffer, "\n");
 		numero++;
 	}
+	strcat(buffer, "\n");
     pthread_mutex_unlock(&tavoli_lock);
     pthread_mutex_unlock(&prenotazioni_lock);
 }
