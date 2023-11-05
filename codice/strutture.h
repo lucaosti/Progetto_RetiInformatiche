@@ -12,9 +12,6 @@
 #include <time.h>
 #include <pthread.h>
 
-#define _XOPEN_SOURCE
-#define _GNU_SOURCE
-
 #define nTavoli 16
 #define nPiatti 8
 #define dimEntryMeny 64

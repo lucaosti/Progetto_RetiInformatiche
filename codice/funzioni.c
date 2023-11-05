@@ -329,7 +329,7 @@ void *gestisciClient(void* i) {
 
 		token = strtok(NULL, " ");
 
-		if (strptime(buffer, "%Y-%m-%d %H", &tm_) != NULL) {
+		if (strptime(buffer, "%d-%m-%y %H", &tm_) != NULL) {
 			dataora = mktime(&tm_);
 		}
 		else {
