@@ -329,6 +329,9 @@ void *gestisciClient(void* i) {
 		token = strtok(NULL, " ");
 		strcpy(dataora, token);
 
+		printf("Test: cognome = %s; nPers = %d, dataora= %s\n", cognome, nPers, dataora);
+		fflush(stdout);
+
 retry:
 		cercaDisponibilita(nPers, dataora, buffer, disponibilita);
 		// Invia il buffer con le possibilità
