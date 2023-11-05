@@ -743,6 +743,9 @@ void *gestisciKd(void* i) {
 		nTav = atoi(token);
 		nTav--;
 
+		printf("test: %d, %d\n", nCom, nTav);
+		fflush(stdout);
+
 		pthread_mutex_lock(&comande_lock);
 		struct comanda* punta = comande[nTav];
 		for(indice = 0; indice < nCom; indice++)
