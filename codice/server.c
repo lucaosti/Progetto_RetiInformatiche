@@ -31,7 +31,7 @@ int main(int argc, char* argv[]){
 	pthread_mutex_init(&socket_lock, NULL);
 	pthread_mutex_init(&fd_lock, NULL);
 
-	numeroComanda = 0;
+	numeroComanda = 1;
 
 	// Carico dai file "tavoli.txt" e "menu.txt"
 	caricaTavoli();

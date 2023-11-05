@@ -567,6 +567,7 @@ void *gestisciTd(void* i) {
 		// Scorro l'array comande ed invio
 		struct comanda* punta = comande[tavolo];
 		int totale = 0;
+		strcpy(buffer, "\0");
 		while(punta != NULL) {
 			for(indice = 0; indice < nPiatti; indice++) {
 				if(punta->quantita[indice] == 0) 
