@@ -1,9 +1,6 @@
 /* Strutture e definizioni necessarie al server */
 /* -------------------------------------------- */
 
-#define _XOPEN_SOURCE 700
-#define _GNU_SOURCE
-
 #include <arpa/inet.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -14,6 +11,9 @@
 #include <unistd.h>
 #include <time.h>
 #include <pthread.h>
+
+#define _XOPEN_SOURCE
+#define _GNU_SOURCE
 
 #define nTavoli 16
 #define nPiatti 8
