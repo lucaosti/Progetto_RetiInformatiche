@@ -598,7 +598,6 @@ void *gestisciTd(void* i) {
 		strcat(buffer, numeroString);
 		strcat(buffer, "\n");
 		invia(socketId, buffer);
-		invia(socketId, "");
 	}
 	else {
 		// Errore, comando non riconosciuto
