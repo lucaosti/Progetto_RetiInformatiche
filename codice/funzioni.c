@@ -257,7 +257,7 @@ void cercaDisponibilita(int nPers, char* dataora, char* buffer, char* disponibil
 		// Tavolo buono
 		disponibilita[index] = 1;
 
-		sprintf(numeroString, "%d", numero);
+		sprintf(numeroString, "%d", numero+1);
 		strcat(buffer, numeroString);
 		strcat(buffer, ") T");
 		sprintf(numeroString, "%d", index+1);
@@ -331,9 +331,6 @@ void *gestisciClient(void* i) {
 		token = strtok(NULL, " ");
 		strcpy(dataora, token);
 
-		printf("Test: cognome = %s; nPers = %d, dataora = %s\n", cognome, nPers, dataora);
-		fflush(stdout);
-
 retry:
 		cercaDisponibilita(nPers, dataora, buffer, disponibilita);
 		// Invia il buffer con le possibilità
@@ -373,11 +370,15 @@ retry:
 			// Converto l'indice in tavolo
 			int tavolo = 0;
 			int v = atoi(token);
-			for(tavolo = 0; tavolo <= nTavoli && !v; tavolo++) {
+			v--;
+			for(tavolo = 0; tavolo <= v; tavolo++) {
 				while(!disponibilita[tavolo])
 					tavolo++;
-				v--;
 			}
+
+			printf("Test: tavolo = %d\n", tavolo);
+			fflush(stdout);
+
 			// Cerco le disponibilità attuali
 			cercaDisponibilita(nPers, dataora, buffer, disponibilita);
 
