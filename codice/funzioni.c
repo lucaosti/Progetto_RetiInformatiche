@@ -505,14 +505,13 @@ void *gestisciTd(void* i) {
 
 		// Parso la comanda ed inserisco
 		pthread_mutex_lock(&comande_lock);
-		struct comanda* punta = comande[tavolo];
-		
 		struct comanda* com = malloc(sizeof(struct comanda));
 		
-		if(punta == NULL) {
-			punta = com;
+		if(comande[tavolo] == NULL) {
+			comande[tavolo] = com;
 		}
 		else {
+			struct comanda* punta = comande[tavolo];
 			while(punta->prossima != NULL)
 				punta = punta->prossima;
 			punta->prossima = com;
