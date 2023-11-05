@@ -111,6 +111,11 @@ int main(int argc, char* argv[]){
 				strcpy(buffer, "");
 				if(i == 0) { // Primo caso: comando da stdin
 					scanf(" %[^\n]", buffer); // Lo inserisco nel buffer
+					if(strcmp(buffer, "esc\0") == 0){
+						printf("Arrivederci\n");
+						close(sd);
+						return 0;
+					}
 					invia(sd, buffer);
 				}
 				else { // Secondo caso: il socket è sd
