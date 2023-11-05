@@ -383,7 +383,7 @@ retry:
 			// Salvo la prenotazione
 			struct prenotazione* p = malloc(sizeof(struct prenotazione));
 			strcpy(p->cognome, cognome);
-			p->data_ora = dataora;
+			strcpy(p->data_ora, dataora);
 			p->prossima = NULL;
 
 			// Inserisco in lista prenotazioni
