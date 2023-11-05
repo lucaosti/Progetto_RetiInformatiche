@@ -745,7 +745,7 @@ void *gestisciKd(void* i) {
 
 		pthread_mutex_lock(&comande_lock);
 		struct comanda* punta = comande[nTav];
-		while(punta =! NULL) {
+		while(punta != NULL) {
 			if(punta->nComanda == nCom) break;
 			punta = punta->prossima;
 		}
