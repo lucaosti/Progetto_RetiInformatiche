@@ -324,12 +324,21 @@ void *gestisciClient(void* i) {
 		token = strtok(NULL, " ");
 		strcpy(cognome, buffer);
 
+		printf("Test, cognome = %s\n", cognome);
+		fflush(stdout);
+
 		token = strtok(NULL, " ");
 		nPers = atoi(buffer);
 
+		printf("Test, nPers = %d\n", nPers);
+		fflush(stdout);
+
 		token = strtok(NULL, " ");
 
-		if (strptime(buffer, "%d-%m-%y %H", &tm_) != NULL) {
+		printf("Test, cognome = %s\n", token);
+		fflush(stdout);
+
+		if (strptime(token, "%d-%m-%y %H", &tm_) != NULL) {
 			dataora = mktime(&tm_);
 		}
 		else {
