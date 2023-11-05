@@ -67,9 +67,10 @@ int comandeInSospeso() {
 	pthread_mutex_lock(&comande_lock);
 	for (i = 0; i < nTavoli; i++) {
 		struct comanda *c = comande[i];
-		while(c != NULL && c->prossima != NULL) {
+		while(c != NULL) {
 			if(c->stato == in_attesa || c->stato == in_preparazione)
 				return 1;
+			c = c->prossima;
 		}
 	}
 	pthread_mutex_unlock(&comande_lock);
