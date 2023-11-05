@@ -17,6 +17,12 @@ int main(int argc, char* argv[]){
 		socket_td[indice] = -1;
 	for(indice = 0; indice < nMaxKd; indice++)
 		socket_kd[indice] = -1;
+	
+	for(indice = 0; indice < nTavoli; indice++)
+		prenotazioni[indice] = NULL;
+	for(indice = 0; indice < nTavoli; indice++)
+		comande[indice] = NULL;
+	listaThread = NULL;
 
 	pthread_mutex_init(&tavoli_lock, NULL);
 	pthread_mutex_init(&prenotazioni_lock, NULL);

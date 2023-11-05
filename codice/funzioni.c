@@ -505,7 +505,7 @@ void *gestisciTd(void* i) {
 
 		// Parso la comanda ed inserisco
 		pthread_mutex_lock(&comande_lock);
-		struct comanda* punta = &comande[tavolo];
+		struct comanda* punta = comande[tavolo];
 		
 		struct comanda* com = malloc(sizeof(struct comanda));
 		
