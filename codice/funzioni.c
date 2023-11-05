@@ -694,6 +694,8 @@ void *gestisciKd(void* i) {
 				}
 			}
 			invia(socketId, buffer);
+			strcpy(buffer, "in preparazione\n");
+			invia(socket_td[nTav], buffer);
 		}
 		pthread_mutex_unlock(&comande_lock);
 	}
