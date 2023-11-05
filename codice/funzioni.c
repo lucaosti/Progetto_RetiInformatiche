@@ -670,29 +670,31 @@ void *gestisciKd(void* i) {
 		}
 		if(nTav == -1) {
 			invia(socketId, "Non ci sono comande\n");
+
 		}
+		else {
+			com->kd = socketId;
+			com->stato = in_preparazione;
 
-		com->kd = socketId;
-		com->stato = in_preparazione;
-
-		strcpy(buffer, "com");
-		sprintf(numeroString, "%d", com->nComanda);
-		strcat(buffer, numeroString);
-		strcat(buffer, "\t");
-		strcat(buffer, "T");
-		sprintf(numeroString, "%d", nTav);
-		strcat(buffer, numeroString);
-		strcat(buffer, "\n");
-		for(indice = 0; indice < nPiatti; indice++) {
-			if(com->quantita[indice] != 0) {
-				strcat(buffer, menu[indice].codice);
-				strcat(buffer, "\t");
-				sprintf(numeroString, "%d", com->quantita[indice]);
-				strcat(buffer, numeroString);
-				strcat(buffer, "\n");
+			strcpy(buffer, "com");
+			sprintf(numeroString, "%d", com->nComanda);
+			strcat(buffer, numeroString);
+			strcat(buffer, "\t");
+			strcat(buffer, "T");
+			sprintf(numeroString, "%d", nTav);
+			strcat(buffer, numeroString);
+			strcat(buffer, "\n");
+			for(indice = 0; indice < nPiatti; indice++) {
+				if(com->quantita[indice] != 0) {
+					strcat(buffer, menu[indice].codice);
+					strcat(buffer, "\t");
+					sprintf(numeroString, "%d", com->quantita[indice]);
+					strcat(buffer, numeroString);
+					strcat(buffer, "\n");
+				}
 			}
+			invia(socketId, buffer);
 		}
-		invia(socketId, buffer);
 		pthread_mutex_unlock(&comande_lock);
 	}
 	else if(strcmp(token, "show") == 0) { // Secondo caso
