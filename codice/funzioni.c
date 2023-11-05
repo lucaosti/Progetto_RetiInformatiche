@@ -621,7 +621,7 @@ void *gestisciKd(void* i) {
 	fflush(stdout);
 
 	// Ricevi il messaggio
-	int ret, indice;
+	int ret;
 	int lmsg = 0;
 	ret = riceviLunghezza(socketId, &lmsg);
 	if(ret == 0) {
