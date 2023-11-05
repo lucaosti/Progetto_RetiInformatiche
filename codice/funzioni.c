@@ -235,6 +235,7 @@ int inserisci(int i, char *c) {
 void cercaDisponibilita(int nPers, char* dataora, char* buffer, char* disponibilita) {
 	char numeroString[BUFFER_SIZE];
 	int index;
+	strcpy(buffer, "\0");
 	pthread_mutex_lock(&tavoli_lock);
 	pthread_mutex_lock(&prenotazioni_lock);
 	int numero = 0;
@@ -245,7 +246,7 @@ void cercaDisponibilita(int nPers, char* dataora, char* buffer, char* disponibil
 		}
 		struct prenotazione* punta = prenotazioni[index];
 		char esito = 1; // Non esiste bool
-		while(punta->prossima != NULL) {
+		while(punta != NULL) {
 			if(strcmp(punta->data_ora, dataora) == 0) {
 				esito = 0;
 				break;
@@ -255,10 +256,11 @@ void cercaDisponibilita(int nPers, char* dataora, char* buffer, char* disponibil
 			continue;
 		// Tavolo buono
 		disponibilita[index] = 1;
+
 		sprintf(numeroString, "%d", numero);
 		strcat(buffer, numeroString);
 		strcat(buffer, ") T");
-		sprintf(numeroString, "%d", index);
+		sprintf(numeroString, "%d", index+1);
 		strcat(buffer, numeroString);
 		strcat(buffer, " ");
 		strcat(buffer, tavoli[index].sala);
@@ -336,9 +338,6 @@ retry:
 		cercaDisponibilita(nPers, dataora, buffer, disponibilita);
 		// Invia il buffer con le possibilità
 		ret = invia(socketId, buffer);
-
-		printf("Test: qui");
-		fflush(stdout);
 
 		// Aspetta una book o una disconnessione
 		ret = riceviLunghezza(socketId, &lmsg);
