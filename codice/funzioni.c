@@ -64,6 +64,8 @@ void caricaMenu() {
 // "in_preparazione" o "in_servizio"; 0 altrimenti
 int comandeInSospeso() {
 	int i;
+	printf("test 1\n");
+	fflush(stdout);
 	pthread_mutex_lock(&comande_lock);
 	for (i = 0; i < nTavoli; i++) {
 		struct comanda *c = comande[i];
@@ -74,6 +76,9 @@ int comandeInSospeso() {
 		}
 	}
 	pthread_mutex_unlock(&comande_lock);
+	printf("test 2\n");
+	fflush(stdout);
+
 	return 0;
 }
 
@@ -682,7 +687,7 @@ void *gestisciKd(void* i) {
 			strcat(buffer, numeroString);
 			strcat(buffer, "\t");
 			strcat(buffer, "T");
-			sprintf(numeroString, "%d", nTav);
+			sprintf(numeroString, "%d", nTav+1);
 			strcat(buffer, numeroString);
 			strcat(buffer, "\n");
 			for(indice = 0; indice < nPiatti; indice++) {
