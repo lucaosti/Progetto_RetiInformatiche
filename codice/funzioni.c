@@ -116,11 +116,12 @@ void elencoComande(char* buffer, enum stato_comanda stato) {
 		struct comanda *c;
 		c = comande[i];
 		while(c != NULL) {
+			if(c->stato != stato) continue;
 			strcat(buffer, "com");
 			sprintf(numeroString, "%d", c->nComanda);
 			strcat(buffer, numeroString);
 			strcat(buffer, " T");
-			sprintf(numeroString, "%d", i);
+			sprintf(numeroString, "%d", i+1);
 			strcat(buffer, numeroString);
 			strcat(buffer, "\n");
 			for(j = 0; j < nPiatti; j++) {
@@ -144,6 +145,7 @@ void elencoComande(char* buffer, enum stato_comanda stato) {
 void elencoComandeTavolo(char* buffer, int tavolo) {
 	char numeroString[BUFFER_SIZE];
 	int i;
+	tavolo--;
 	strcpy(buffer, "\0");
 	pthread_mutex_lock(&comande_lock);
 	struct comanda *c;
