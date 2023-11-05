@@ -252,8 +252,10 @@ void cercaDisponibilita(int nPers, char* dataora, char* buffer, char* disponibil
 				break;
 			}
 		}
-		if(!esito)
+		if(!esito){
+			disponibilita[index] = 0;
 			continue;
+		}
 		// Tavolo buono
 		disponibilita[index] = 1;
 
