@@ -159,13 +159,13 @@ void elencoComandeTavolo(char* buffer, int tavolo) {
 		strcat(buffer, " ");
 		switch (c->stato) {
 			case in_attesa:
-				strcpy(numeroString,"In attesa");
+				strcpy(numeroString,"<in attesa>");
 				break;
 			case in_preparazione:
-				strcpy(numeroString,"In preparazione");
+				strcpy(numeroString,"<in preparazione>");
 				break;
 			case in_servizio:
-				strcpy(numeroString,"In servizio");
+				strcpy(numeroString,"<in servizio>");
 				break;
 			default:
 				strcpy(numeroString,"Sconosciuto");
