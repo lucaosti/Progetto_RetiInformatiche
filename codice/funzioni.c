@@ -399,15 +399,14 @@ retry:
 				punta = p;
 			}
 			else {
-				while(punta->prossima != NULL && punta->prossima->data_ora < p->data_ora) {
+				while(punta->prossima != NULL) {
 					punta = punta->prossima;
 				}
-				p->prossima = punta->prossima;
 				punta->prossima = p;
 			}
 			pthread_mutex_unlock(&prenotazioni_lock);
 
-			printf("Client %d ha effettuato una prenotazione\n", socketId);
+			printf("Un client ha effettuato una prenotazione\n");
 			fflush(stdout);
 
 			strcpy(buffer, "PRENOTAZIONE EFFETTUATA\n");
