@@ -745,17 +745,19 @@ void *gestisciKd(void* i) {
 
 		pthread_mutex_lock(&comande_lock);
 		struct comanda* punta = comande[nTav];
-		for(indice = 0; indice < nCom-1; indice++) {
-			if(punta == NULL || punta->prossima == NULL) {
-				printf("Errore nel trovare la comanda\n");
-				fflush(stdout);
-			}
+		while(punta =! NULL) {
+			if(punta->nComanda == nCom) break;
 			punta = punta->prossima;
 		}
-
-		punta->stato = in_servizio;
-		invia(socketId, "COMANDA IN SERVIZIO\n");
-		invia(socket_td[nTav], "ORDINAZIONE IN ARRIVO\n");
+		if(punta != NULL) {
+			punta->stato = in_servizio;
+			invia(socketId, "COMANDA IN SERVIZIO\n");
+			invia(socket_td[nTav], "ORDINAZIONE IN ARRIVO\n");
+		}
+		else {
+			printf("Errore nel trovare la comanda\n");
+			fflush(stdout);	
+		}
 		pthread_mutex_unlock(&comande_lock);
 	}
 	else {
