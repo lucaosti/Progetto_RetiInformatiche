@@ -319,9 +319,6 @@ void *gestisciClient(void* i) {
 		int nPers;
 		char dataora[12];
 		char disponibilita[nTavoli];
-
-		printf("Test: qui\n");
-		fflush(stdout);
 		
 		token = strtok(NULL, " ");
 		strcpy(cognome, token);
@@ -332,7 +329,7 @@ void *gestisciClient(void* i) {
 		token = strtok(NULL, " ");
 		strcpy(dataora, token);
 
-		printf("Test: cognome = %s; nPers = %d, dataora= %s\n", cognome, nPers, dataora);
+		printf("Test: cognome = %s; nPers = %d, dataora = %s\n", cognome, nPers, dataora);
 		fflush(stdout);
 
 retry:
