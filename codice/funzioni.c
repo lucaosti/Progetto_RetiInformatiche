@@ -536,6 +536,9 @@ void *gestisciTd(void* i) {
 		com->nComanda = numeroComanda++;
 		com->stato = in_attesa;
 
+		printf("Test: Aggiunta comanda n.%d\n", comande[tavolo]->nComanda);
+		fflush(stdout);
+
 		pthread_mutex_unlock(&comande_lock);
 
 		// Avviso che la comanda è stata ricevuta correttamente
