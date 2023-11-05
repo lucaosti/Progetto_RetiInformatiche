@@ -337,6 +337,9 @@ retry:
 		// Invia il buffer con le possibilità
 		ret = invia(socketId, buffer);
 
+		printf("Test: qui");
+		fflush(stdout);
+
 		// Aspetta una book o una disconnessione
 		ret = riceviLunghezza(socketId, &lmsg);
 		if(ret == 0) {
