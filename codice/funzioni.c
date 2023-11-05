@@ -319,6 +319,9 @@ void *gestisciClient(void* i) {
 		int nPers;
 		char dataora[12];
 		char disponibilita[nTavoli];
+
+		printf("Test: qui\n");
+		fflush(stdout);
 		
 		token = strtok(NULL, " ");
 		strcpy(cognome, token);
