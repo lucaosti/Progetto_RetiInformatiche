@@ -12,12 +12,12 @@ void caricaTavoli() {
 	int i;
 	f = fopen("../txts/tavoli.txt","r");
 	
-	if (f == NULL){
+	if (f == NULL) {
        printf("Errore! Apertura file tavoli.txt non riuscita\n");
        exit(-1);
 	}
 
-	for(i = 0; i < nTavoli; i++){
+	for(i = 0; i < nTavoli; i++) {
 		fgets(buffer, sizeof(buffer), f);
 		serverCommand = strtok(buffer, " ");
 		tavoli[i].nPosti = atoi(serverCommand);
@@ -40,7 +40,7 @@ void caricaMenu() {
 	int i;
 	f = fopen("../txts/menu.txt","r");
 	
-	if (f == NULL){
+	if (f == NULL) {
        printf("Errore! Apertura file menu.txt non riuscita\n");
        exit(-1);
 	}
@@ -63,7 +63,7 @@ void caricaMenu() {
 // Ritorna 1 nel caso ci siano attualmente delle comande
 // "in_preparazione" o "in_servizio"; 0 altrimenti
 int comandeInSospeso() {
-	int i;
+	int i, ret = 0;
 	printf("test 1\n");
 	fflush(stdout);
 	pthread_mutex_lock(&comande_lock);
@@ -72,15 +72,16 @@ int comandeInSospeso() {
 		struct comanda *c = comande[i];
 		while(c != NULL) {
 			if(c->stato == in_attesa || c->stato == in_preparazione)
-				return 1;
+				ret = 1;
 			c = c->prossima;
 		}
 	}
 	pthread_mutex_unlock(&comande_lock);
+	
 	printf("test 2\n");
 	fflush(stdout);
 
-	return 0;
+	return ret;
 }
 
 // Invia al socket in input il messaggio dentro buffer
@@ -200,8 +201,8 @@ int inserisci(int i, char *c) {
 	switch (c[0])
 	{
 	case 'c': // Client
-		for(; j < nMaxClient; j++){
-			if(socket_client[j] == -1){
+		for(; j < nMaxClient; j++) {
+			if(socket_client[j] == -1) {
 				socket_client[j] = i;
 				ret = 0;
 				break;
@@ -209,8 +210,8 @@ int inserisci(int i, char *c) {
 		}
 		break;
 	case 'k': // Kitchen device
-		for(; j < nMaxKd; j++){
-			if(socket_kd[j] == -1){
+		for(; j < nMaxKd; j++) {
+			if(socket_kd[j] == -1) {
 				socket_kd[j] = i;
 				ret = 1;
 				break;
@@ -218,8 +219,8 @@ int inserisci(int i, char *c) {
 		}
 		break;
 	case 't': // Table device
-		for(; j < nMaxTd; j++){ // Ipotizzo l'accensione ordinata
-			if(socket_td[j] == -1){
+		for(; j < nMaxTd; j++) { // Ipotizzo l'accensione ordinata
+			if(socket_td[j] == -1) {
 				socket_td[j] = i;
 				ret = 2;
 				break;
@@ -244,14 +245,14 @@ void cercaDisponibilita(int nPers, time_t dataora, char* buffer, char* disponibi
 	pthread_mutex_lock(&prenotazioni_lock);
 	int numero = 0;
 	for(index = 0; index < nTavoli; index++) {
-		if(tavoli[index].nPosti < nPers){
+		if(tavoli[index].nPosti < nPers) {
 			disponibilita[index] = 0;
 			continue;
 		}
 		struct prenotazione* punta = prenotazioni[index];
 		char esito = 1; // Non esiste bool
 		while(punta->prossima != NULL) {
-			if(punta->data_ora == dataora){
+			if(punta->data_ora == dataora) {
 				esito = 0;
 				break;
 			}
@@ -387,7 +388,7 @@ retry:
 			// Converto l'indice in tavolo
 			int tavolo = 0;
 			int v = atoi(token);
-			for(tavolo = 0; tavolo <= nTavoli && !v; tavolo++){
+			for(tavolo = 0; tavolo <= nTavoli && !v; tavolo++) {
 				while(!disponibilita[tavolo])
 					tavolo++;
 				v--;
@@ -677,7 +678,6 @@ void *gestisciKd(void* i) {
 		}
 		if(nTav == -1) {
 			invia(socketId, "Non ci sono comande\n");
-
 		}
 		else {
 			com->kd = socketId;
@@ -713,7 +713,7 @@ void *gestisciKd(void* i) {
 		pthread_mutex_lock(&comande_lock);
 		for(indice = 0; indice < nTavoli; indice++) {
 			struct comanda *punta = comande[indice];
-			while(punta != NULL){
+			while(punta != NULL) {
 				if(punta->kd == socketId && punta->stato == in_preparazione) {
 					strcat(buffer, "com");
 					sprintf(numeroString, "%d", punta->nComanda);
