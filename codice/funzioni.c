@@ -621,7 +621,7 @@ void *gestisciKd(void* i) {
 	fflush(stdout);
 
 	// Ricevi il messaggio
-	int ret;
+	int ret, indice;
 	int lmsg = 0;
 	ret = riceviLunghezza(socketId, &lmsg);
 	if(ret == 0) {
@@ -736,7 +736,7 @@ void *gestisciKd(void* i) {
 	}
 	else if(strcmp(token, "ready") == 0) { // Terzo caso
 		// Parso il comando e notifico il td
-		int nCom, nTav, indice;
+		int nCom, nTav;
 		token = strtok(NULL, " com-T");
 		nCom = atoi(token);
 		token = strtok(NULL, " com-T");
