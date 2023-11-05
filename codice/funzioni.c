@@ -322,13 +322,13 @@ void *gestisciClient(void* i) {
 		char disponibilita[nTavoli];
 		
 		token = strtok(NULL, " ");
-		strcpy(cognome, buffer);
+		strcpy(cognome, token);
 
 		printf("Test, cognome = %s\n", cognome);
 		fflush(stdout);
 
 		token = strtok(NULL, " ");
-		nPers = atoi(buffer);
+		nPers = atoi(token);
 
 		printf("Test, nPers = %d\n", nPers);
 		fflush(stdout);
