@@ -64,10 +64,8 @@ void caricaMenu() {
 // "in_preparazione" o "in_servizio"; 0 altrimenti
 int comandeInSospeso() {
 	int i, ret = 0;
-	printf("test 1\n");
 	fflush(stdout);
 	pthread_mutex_lock(&comande_lock);
-	printf("test 1.5\n");
 	for (i = 0; i < nTavoli; i++) {
 		struct comanda *c = comande[i];
 		while(c != NULL) {
@@ -77,10 +75,6 @@ int comandeInSospeso() {
 		}
 	}
 	pthread_mutex_unlock(&comande_lock);
-	
-	printf("test 2\n");
-	fflush(stdout);
-
 	return ret;
 }
 
