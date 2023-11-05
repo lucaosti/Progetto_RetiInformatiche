@@ -737,11 +737,11 @@ void *gestisciKd(void* i) {
 	else if(strcmp(token, "ready") == 0) { // Terzo caso
 		// Parso il comando e notifico il td
 		int nCom, nTav, indice;
-		token = strtok(NULL, " com-");
+		token = strtok(NULL, " com-T");
 		nCom = atoi(token);
-		token = strtok(NULL, "T");
+		token = strtok(NULL, " com-T");
 		nTav = atoi(token);
-
+		nTav--;
 
 		pthread_mutex_lock(&comande_lock);
 		struct comanda* punta = comande[nTav];
