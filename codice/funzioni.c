@@ -538,8 +538,12 @@ void *gestisciTd(void* i) {
 
 		pthread_mutex_unlock(&comande_lock);
 
+		// Avviso che la comanda è stata ricevuta correttamente
+		strcpy(buffer, "COMANDA RICEVUTA\n");
+		invia(socketId, buffer);
+
 		// Notifico tutti i KD
-		strcpy(buffer, "Nuova comanda!");
+		strcpy(buffer, "*\n");
 		pthread_mutex_lock(&socket_lock);
 		for(indice = 0; indice < nMaxKd; indice++) {
 			if(socket_kd[indice] != -1) {
