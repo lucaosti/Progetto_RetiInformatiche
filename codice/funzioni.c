@@ -232,7 +232,7 @@ int inserisci(int i, char *c) {
 }
 
 // Prende i parametri della find ed inserisce nel buffer le disponibilità
-void cercaDisponibilita(int nPers, time_t dataora, char* buffer, char* disponibilita) {
+void cercaDisponibilita(int nPers, char* dataora, char* buffer, char* disponibilita) {
 	char numeroString[BUFFER_SIZE];
 	int index;
 	pthread_mutex_lock(&tavoli_lock);
@@ -246,7 +246,7 @@ void cercaDisponibilita(int nPers, time_t dataora, char* buffer, char* disponibi
 		struct prenotazione* punta = prenotazioni[index];
 		char esito = 1; // Non esiste bool
 		while(punta->prossima != NULL) {
-			if(punta->data_ora == dataora) {
+			if(strcmp(punta->data_ora, dataora) == 0) {
 				esito = 0;
 				break;
 			}
@@ -315,42 +315,19 @@ void *gestisciClient(void* i) {
 	token = strtok(buffer, " ");
 	if(strcmp(token, "find") == 0) { // Primo caso
 		// Parsa la stringa e cerca i tavoli liberi
-		struct tm tm_;
 		char cognome[64];
 		int nPers;
-		time_t dataora;
+		char dataora[12];
 		char disponibilita[nTavoli];
 		
 		token = strtok(NULL, " ");
 		strcpy(cognome, token);
 
-		printf("Test, cognome = %s\n", cognome);
-		fflush(stdout);
-
 		token = strtok(NULL, " ");
 		nPers = atoi(token);
 
-		printf("Test, nPers = %d\n", nPers);
-		fflush(stdout);
-
 		token = strtok(NULL, " ");
-
-		printf("Test, data = %s\n", token);
-		fflush(stdout);
-
-		if (strptime(token, "%d-%m-%y %H", &tm_) != NULL) {
-			dataora = mktime(&tm_);
-		}
-		else {
-			printf("Data inserita non valida\n");
-			fflush(stdout);
-			pthread_mutex_lock(&fd_lock);
-			FD_SET(socketId, &master);
-			pthread_mutex_unlock(&fd_lock);
-			printf("Terminato thread client\n");
-			fflush(stdout);
-			return NULL;
-		}
+		strcpy(dataora, token);
 
 retry:
 		cercaDisponibilita(nPers, dataora, buffer, disponibilita);
