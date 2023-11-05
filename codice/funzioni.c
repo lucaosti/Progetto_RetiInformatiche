@@ -67,6 +67,7 @@ int comandeInSospeso() {
 	printf("test 1\n");
 	fflush(stdout);
 	pthread_mutex_lock(&comande_lock);
+	printf("test 1.5\n");
 	for (i = 0; i < nTavoli; i++) {
 		struct comanda *c = comande[i];
 		while(c != NULL) {
