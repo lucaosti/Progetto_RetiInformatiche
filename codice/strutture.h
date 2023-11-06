@@ -132,6 +132,7 @@ pthread_mutex_t socket_lock;
 // Strutture e relativi MutEx
 struct tavolo tavoli[nTavoli];
 pthread_mutex_t tavoli_lock;
+int tavoli_logged[nTavoli]; // Serve a capire se è stato fatto un accesso
 struct prenotazione* prenotazioni[nTavoli];
 pthread_mutex_t prenotazioni_lock;
 struct comanda* comande[nTavoli];

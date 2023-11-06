@@ -487,6 +487,7 @@ void *gestisciTd(void* i) {
 		printf("TD disconnesso\n");
 		fflush(stdout);
 		close(socketId);
+		tavoli_logged[tavolo] = 0;
 		for(indice = 0; indice < nMaxTd; indice++)
 			if(socketId == socket_td[indice])
 				socket_td[indice] = -1;
@@ -499,6 +500,7 @@ void *gestisciTd(void* i) {
 		printf("TD disconnesso\n");
 		fflush(stdout);
 		close(socketId);
+		tavoli_logged[tavolo] = 0;
 		for(indice = 0; indice < nMaxTd; indice++)
 			if(socketId == socket_td[indice])
 				socket_td[indice] = -1;
@@ -507,12 +509,37 @@ void *gestisciTd(void* i) {
 		return NULL;
 	}
 
+	char* token;
+	token = strtok(buffer, " ");
+
+	if(tavoli_logged[tavolo] == 0) { // Se non è loggato
+		// Controllo se ho una prenotazione con questo codice:
+		//	- Nel caso affermativo, continuo;
+		//	- Nel caso negativo, termino il thread.
+		struct prenotazione* punta = prenotazioni[tavolo];
+		while(punta != NULL){
+			if(strcmp(punta->pwd, token) == 0){
+				invia(socketId, "accesso");
+				break;
+			}
+			else {
+				strcpy(buffer, "Codice prenotazione errato\n");
+				invia(socketId, buffer);
+				printf("Terminato thread table device\n");
+				fflush(stdout);
+				return NULL;
+			}
+			punta = punta->prossima;
+		}
+	}
+
+	// In questo caso è loggato
+
 	// Gestisce i tipi di comandi:
 	//   - menu;
 	//   - comanda;
 	//   - conto.
-	char* token;
-	token = strtok(buffer, " ");
+	
 	if(strcmp(token, "menu") == 0) { // Primo caso
 		// Invio il menu
 		strcpy(buffer, menu_text);
@@ -623,7 +650,7 @@ void *gestisciTd(void* i) {
 	pthread_mutex_lock(&fd_lock);
 	FD_SET(socketId, &master);
 	pthread_mutex_unlock(&fd_lock);
-
+	tavoli_logged[tavolo] = 0;
 	printf("Terminato thread table device\n");
 	fflush(stdout);
 

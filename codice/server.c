@@ -23,6 +23,9 @@ int main(int argc, char* argv[]){
 	for(indice = 0; indice < nTavoli; indice++)
 		comande[indice] = NULL;
 	listaThread = NULL;
+	
+	for(indice = 0; indice < nTavoli; indice++)
+		tavoli_logged[indice] = 0;
 
 	pthread_mutex_init(&tavoli_lock, NULL);
 	pthread_mutex_init(&prenotazioni_lock, NULL);
