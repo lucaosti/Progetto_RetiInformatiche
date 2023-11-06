@@ -272,6 +272,8 @@ int cercaDisponibilita(int nPers, char* dataora, char* buffer, char* disponibili
 	strcat(buffer, "\n");
     pthread_mutex_unlock(&tavoli_lock);
     pthread_mutex_unlock(&prenotazioni_lock);
+	printf("QUI?");
+	fflush(stdout);
 	return numero;
 }
 
@@ -382,7 +384,7 @@ void *gestisciClient(void* i) {
 				// Converto l'indice in tavolo
 				int tavolo;
 				int v = atoi(token);
-				if(v > massimo){
+				if(v > massimo) {
 					printf("Opzione non disponibile\n");
 					strcpy(buffer, "Opzione non disponibile\n");
 					invia(socketId, buffer);
@@ -516,10 +518,10 @@ void *gestisciTd(void* i) {
 		// Controllo se ho una prenotazione con questo codice:
 		//	- Nel caso affermativo, continuo;
 		//	- Nel caso negativo, termino il thread.
-		for(indice = 0; indice < nMaxTd; indice++){
+		for(indice = 0; indice < nMaxTd; indice++) {
 			struct prenotazione* punta = prenotazioni[indice];
-			while(punta != NULL){
-				if(strcmp(punta->pwd, token) == 0 && indice == tavolo){
+			while(punta != NULL) {
+				if(strcmp(punta->pwd, token) == 0 && indice == tavolo) {
 					invia(socketId, "accesso");
 					tavoli_logged[tavolo] = 1;
 					break;

@@ -202,16 +202,17 @@ int main(int argc, char* argv[]){
 							close(listener);
 
 							// Aspetto la fine di TUTTI i thread
-							struct lis_thread *lt;
-							lt = listaThread;
+							struct lis_thread *lt = listaThread;
 							while(lt != NULL) {
-								pthread_join(*(lt->t),NULL);
+								pthread_join(*(lt->t), NULL);
 								lt = lt->prossimo;
 							}
 
 							deallocaStrutture();
 
 							// Termino il server con esito positivo
+							printf("Server chiuso\n");
+							fflush(stdout);
 							return 1;
 						}
 						else { // Non posso fermarmi
