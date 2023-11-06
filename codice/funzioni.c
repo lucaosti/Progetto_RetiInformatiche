@@ -377,14 +377,19 @@ retry:
 				while(!disponibilita[tavolo])
 					tavolo++;
 			}
+			tavolo--;
 
-			tavolo--; // Test
+			printf("Prenotato tavolo %d per %s\n", tavolo+1, dataora);
+			fflush(stdout);
 
-			printf("Test: tavolo = %d\n", tavolo);
+			printf(disponibilita);
 			fflush(stdout);
 
 			// Cerco le disponibilità attuali
 			cercaDisponibilita(nPers, dataora, buffer, disponibilita);
+
+			printf(disponibilita);
+			fflush(stdout);
 
 			if(disponibilita[tavolo] == 0) {
 				// Caso in cui non sia più disponibile l'opzione
