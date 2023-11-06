@@ -370,14 +370,12 @@ retry:
 			token = strtok(NULL, " ");
 			
 			// Converto l'indice in tavolo
-			int tavolo = 0;
+			int tavolo;
 			int v = atoi(token);
 			v--;
-			for(tavolo = 0; tavolo <= v; tavolo++) {
-				while(!disponibilita[tavolo])
-					tavolo++;
-			}
-			tavolo--;
+			for(tavolo = 0; tavolo <= nTavoli && v > 0; tavolo++)
+				if(disponibilita[tavolo] == 1)
+					v--;
 
 			printf("Prenotato tavolo %d per %s\n", tavolo+1, dataora);
 			fflush(stdout);
