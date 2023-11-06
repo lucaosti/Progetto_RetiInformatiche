@@ -334,8 +334,8 @@ void *gestisciClient(void* i) {
 		strcpy(dataora, token);
 
 		token = strtok(NULL, " ");
-		dataora[8] = " ";
-		strcpy(dataora[9], token);
+		strcpy(dataora+8, " ");
+		strcpy(dataora+9, token);
 
 retry:
 		cercaDisponibilita(nPers, dataora, buffer, disponibilita);
