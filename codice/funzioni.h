@@ -32,7 +32,7 @@ void elencoComandeTavolo(char* buffer, int tavolo);
 int inserisci(int i, char* c);
 
 // Prende i parametri della find ed inserisce nel buffer le disponibilità
-void cercaDisponibilita(int nPers, char* dataora, char* buffer, char* disponibilita);
+int cercaDisponibilita(int nPers, char* dataora, char* buffer, char* disponibilita);
 
 // Gestisce UNA richiesta da parte di un client
 void *gestisciClient(void* i);

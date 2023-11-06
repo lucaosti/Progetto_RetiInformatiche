@@ -232,7 +232,7 @@ int inserisci(int i, char *c) {
 }
 
 // Prende i parametri della find ed inserisce nel buffer le disponibilità
-void cercaDisponibilita(int nPers, char* dataora, char* buffer, char* disponibilita) {
+int cercaDisponibilita(int nPers, char* dataora, char* buffer, char* disponibilita) {
 	char numeroString[BUFFER_SIZE];
 	int index;
 	strcpy(buffer, "\0");
@@ -272,6 +272,7 @@ void cercaDisponibilita(int nPers, char* dataora, char* buffer, char* disponibil
 	strcat(buffer, "\n");
     pthread_mutex_unlock(&tavoli_lock);
     pthread_mutex_unlock(&prenotazioni_lock);
+	return numero;
 }
 
 // Gestisce UNA richiesta da parte di UN client
@@ -338,11 +339,12 @@ void *gestisciClient(void* i) {
 		strcpy(dataora+9, token);
 
 		for(;;) {
+			int massimo;
 			// Invia il buffer con le possibilità
-			cercaDisponibilita(nPers, dataora, buffer, disponibilita);
+			massimo = cercaDisponibilita(nPers, dataora, buffer, disponibilita);
 			ret = invia(socketId, buffer);
 
-			printf("Mandate le disponibilità");
+			printf("Mandate le disponibilità\n");
 			fflush(stdout);
 
 			// Aspetta una book o una disconnessione
@@ -379,6 +381,11 @@ void *gestisciClient(void* i) {
 				// Converto l'indice in tavolo
 				int tavolo;
 				int v = atoi(token);
+				if(v > massimo){
+					printf("Opzione non disponibile\n");
+					fflush(stdout);
+					continue;
+				}
 				for(tavolo = 0; tavolo <= nTavoli && v > 0; tavolo++)
 					if(disponibilita[tavolo] == 1)
 						v--;
