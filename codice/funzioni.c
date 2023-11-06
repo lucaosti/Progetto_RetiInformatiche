@@ -406,11 +406,11 @@ retry:
 
 			// Inserisco in lista prenotazioni
 			pthread_mutex_lock(&prenotazioni_lock);
-			struct prenotazione* punta = prenotazioni[tavolo];
-			if(punta == NULL) {
-				punta = p;
+			if(prenotazioni[tavolo] == NULL) {
+				prenotazioni[tavolo] = p;
 			}
 			else {
+				struct prenotazione* punta = prenotazioni[tavolo];
 				while(punta->prossima != NULL) {
 					punta = punta->prossima;
 				}
