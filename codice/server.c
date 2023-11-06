@@ -357,7 +357,7 @@ int main(int argc, char* argv[]){
 								inserisciThread->prossimo = p;
 							}
 
-							printf("Creo thread per un table device %d\n", i);
+							printf("Creo thread per un table device\n");
 							fflush(stdout);
 							
 							break;

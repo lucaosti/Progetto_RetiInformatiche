@@ -514,6 +514,10 @@ void *gestisciTd(void* i) {
 	char* token;
 	token = strtok(buffer, " ");
 
+	printf("Prima del controllo\n");
+	fflush(stdout);
+
+	pthread_mutex_lock(&tavoli_lock);
 	if(tavoli_logged[tavolo] == 0) { // Se non è loggato
 		// Controllo se ho una prenotazione con questo codice:
 		//	- Nel caso affermativo, continuo;
@@ -533,8 +537,13 @@ void *gestisciTd(void* i) {
 		}
 		printf("Terminato thread table device\n");
 		fflush(stdout);
+		pthread_mutex_unlock(&tavoli_lock);
+		pthread_mutex_lock(&fd_lock);
+		FD_SET(socketId, &master);
+		pthread_mutex_unlock(&fd_lock);
 		return NULL;
 	}
+	pthread_mutex_unlock(&tavoli_lock);
 
 	printf("Passato controllo\n");
 	fflush(stdout);
