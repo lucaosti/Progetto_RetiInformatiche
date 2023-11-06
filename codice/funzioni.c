@@ -342,6 +342,9 @@ void *gestisciClient(void* i) {
 			cercaDisponibilita(nPers, dataora, buffer, disponibilita);
 			ret = invia(socketId, buffer);
 
+			printf("Mandate le disponibilità");
+			fflush(stdout);
+
 			// Aspetta una book o una disconnessione
 			ret = riceviLunghezza(socketId, &lmsg);
 			if(ret == 0) {
