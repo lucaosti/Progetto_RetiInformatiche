@@ -372,7 +372,6 @@ retry:
 			// Converto l'indice in tavolo
 			int tavolo;
 			int v = atoi(token);
-			v--;
 			for(tavolo = 0; tavolo <= nTavoli && v > 0; tavolo++)
 				if(disponibilita[tavolo] == 1)
 					v--;
