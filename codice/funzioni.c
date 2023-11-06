@@ -140,7 +140,6 @@ void elencoComande(char* buffer, enum stato_comanda stato) {
 			c = c->prossima;
 		}
 	}
-	printf("Qui?");
 	pthread_mutex_unlock(&comande_lock);
 }
 
@@ -612,6 +611,8 @@ void *gestisciTd(void* i) {
 	}
 	else if(strcmp(token, "conto") == 0) { // Terzo caso
 		int indice;
+
+		tavoli_logged[tavolo] = 0;
 
 		printf("Conto richiesto dal tavolo %d\n", tavoli[tavolo].numero); // Enumerazione non 0-based
 		fflush(stdout);
