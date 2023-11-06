@@ -383,6 +383,8 @@ void *gestisciClient(void* i) {
 				int v = atoi(token);
 				if(v > massimo){
 					printf("Opzione non disponibile\n");
+					strcpy(buffer, "Opzione non disponibile\n");
+					invia(socketId, buffer);
 					fflush(stdout);
 					continue;
 				}
