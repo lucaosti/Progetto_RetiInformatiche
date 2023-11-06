@@ -339,6 +339,7 @@ void *gestisciClient(void* i) {
 		strcpy(dataora+9, token);
 
 		for(;;) {
+			sleep(1);
 			int massimo;
 			// Invia il buffer con le possibilità
 			massimo = cercaDisponibilita(nPers, dataora, buffer, disponibilita);
