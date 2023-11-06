@@ -252,6 +252,7 @@ int cercaDisponibilita(int nPers, char* dataora, char* buffer, char* disponibili
 				esito = 0;
 				break;
 			}
+			punta = punta->prossima;
 		}
 		// Tavolo non buono
 		if(!esito)
