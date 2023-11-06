@@ -433,7 +433,7 @@ void *gestisciClient(void* i) {
 				printf("Un client ha effettuato una prenotazione %s\n", prenotazioni[tavolo]->pwd);
 				fflush(stdout);
 
-				strcpy(buffer, "PRENOTAZIONE EFFETTUATA\nCodice ");
+				strcpy(buffer, "PRENOTAZIONE EFFETTUATA\nCodice: ");
 				strcat(buffer, p->pwd);
 				strcat(buffer, "\n");
 				invia(socketId, buffer);
