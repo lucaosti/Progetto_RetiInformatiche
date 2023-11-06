@@ -333,6 +333,10 @@ void *gestisciClient(void* i) {
 		token = strtok(NULL, " ");
 		strcpy(dataora, token);
 
+		token = strtok(NULL, " ");
+		dataora[8] = " ";
+		strcpy(dataora[9], token);
+
 retry:
 		cercaDisponibilita(nPers, dataora, buffer, disponibilita);
 		// Invia il buffer con le possibilità
@@ -375,6 +379,7 @@ retry:
 			for(tavolo = 0; tavolo <= nTavoli && v > 0; tavolo++)
 				if(disponibilita[tavolo] == 1)
 					v--;
+			tavolo--;
 
 			printf("Prenotato tavolo %d per %s\n", tavolo+1, dataora);
 			fflush(stdout);
