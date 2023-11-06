@@ -92,7 +92,7 @@ int main(int argc, char* argv[]){
 
     // Stampo i comandi che il client può digitare
     printf(BENVENUTO_CLIENT);
-	fflush(stdin);
+	fflush(stdout);
 
 	for(;;){
 		// Inizializzo il set read_fds, manipolato dalla select()

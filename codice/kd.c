@@ -92,7 +92,7 @@ int main(int argc, char* argv[]){
 
 	// Stampo i comandi che il kitchen device può digitare
 	printf(BENVENUTO_KD);
-	fflush(stdin);
+	fflush(stdout);
 
 	for(;;){
 		// Inizializzo il set read_fds, manipolato dalla select()
