@@ -236,7 +236,7 @@ int cercaDisponibilita(int nPers, char* dataora, char* buffer, char* disponibili
 	char numeroString[BUFFER_SIZE];
 	int index;
 	strcpy(buffer, "\0");
-	printf("QUA?");
+	printf("test:QUA?\n");
 	fflush(stdout);
 	pthread_mutex_lock(&tavoli_lock);
 	pthread_mutex_lock(&prenotazioni_lock);
@@ -274,7 +274,7 @@ int cercaDisponibilita(int nPers, char* dataora, char* buffer, char* disponibili
 	strcat(buffer, "\n");
     pthread_mutex_unlock(&tavoli_lock);
     pthread_mutex_unlock(&prenotazioni_lock);
-	printf("QUI?");
+	printf("test:QUI?\n");
 	fflush(stdout);
 	return numero;
 }
