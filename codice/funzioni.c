@@ -403,6 +403,8 @@ retry:
 			struct prenotazione* p = malloc(sizeof(struct prenotazione));
 			strcpy(p->cognome, cognome);
 			strcpy(p->data_ora, dataora);
+			for(indice = 0; indice < 5; indice++)
+				p->pwd[indice] = 'A' + (rand() % 26);
 			p->prossima = NULL;
 
 			// Inserisco in lista prenotazioni
@@ -422,7 +424,9 @@ retry:
 			printf("Un client ha effettuato una prenotazione\n");
 			fflush(stdout);
 
-			strcpy(buffer, "PRENOTAZIONE EFFETTUATA\n");
+			strcpy(buffer, "PRENOTAZIONE EFFETTUATA\nCodice ");
+			strcat(buffer, p->pwd);
+			strcat(buffer, "\n");
 			invia(socketId, buffer);
 		}
 	}

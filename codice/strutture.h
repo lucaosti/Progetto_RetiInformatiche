@@ -48,6 +48,7 @@ struct prenotazione
 {
 	char cognome[64];
 	char data_ora[12];	// Non della richiesta, ma della prenotazione
+	char pwd[5];
 	struct prenotazione *prossima;
 	/* 
 	Il tavolo non è necessario poiché corrisponde
