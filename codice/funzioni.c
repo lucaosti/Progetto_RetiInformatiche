@@ -536,6 +536,9 @@ void *gestisciTd(void* i) {
 		return NULL;
 	}
 
+	printf("Passato controllo\n");
+	fflush(stdout);
+
 	// In questo caso è loggato
 
 	// Gestisce i tipi di comandi:
