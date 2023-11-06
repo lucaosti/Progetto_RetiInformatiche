@@ -124,6 +124,7 @@ int main(int argc, char* argv[]){
 					ricevi(sd, lmsg, buffer);
 					if(strcmp(buffer, "STOP\0") == 0){
 						printf("Server chiuso\n");
+						fflush(stdout);
 						close(sd);
 						return 0;
 					}
