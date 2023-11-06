@@ -378,6 +378,8 @@ retry:
 					tavolo++;
 			}
 
+			tavolo--; // Test
+
 			printf("Test: tavolo = %d\n", tavolo);
 			fflush(stdout);
 
