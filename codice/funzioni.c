@@ -516,20 +516,24 @@ void *gestisciTd(void* i) {
 		// Controllo se ho una prenotazione con questo codice:
 		//	- Nel caso affermativo, continuo;
 		//	- Nel caso negativo, termino il thread.
-		struct prenotazione* punta = prenotazioni[tavolo];
-		while(punta != NULL){
-			if(strcmp(punta->pwd, token) == 0){
-				invia(socketId, "accesso");
-				break;
+		for(indice = 0; indice < nMaxTd; indice++){
+			struct prenotazione* punta = prenotazioni[indice];
+			while(punta != NULL){
+				if(strcmp(punta->pwd, token) == 0 && indice == tavolo){
+					invia(socketId, "accesso");
+					tavoli_logged[tavolo] = 1;
+					break;
+				}
+				else {
+					strcpy(buffer, "Codice prenotazione errato o inserito nel tavolo sbagliato\nInserisci il codice prenotazione: \n");
+					invia(socketId, buffer);
+					printf("Terminato thread table device\n");
+					fflush(stdout);
+					return NULL;
+				}
+				punta = punta->prossima;
 			}
-			else {
-				strcpy(buffer, "Codice prenotazione errato\nInserisci il codice prenotazione: \n");
-				invia(socketId, buffer);
-				printf("Terminato thread table device\n");
-				fflush(stdout);
-				return NULL;
-			}
-			punta = punta->prossima;
+			if(punta != NULL) break;
 		}
 	}
 
