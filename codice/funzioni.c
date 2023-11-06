@@ -240,10 +240,9 @@ void cercaDisponibilita(int nPers, char* dataora, char* buffer, char* disponibil
 	pthread_mutex_lock(&prenotazioni_lock);
 	int numero = 0;
 	for(index = 0; index < nTavoli; index++) {
-		if(tavoli[index].nPosti < nPers) {
-			disponibilita[index] = 0;
+		disponibilita[index] = 0;
+		if(tavoli[index].nPosti < nPers)
 			continue;
-		}
 		struct prenotazione* punta = prenotazioni[index];
 		char esito = 1; // Non esiste bool
 		while(punta != NULL) {
@@ -252,12 +251,9 @@ void cercaDisponibilita(int nPers, char* dataora, char* buffer, char* disponibil
 				break;
 			}
 		}
-
 		// Tavolo non buono
-		if(!esito){
-			disponibilita[index] = 0;
+		if(!esito)
 			continue;
-		}
 		
 		// Tavolo buono
 		disponibilita[index] = 1;
