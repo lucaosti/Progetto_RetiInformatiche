@@ -393,6 +393,10 @@ retry:
 
 			if(disponibilita[tavolo] == 0) {
 				// Caso in cui non sia più disponibile l'opzione
+				printf("Tavolo già prenotato\n");
+				fflush(stdout);
+				strcpy(buffer, "Tavolo già prenotato\n");
+				invia(socketId, buffer);
 				goto retry;
 			}
 			// Salvo la prenotazione
