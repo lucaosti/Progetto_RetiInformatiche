@@ -341,9 +341,9 @@ void *gestisciClient(void* i) {
 		strcpy(dataora+8, " ");
 		strcpy(dataora+9, token);
 
-			cercaDisponibilita(nPers, dataora, buffer, disponibilita);
 		for(;;) {
 			// Invia il buffer con le possibilità
+			cercaDisponibilita(nPers, dataora, buffer, disponibilita);
 			ret = invia(socketId, buffer);
 
 			// Aspetta una book o una disconnessione
