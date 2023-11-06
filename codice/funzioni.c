@@ -139,6 +139,7 @@ void elencoComande(char* buffer, enum stato_comanda stato) {
 			c = c->prossima;
 		}
 	}
+	printf("Qui?");
 	pthread_mutex_unlock(&comande_lock);
 }
 
