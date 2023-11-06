@@ -518,25 +518,22 @@ void *gestisciTd(void* i) {
 		// Controllo se ho una prenotazione con questo codice:
 		//	- Nel caso affermativo, continuo;
 		//	- Nel caso negativo, termino il thread.
-		for(indice = 0; indice < nMaxTd; indice++) {
-			struct prenotazione* punta = prenotazioni[indice];
-			while(punta != NULL) {
-				if(strcmp(punta->pwd, token) == 0 && indice == tavolo) {
-					invia(socketId, "accesso");
-					tavoli_logged[tavolo] = 1;
-					break;
-				}
-				else {
-					strcpy(buffer, "Codice prenotazione errato o inserito nel tavolo sbagliato\nInserisci il codice prenotazione: ");
-					invia(socketId, buffer);
-					printf("Terminato thread table device\n");
-					fflush(stdout);
-					return NULL;
-				}
-				punta = punta->prossima;
+		struct prenotazione* punta = prenotazioni[tavolo];
+		while(punta != NULL) {
+			if(strcmp(punta->pwd, token) == 0) { // Volendo è possibile controllare la data della prenotazione con l'attuale
+				invia(socketId, "accesso");
+				tavoli_logged[tavolo] = 1;
+				break;
 			}
-			if(punta != NULL) break;
+			punta = punta->prossima;
 		}
+		if(punta == NULL) {
+			strcpy(buffer, "Codice prenotazione errato o inserito nel tavolo sbagliato\nInserisci il codice prenotazione: ");
+			invia(socketId, buffer);
+		}
+		printf("Terminato thread table device\n");
+		fflush(stdout);
+		return NULL;
 	}
 
 	// In questo caso è loggato
@@ -647,7 +644,7 @@ void *gestisciTd(void* i) {
 		strcat(buffer, "Totale: ");
 		sprintf(numeroString, "%d", totale);
 		strcat(buffer, numeroString);
-		strcat(buffer, "\nnInserisci il codice prenotazione: ");
+		strcat(buffer, "\nInserisci il codice prenotazione: ");
 		invia(socketId, buffer);
 	}
 	else {
