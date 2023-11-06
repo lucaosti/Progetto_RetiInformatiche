@@ -252,7 +252,7 @@ void cercaDisponibilita(int nPers, char* dataora, char* buffer, char* disponibil
 				break;
 			}
 		}
-		
+
 		// Tavolo non buono
 		if(!esito){
 			disponibilita[index] = 0;
@@ -341,8 +341,8 @@ void *gestisciClient(void* i) {
 		strcpy(dataora+8, " ");
 		strcpy(dataora+9, token);
 
-		while(1) {
 			cercaDisponibilita(nPers, dataora, buffer, disponibilita);
+		for(;;) {
 			// Invia il buffer con le possibilità
 			ret = invia(socketId, buffer);
 
