@@ -333,6 +333,7 @@ void *gestisciClient(void* i) {
 		token = strtok(NULL, " ");
 		strcpy(dataora, token);
 
+		// Salvo l'orario che perdevo con l'operazione antecedente
 		token = strtok(NULL, " ");
 		strcpy(dataora+8, " ");
 		strcpy(dataora+9, token);
@@ -381,17 +382,11 @@ retry:
 					v--;
 			tavolo--;
 
-			printf("Prenotato tavolo %d per %s\n", tavolo+1, dataora);
-			fflush(stdout);
-
-			printf(disponibilita);
+			printf("Provo a prenotare il tavolo %d per %s\n", tavolo+1, dataora);
 			fflush(stdout);
 
 			// Cerco le disponibilità attuali
 			cercaDisponibilita(nPers, dataora, buffer, disponibilita);
-
-			printf(disponibilita);
-			fflush(stdout);
 
 			if(disponibilita[tavolo] == 0) {
 				// Caso in cui non sia più disponibile l'opzione
@@ -423,7 +418,7 @@ retry:
 			}
 			pthread_mutex_unlock(&prenotazioni_lock);
 
-			printf("Un client ha effettuato una prenotazione\n");
+			printf("Un client ha effettuato una prenotazione %s\n", prenotazioni[tavolo]->pwd);
 			fflush(stdout);
 
 			strcpy(buffer, "PRENOTAZIONE EFFETTUATA\nCodice ");
