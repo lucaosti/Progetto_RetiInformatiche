@@ -338,93 +338,95 @@ void *gestisciClient(void* i) {
 		strcpy(dataora+8, " ");
 		strcpy(dataora+9, token);
 
-retry:
-		cercaDisponibilita(nPers, dataora, buffer, disponibilita);
-		// Invia il buffer con le possibilità
-		ret = invia(socketId, buffer);
-
-		// Aspetta una book o una disconnessione
-		ret = riceviLunghezza(socketId, &lmsg);
-		if(ret == 0) {
-			printf("Client disconnesso\n");
-			fflush(stdout);
-			close(socketId);
-			for(indice = 0; indice < nMaxClient; indice++)
-				if(socketId == socket_client[indice])
-					socket_client[indice] = -1;
-			printf("Terminato thread client\n");
-			fflush(stdout);
-			return NULL;
-		}
-		ret = ricevi(socketId, lmsg, buffer);
-		if(ret == 0) {
-			printf("Client disconnesso\n");
-			fflush(stdout);
-			close(socketId);
-			for(indice = 0; indice < nMaxClient; indice++)
-				if(socketId == socket_client[indice])
-					socket_client[indice] = -1;
-			printf("Terminato thread client\n");
-			fflush(stdout);
-			return NULL;
-		}
-
-		token = strtok(buffer, " ");
-
-		if(strcmp(token, "book") == 0) { // Caso book
-			token = strtok(NULL, " ");
-			
-			// Converto l'indice in tavolo
-			int tavolo;
-			int v = atoi(token);
-			for(tavolo = 0; tavolo <= nTavoli && v > 0; tavolo++)
-				if(disponibilita[tavolo] == 1)
-					v--;
-			tavolo--;
-
-			printf("Provo a prenotare il tavolo %d per %s\n", tavolo+1, dataora);
-			fflush(stdout);
-
-			// Cerco le disponibilità attuali
+		while(1) {
 			cercaDisponibilita(nPers, dataora, buffer, disponibilita);
+			// Invia il buffer con le possibilità
+			ret = invia(socketId, buffer);
 
-			if(disponibilita[tavolo] == 0) {
-				// Caso in cui non sia più disponibile l'opzione
-				printf("Tavolo già prenotato\n");
+			// Aspetta una book o una disconnessione
+			ret = riceviLunghezza(socketId, &lmsg);
+			if(ret == 0) {
+				printf("Client disconnesso\n");
 				fflush(stdout);
-				strcpy(buffer, "Tavolo già prenotato\n");
-				invia(socketId, buffer);
-				goto retry;
+				close(socketId);
+				for(indice = 0; indice < nMaxClient; indice++)
+					if(socketId == socket_client[indice])
+						socket_client[indice] = -1;
+				printf("Terminato thread client\n");
+				fflush(stdout);
+				return NULL;
 			}
-			// Salvo la prenotazione
-			struct prenotazione* p = malloc(sizeof(struct prenotazione));
-			strcpy(p->cognome, cognome);
-			strcpy(p->data_ora, dataora);
-			for(indice = 0; indice < 5; indice++)
-				p->pwd[indice] = 'A' + (rand() % 26);
-			p->prossima = NULL;
+			ret = ricevi(socketId, lmsg, buffer);
+			if(ret == 0) {
+				printf("Client disconnesso\n");
+				fflush(stdout);
+				close(socketId);
+				for(indice = 0; indice < nMaxClient; indice++)
+					if(socketId == socket_client[indice])
+						socket_client[indice] = -1;
+				printf("Terminato thread client\n");
+				fflush(stdout);
+				return NULL;
+			}
 
-			// Inserisco in lista prenotazioni
-			pthread_mutex_lock(&prenotazioni_lock);
-			if(prenotazioni[tavolo] == NULL) {
-				prenotazioni[tavolo] = p;
-			}
-			else {
-				struct prenotazione* punta = prenotazioni[tavolo];
-				while(punta->prossima != NULL) {
-					punta = punta->prossima;
+			token = strtok(buffer, " ");
+
+			if(strcmp(token, "book") == 0) { // Caso book
+				token = strtok(NULL, " ");
+				
+				// Converto l'indice in tavolo
+				int tavolo;
+				int v = atoi(token);
+				for(tavolo = 0; tavolo <= nTavoli && v > 0; tavolo++)
+					if(disponibilita[tavolo] == 1)
+						v--;
+				tavolo--;
+
+				printf("Provo a prenotare il tavolo %d per %s\n", tavolo+1, dataora);
+				fflush(stdout);
+
+				// Cerco le disponibilità attuali
+				cercaDisponibilita(nPers, dataora, buffer, disponibilita);
+
+				if(disponibilita[tavolo] == 0) {
+					// Caso in cui non sia più disponibile l'opzione
+					printf("Tavolo già prenotato\n");
+					fflush(stdout);
+					strcpy(buffer, "Tavolo già prenotato\n");
+					invia(socketId, buffer);
+					continue;
 				}
-				punta->prossima = p;
+				// Salvo la prenotazione
+				struct prenotazione* p = malloc(sizeof(struct prenotazione));
+				strcpy(p->cognome, cognome);
+				strcpy(p->data_ora, dataora);
+				for(indice = 0; indice < 5; indice++)
+					p->pwd[indice] = 'A' + (rand() % 26);
+				p->prossima = NULL;
+
+				// Inserisco in lista prenotazioni
+				pthread_mutex_lock(&prenotazioni_lock);
+				if(prenotazioni[tavolo] == NULL) {
+					prenotazioni[tavolo] = p;
+				}
+				else {
+					struct prenotazione* punta = prenotazioni[tavolo];
+					while(punta->prossima != NULL) {
+						punta = punta->prossima;
+					}
+					punta->prossima = p;
+				}
+				pthread_mutex_unlock(&prenotazioni_lock);
+
+				printf("Un client ha effettuato una prenotazione %s\n", prenotazioni[tavolo]->pwd);
+				fflush(stdout);
+
+				strcpy(buffer, "PRENOTAZIONE EFFETTUATA\nCodice ");
+				strcat(buffer, p->pwd);
+				strcat(buffer, "\n");
+				invia(socketId, buffer);
+				break;
 			}
-			pthread_mutex_unlock(&prenotazioni_lock);
-
-			printf("Un client ha effettuato una prenotazione %s\n", prenotazioni[tavolo]->pwd);
-			fflush(stdout);
-
-			strcpy(buffer, "PRENOTAZIONE EFFETTUATA\nCodice ");
-			strcat(buffer, p->pwd);
-			strcat(buffer, "\n");
-			invia(socketId, buffer);
 		}
 	}
 	else if(strcmp(token, "book") == 0) {
