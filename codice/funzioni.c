@@ -654,7 +654,6 @@ void *gestisciTd(void* i) {
 	pthread_mutex_lock(&fd_lock);
 	FD_SET(socketId, &master);
 	pthread_mutex_unlock(&fd_lock);
-	tavoli_logged[tavolo] = 0;
 	printf("Terminato thread table device\n");
 	fflush(stdout);
 
