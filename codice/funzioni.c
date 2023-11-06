@@ -647,7 +647,7 @@ void *gestisciTd(void* i) {
 		strcat(buffer, "Totale: ");
 		sprintf(numeroString, "%d", totale);
 		strcat(buffer, numeroString);
-		strcat(buffer, "\n");
+		strcat(buffer, "\nnInserisci il codice prenotazione: ");
 		invia(socketId, buffer);
 	}
 	else {
