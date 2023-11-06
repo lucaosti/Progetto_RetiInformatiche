@@ -523,7 +523,7 @@ void *gestisciTd(void* i) {
 				break;
 			}
 			else {
-				strcpy(buffer, "Codice prenotazione errato\n");
+				strcpy(buffer, "Codice prenotazione errato\nInserisci il codice prenotazione: \n");
 				invia(socketId, buffer);
 				printf("Terminato thread table device\n");
 				fflush(stdout);
