@@ -118,21 +118,22 @@ void elencoComande(char* buffer, enum stato_comanda stato) {
 		struct comanda *c;
 		c = comande[i];
 		while(c != NULL) {
-			if(c->stato != stato) continue;
-			strcat(buffer, "com");
-			sprintf(numeroString, "%d", c->nComanda);
-			strcat(buffer, numeroString);
-			strcat(buffer, " T");
-			sprintf(numeroString, "%d", i+1);
-			strcat(buffer, numeroString);
-			strcat(buffer, "\n");
-			for(j = 0; j < nPiatti; j++) {
-				if(c->quantita[j] != 0) {
-					strcat(buffer, menu[j].codice);
-					strcat(buffer, " ");
-					sprintf(numeroString, "%d", c->quantita[j]);
-					strcat(buffer, numeroString);
-					strcat(buffer, "\n");
+			if(c->stato == stato){
+				strcat(buffer, "com");
+				sprintf(numeroString, "%d", c->nComanda);
+				strcat(buffer, numeroString);
+				strcat(buffer, " T");
+				sprintf(numeroString, "%d", i+1);
+				strcat(buffer, numeroString);
+				strcat(buffer, "\n");
+				for(j = 0; j < nPiatti; j++) {
+					if(c->quantita[j] != 0) {
+						strcat(buffer, menu[j].codice);
+						strcat(buffer, " ");
+						sprintf(numeroString, "%d", c->quantita[j]);
+						strcat(buffer, numeroString);
+						strcat(buffer, "\n");
+					}
 				}
 			}
 			// Vado avanti
